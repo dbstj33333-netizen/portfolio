@@ -1,0 +1,752 @@
+/* =========================================================
+   UIUX DESIGNER PORTFOLIO — Make it Clear.
+   style.css
+   기준 해상도: 데스크톱 1920px / 이후 태블릿·모바일 대응
+========================================================= */
+
+/* ---------------------------------------------------------
+   0. 디자인 토큰 (컬러 · 폰트 변수)
+--------------------------------------------------------- */
+:root {
+  /* 컬러 — 선명한 블루 중심, 흰색/연한 하늘색 배경 */
+  --blue: #2f6bff;          /* 메인 선명한 블루 (대비 강화) */
+  --blue-strong: #1f53e6;   /* 진한 블루 (강조) */
+  --blue-soft: #9cc0ff;     /* 연한 블루 */
+  --blue-faint: #d7e6ff;    /* 아주 연한 블루 라인 */
+  --ring: #AED5F6;          /* 모든 원/링 테두리 색 (지정 컬러) */
+  --ink: #161a22;           /* 기본 텍스트(또렷한 잉크색) */
+  --ink-soft: #5b6473;      /* 보조 텍스트 */
+  --bg-top: #ffffff;
+  --bg-bottom: #e7f0ff;
+
+  /* 타이포 — 페이퍼로지(Paperlogy)를 메인으로, 미설치 시 폴백 */
+  --font-en: 'Paperlogy', 'Poppins', sans-serif;
+  --font-ko: 'Paperlogy', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+  /* 레이아웃 */
+  --pad-x: 8.3vw;           /* 좌우 공통 여백 (1920px 기준 ≈ 160px) */
+  --lens-size: 280px;       /* 인트로 렌즈 지름 */
+}
+
+/* ---------------------------------------------------------
+   1. 리셋 & 공통
+--------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ko);
+  color: var(--ink);
+  background: var(--bg-top);
+  /* 가로 스크롤 방지 */
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+em {
+  font-style: normal;
+}
+
+/* ---------------------------------------------------------
+   2. 배경 그라데이션 (전체 고정 레이어)
+   흰색 → 아주 연한 블루
+--------------------------------------------------------- */
+.bg-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--bg-top) 0%, #f3f8ff 55%, var(--bg-bottom) 100%);
+}
+
+/* 몽환적인 분위기 — 크게 번지는 블러 글로우 두 덩어리 */
+.bg-gradient::before,
+.bg-gradient::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+}
+.bg-gradient::before {
+  width: 60vw;
+  height: 60vw;
+  top: -20vw;
+  left: -14vw;
+  /* 콘텐츠가 흐려 보이지 않도록 글로우는 은은하게 */
+  background: radial-gradient(circle, rgba(174, 213, 246, 0.4) 0%, rgba(174, 213, 246, 0) 70%);
+}
+.bg-gradient::after {
+  width: 54vw;
+  height: 54vw;
+  bottom: -24vw;
+  right: -12vw;
+  background: radial-gradient(circle, rgba(180, 205, 255, 0.32) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+/* ---------------------------------------------------------
+   3. 모핑 그래픽 레이어
+   스크롤 내내 변형되며 이어지는 핵심 그래픽
+   (JS에서 transform / opacity 를 제어)
+--------------------------------------------------------- */
+.morph-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 큰 원형 라인 — 렌즈 → INDEX 큰 원 → About 우측 원으로 연속 변형 */
+.morph-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* 지름(width/height)은 JS가 px 로 직접 지정 → 어느 크기에서도 border 1.5px 유지 */
+  width: 280px;
+  height: 280px;
+  border: 1.5px solid var(--ring);
+  border-radius: 50%;
+  transform-origin: center center;
+  /* 원 안쪽을 반투명 흰색으로 채워, 흐릿한 배경 위에서 내부가 더 선명·밝아 보이게 */
+  background: radial-gradient(circle at 50% 50%,
+              rgba(255, 255, 255, 0.62) 0%,
+              rgba(255, 255, 255, 0.42) 60%,
+              rgba(255, 255, 255, 0.12) 82%,
+              rgba(255, 255, 255, 0) 100%);
+  /* 원 내부 영역을 살짝 밝고 선명하게 (배경 블러와 대비) */
+  backdrop-filter: brightness(1.05) saturate(1.06);
+  -webkit-backdrop-filter: brightness(1.05) saturate(1.06);
+  /* 초기 상태: JS 그래픽 컨트롤러가 width/height/transform/opacity 를 매 프레임 제어 */
+  opacity: 0;
+  will-change: width, height, transform, opacity;
+}
+
+/* 깔때기 이미지 — Why UI/UX 단계에서 등장, Project 에서 펼쳐짐
+   (위치/크기/투명도는 JS 그래픽 컨트롤러가 매 프레임 제어) */
+.morph-funnel {
+  position: absolute;
+  /* 좌측 107px / 우측 77px (너비 1736 = 원본 크기). 목 = (975, 790) → top 3 */
+  top: 3px;
+  left: 107px;
+  width: 1736px;
+  height: auto;
+  z-index: 1; /* Why 섹션 콘텐츠(z-index 2) 뒤에 깔림 */
+  /* transform-origin(50% 100%)·transform·opacity 는 GSAP 가 제어 */
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ---------------------------------------------------------
+   4. 스크롤 루트 & 섹션 공통
+--------------------------------------------------------- */
+.scroll-root {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  /* 섹션 간 간격을 넓게 — 전환에 충분한 스크롤 여유를 주고 여백감을 키움 */
+  min-height: 130vh;
+  padding: 0 var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* =========================================================
+   [1·2] INTRO — 흐릿한 인트로 + 마우스 렌즈 효과
+========================================================= */
+.section--intro {
+  /* 첫 화면은 정확히 한 화면(100vh) — 위쪽에 빈 간격을 만들지 않음 */
+  min-height: 100vh;
+  align-items: center;
+  overflow: hidden;
+}
+
+.intro-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 두 텍스트 레이어를 정확히 겹치기 */
+.intro-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+}
+
+.intro-sub {
+  font-family: var(--font-en);
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  font-size: clamp(1.4rem, 3.2vw, 3.4rem);
+  margin-bottom: 0.4em;
+}
+
+.intro-title {
+  font-family: var(--font-en);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.6rem, 3.6vw, 3.8rem);
+}
+
+/* (1) 배경용 흐릿한 레이어 — 항상 blur */
+.intro-text--blur {
+  color: var(--blue-soft);
+  filter: blur(7px);
+  opacity: 0.85;
+}
+
+/* (2) 선명한 레이어 — 렌즈(circle clip-path) 안에서만 보임
+   --lens-x / --lens-y 는 JS가 마우스 위치로 업데이트 */
+.intro-text--clear {
+  color: var(--blue-strong);
+  --lens-x: 50%;
+  --lens-y: 50%;
+  -webkit-clip-path: circle(calc(var(--lens-size) / 2) at var(--lens-x) var(--lens-y));
+  clip-path: circle(calc(var(--lens-size) / 2) at var(--lens-x) var(--lens-y));
+}
+
+/* 마우스를 따라다니는 렌즈 링 (JS가 생성) — 얇은 블루 border 원 */
+.lens-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--lens-size);
+  height: var(--lens-size);
+  border: 1.5px solid var(--ring);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 0 0 1px rgba(59, 123, 255, 0.12),
+              inset 0 0 24px rgba(59, 123, 255, 0.08);
+  /* transform 은 JS가 매 프레임 갱신 */
+}
+
+/* 주변 흐릿한 키워드 */
+.intro-keyword {
+  position: absolute;
+  font-family: var(--font-ko);
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--blue-soft);
+  filter: blur(3px);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.kw-1 { top: 12%;  left: 18%; }
+.kw-2 { top: 22%;  right: 14%; }
+.kw-3 { bottom: 20%; left: 12%; }
+.kw-4 { bottom: 14%; right: 20%; }
+.kw-5 { top: 38%;  left: 6%; }
+.kw-6 { bottom: 34%; right: 8%; }
+
+/* 하단 스크롤 인디케이터 */
+.scroll-indicator {
+  position: absolute;
+  bottom: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.scroll-label {
+  font-family: var(--font-en);
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  font-size: 20px;
+  color: var(--blue-soft);
+}
+
+.scroll-arrows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.scroll-arrows svg {
+  width: 26px;
+  height: 13px;
+}
+.scroll-arrows path {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* 연한 파랑 → 진한 파랑 3단 + 순차 깜빡임 */
+.scroll-arrows svg:nth-child(1) path { stroke: var(--blue-soft); }
+.scroll-arrows svg:nth-child(2) path { stroke: var(--blue); }
+.scroll-arrows svg:nth-child(3) path { stroke: var(--blue-strong); }
+
+.scroll-arrows svg { animation: arrowPulse 1.6s ease-in-out infinite; }
+.scroll-arrows svg:nth-child(2) { animation-delay: 0.18s; }
+.scroll-arrows svg:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes arrowPulse {
+  0%, 100% { opacity: 0.35; transform: translateY(-2px); }
+  50%      { opacity: 1;    transform: translateY(2px); }
+}
+
+/* =========================================================
+   [3] INDEX — 메뉴 목록
+========================================================= */
+.section--index {
+  justify-content: flex-start;
+  padding-top: 12vh;
+}
+
+.index-title {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  color: var(--blue);
+  letter-spacing: 0.02em;
+  margin-bottom: 4vh;
+}
+
+.index-menu {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.2rem, 5vh, 4.5rem);
+  /* 메뉴는 중앙~오른쪽으로 치우쳐 배치 (이미지 3 참고) */
+  margin-left: 22vw;
+  max-width: 760px;
+}
+
+.index-item {
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.index-item-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 0.7rem;
+}
+
+.index-en {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.2vw, 3.4rem);
+  color: var(--ink);
+  letter-spacing: 0.005em;
+  transition: color 0.35s ease;
+}
+
+.index-ko {
+  font-family: var(--font-ko);
+  font-weight: 300;
+  font-size: 20px;
+  color: var(--ink-soft);
+}
+
+/* 메뉴 아래 얇은 파란 라인 + 끝에 원형 점 */
+.index-line {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: var(--blue-faint);
+}
+.index-line::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ring);
+  transition: background 0.35s ease, transform 0.35s ease;
+}
+/* 라인 길이를 서로 다르게 (이미지 3 참고) */
+.index-line--xshort { width: 46%; }
+.index-line--short  { width: 60%; }
+.index-line--mid    { width: 78%; }
+.index-line--long   { width: 96%; }
+
+/* INDEX — Project 항목 아래 프로젝트 목록 (작은 회색, 좌측 정렬) */
+.index-projects {
+  list-style: none;
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.index-projects li {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+
+/* hover: 차분한 강조 */
+.index-item:hover { transform: translateX(8px); }
+.index-item:hover .index-en { color: var(--blue); }
+.index-item:hover .index-line { background: var(--blue-soft); }
+.index-item:hover .index-line::after {
+  background: var(--blue-strong);
+  transform: translateY(-50%) scale(1.25);
+}
+
+/* =========================================================
+   [4] ABOUT ME — 2단 레이아웃
+========================================================= */
+.section--about {
+  /* 정보가 한 화면 안에 들어오도록 여백 축소 + 세로 중앙 정렬 (평범하게 스크롤) */
+  padding-top: 6vh;
+  padding-bottom: 6vh;
+  justify-content: center;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7vw;
+  width: 100%;
+  max-width: 1500px;
+}
+
+/* --- 왼쪽 --- */
+.about-title {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+  color: var(--blue);
+  margin-bottom: 1rem;
+}
+
+.about-intro {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 1.4rem;
+}
+.about-intro em { color: var(--blue); font-weight: 400; }
+
+.about-profile {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+/* 프로필 이미지 placeholder */
+.profile-photo {
+  width: 120px;
+  height: 150px;
+  flex-shrink: 0;
+  border: 1px solid var(--blue-faint);
+  background: linear-gradient(160deg, #fbfdff, #eef5ff);
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0.1rem;
+}
+.profile-role {
+  font-size: 20px;
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+}
+.profile-meta {
+  font-size: 20px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.approach-title {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.approach-desc {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 520px;
+}
+
+/* --- 오른쪽 --- */
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resume-title {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--blue);
+  margin-bottom: 0.4rem;
+}
+
+.resume-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.resume-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #eef2f8;
+}
+.resume-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.resume-org {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+}
+.resume-detail {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.resume-date {
+  flex-shrink: 0;
+  font-family: var(--font-en);
+  font-size: 20px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* Skills */
+.skills-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.skills-list li {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--ink);
+}
+.skill-cat {
+  display: inline-block;
+  min-width: 130px;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+/* =========================================================
+   [5] WHY UI/UX? — 깔때기 + 쏟아지는 키워드
+========================================================= */
+.section--why {
+  /* 핀(pin) 으로 고정되므로 한 화면(100vh)에 맞춰 구성:
+     제목(위) · 키워드(깔때기 목 부근) · 설명(아래) */
+  min-height: 100vh;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  padding-top: 11vh;
+  padding-bottom: 5vh;
+  overflow: hidden;
+}
+
+.why-title {
+  position: relative;
+  z-index: 2; /* 깔때기 위에 표시 */
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  color: var(--blue-strong);
+  letter-spacing: -0.01em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* 키워드 캡슐 더미 — 깔때기 목 위쪽 중앙에 모이는 앵커(0크기) 지점.
+   각 캡슐은 JS(GSAP)가 data 좌표로 배치 */
+/* 키워드 조각 컨테이너 — 섹션(=화면) 좌상단 (0,0) 기준.
+   각 조각은 data-x(left)/data-y(top) 절대 좌표로 GSAP 가 배치 */
+.why-keywords {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* 깔때기 위에 표시 */
+}
+
+/* 키워드 조각 이미지 — 원본 모양/기울기 그대로, 위치/낙하는 GSAP 가 제어 */
+.why-cap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  /* 이미지 원본 픽셀 크기 그대로 (필요 시 --cap-scale 로 일괄 조절) */
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.why-desc {
+  /* 화면 상단으로부터 863px (절대 좌표) */
+  position: absolute;
+  z-index: 2; /* 깔때기 위에 표시 */
+  top: 863px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 1300px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--ink);
+}
+.why-desc em { color: var(--blue-strong); font-weight: 500; }
+
+/* =========================================================
+   [6] PROJECT — 진입 화면
+========================================================= */
+.section--project {
+  min-height: 100vh;
+  justify-content: center;
+  /* 하단으로 갈수록 연한 블루가 더해지는 그라데이션 */
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(210,228,255,0.55) 100%);
+}
+
+/* Project 섹션 우측 프로젝트 목록 (우측 정렬) */
+.project-names {
+  position: absolute;
+  right: var(--pad-x);
+  top: 60%;
+  list-style: none;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.project-names li {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--blue);
+  letter-spacing: 0.01em;
+}
+
+/* 하단 가로 구분선 */
+.project-divider {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 16%;
+  height: 1px;
+  background: var(--blue-faint);
+}
+
+.project-title {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: clamp(5rem, 16vw, 17rem);
+  line-height: 1;
+  color: var(--blue);
+  letter-spacing: -0.01em;
+}
+
+/* 이후 프로젝트 카드/리스트 자리 */
+.project-list {
+  margin-top: 4vh;
+}
+
+/* =========================================================
+   7. 스크롤 진입 애니메이션용 초기 상태
+   (JS ScrollTrigger 가 .is-visible 로 해제)
+========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   8. 반응형 — 태블릿 / 모바일 기본 대응
+========================================================= */
+
+/* 태블릿 (~1024px) */
+@media (max-width: 1024px) {
+  :root { --pad-x: 6vw; }
+
+  .index-menu { margin-left: 8vw; }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+/* 모바일 (~640px) */
+@media (max-width: 640px) {
+  :root { --pad-x: 6vw; --lens-size: 200px; }
+
+  .intro-sub  { font-size: 1.05rem; letter-spacing: 0.14em; }
+  .intro-title { font-size: 1.5rem; }
+
+  .index-menu { margin-left: 0; }
+  .index-item-head { flex-direction: column; gap: 0.2rem; }
+
+  .about-profile { flex-direction: column; align-items: flex-start; }
+
+  .resume-list li { flex-direction: column; gap: 0.4rem; }
+
+  .project-title { font-size: 4rem; }
+}
+
+/* 접근성: 모션 최소화 선호 시 애니메이션 약화 */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-arrows svg { animation: none; }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UIUX DESIGNER PORTFOLIO — Make it Clear.</title>
+
+  <!-- ===== Fonts ===== -->
+  <!-- 페이퍼로지(Paperlogy) 웹폰트 — 미설치 데스크톱에서도 동일하게 표시됨
+       (jsDelivr CDN, font-display: swap) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css" />
+  <!-- 영문 보조 폰트(폴백용) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ===== Styles ===== -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- =========================================================
+       배경 그라데이션 (전체 고정 레이어)
+  ========================================================== -->
+  <div class="bg-gradient"></div>
+
+  <!-- =========================================================
+       모핑 그래픽 레이어 (스크롤 내내 변형되며 이어지는 핵심 그래픽)
+       렌즈 원 → 큰 원형 라인 → 우측 원 → 깔때기 → 펼쳐지는 라인
+  ========================================================== -->
+  <div class="morph-stage" aria-hidden="true">
+    <!-- 큰 원형 라인 (인트로 렌즈 → INDEX/About의 큰 원으로 연속 변형) -->
+    <div class="morph-circle"></div>
+
+  </div>
+
+  <!-- =========================================================
+       메인 콘텐츠
+  ========================================================== -->
+  <main class="scroll-root">
+
+    <!-- ===================================================
+         [1·2] INTRO — 흐릿한 인트로 + 마우스 렌즈 효과
+    ==================================================== -->
+    <section class="section section--intro" id="intro">
+      <div class="intro-inner">
+        <!-- 주변 흐릿한 키워드들 -->
+        <span class="intro-keyword kw-1">사용자</span>
+        <span class="intro-keyword kw-2">불편 관찰</span>
+        <span class="intro-keyword kw-3">정보 정리</span>
+        <span class="intro-keyword kw-4">화면 흐름</span>
+        <span class="intro-keyword kw-5">선명함</span>
+        <span class="intro-keyword kw-6">문제 해결</span>
+
+        <!-- (1) 배경용 흐릿한 텍스트 레이어 -->
+        <div class="intro-text intro-text--blur">
+          <p class="intro-sub">UIUX DESIGNER PORTFOLIO</p>
+          <h1 class="intro-title">Make it Clear.</h1>
+        </div>
+
+        <!-- (2) 렌즈 안에서만 보이는 선명한 텍스트 레이어 (clip-path 마스킹) -->
+        <div class="intro-text intro-text--clear">
+          <p class="intro-sub">UIUX DESIGNER PORTFOLIO</p>
+          <h1 class="intro-title">Make it Clear.</h1>
+        </div>
+      </div>
+
+      <!-- 하단 스크롤 인디케이터 -->
+      <div class="scroll-indicator">
+        <span class="scroll-label">SCROLL</span>
+        <span class="scroll-arrows">
+          <svg viewBox="0 0 24 12"><path d="M2 2 L12 9 L22 2" /></svg>
+          <svg viewBox="0 0 24 12"><path d="M2 2 L12 9 L22 2" /></svg>
+          <svg viewBox="0 0 24 12"><path d="M2 2 L12 9 L22 2" /></svg>
+        </span>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         [3] INDEX — 메뉴 목록
+    ==================================================== -->
+    <section class="section section--index" id="index">
+      <h2 class="index-title">INDEX</h2>
+
+      <nav class="index-menu">
+        <a class="index-item" href="#about">
+          <div class="index-item-head">
+            <span class="index-en">About Me</span>
+            <span class="index-ko">자기소개</span>
+          </div>
+          <span class="index-line index-line--short"></span>
+        </a>
+
+        <a class="index-item" href="#why">
+          <div class="index-item-head">
+            <span class="index-en">Why UI/UX?</span>
+            <span class="index-ko">UIUX 디자이너를 선택한 이유</span>
+          </div>
+          <span class="index-line index-line--long"></span>
+        </a>
+
+        <a class="index-item" href="#project">
+          <div class="index-item-head">
+            <span class="index-en">Project</span>
+            <span class="index-ko">프로젝트 소개</span>
+          </div>
+          <span class="index-line index-line--xshort"></span>
+          <ul class="index-projects">
+            <li>모카클래스 반응형 웹 UX 개선</li>
+            <li>시스템치과 반응형 웹 UX 개선</li>
+            <li>러닝 기록 앱 기획 및 제작</li>
+            <li>디지털 디톡스 앱 기획 및 제작</li>
+          </ul>
+        </a>
+      </nav>
+    </section>
+
+    <!-- ===================================================
+         [4] ABOUT ME — 2단 레이아웃
+    ==================================================== -->
+    <section class="section section--about" id="about">
+      <div class="about-grid">
+
+        <!-- 왼쪽: 소개 · 프로필 · My Approach -->
+        <div class="about-left">
+          <h2 class="about-title">About Me</h2>
+          <p class="about-intro">
+            사람을 응대하고 정보를 전달하던 경험을 바탕으로,<br />
+            <em>사용자의 불편을 실제로 해결</em>하는 UI/UX 디자이너입니다
+          </p>
+
+          <div class="about-profile">
+            <div class="profile-photo" aria-label="프로필 이미지"></div>
+            <div class="profile-info">
+              <p class="profile-name">이윤서</p>
+              <p class="profile-role">UI/UX 디자이너</p>
+              <p class="profile-meta">이메일 dbstj33333@gmail.com</p>
+              <p class="profile-meta">연락처 010.2981.8296</p>
+            </div>
+          </div>
+
+          <div class="about-approach">
+            <h3 class="approach-title">My Approach</h3>
+            <p class="approach-desc">
+              정보를 쉽게 전달하는 방식에 대한 관심을 바탕으로,
+              기존 서비스의 불편을 직접 찾고 유사 사례와 AI 도구를 활용해
+              더 나은 화면 흐름을 제안합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 이력 정보 -->
+        <div class="about-right">
+          <div class="resume-block">
+            <h3 class="resume-title">Education</h3>
+            <ul class="resume-list">
+              <li>
+                <div class="resume-text">
+                  <span class="resume-org">그린컴퓨터아카데미</span>
+                  <span class="resume-detail">AI 활용 반응형 웹 UI/UX 제작 과정</span>
+                </div>
+                <span class="resume-date">26.02 - 26.07</span>
+              </li>
+              <li>
+                <div class="resume-text">
+                  <span class="resume-org">을지대학교</span>
+                  <span class="resume-detail">안경광학과 졸업</span>
+                </div>
+                <span class="resume-date">19.03 - 23.02</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="resume-block">
+            <h3 class="resume-title">Experience</h3>
+            <ul class="resume-list">
+              <li>
+                <div class="resume-text">
+                  <span class="resume-org">분당연세플러스안과 검안팀 근무</span>
+                  <span class="resume-detail">전반적인 안과 검사, 렌즈 검사 및 사용자 응대</span>
+                </div>
+                <span class="resume-date">23.03 - 25.11</span>
+              </li>
+              <li>
+                <div class="resume-text">
+                  <span class="resume-org">을지대학교 학보사</span>
+                  <span class="resume-detail">학생기자 및 편집장 / 기사 기획, 작성, 편집, 일정 관리, 협업</span>
+                </div>
+                <span class="resume-date">19.04 - 21.12</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="resume-block">
+            <h3 class="resume-title">Certificate</h3>
+            <ul class="resume-list">
+              <li>
+                <div class="resume-text">
+                  <span class="resume-org">웹디자인개발기능사 필기 합격 / 실기 준비 중</span>
+                </div>
+                <span class="resume-date">26.04</span>
+              </li>
+              <li>
+                <div class="resume-text"><span class="resume-org">GTQ 1급</span></div>
+                <span class="resume-date">26.03</span>
+              </li>
+              <li>
+                <div class="resume-text"><span class="resume-org">JLPT N4</span></div>
+                <span class="resume-date">26.08</span>
+              </li>
+              <li>
+                <div class="resume-text"><span class="resume-org">안경사 면허증</span></div>
+                <span class="resume-date">23.02</span>
+              </li>
+              <li>
+                <div class="resume-text"><span class="resume-org">컴퓨터활용능력 2급</span></div>
+                <span class="resume-date">22.07</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="resume-block">
+            <h3 class="resume-title">Skills</h3>
+            <ul class="skills-list">
+              <li><span class="skill-cat">Design</span> Figma, Photoshop, Illustrator</li>
+              <li><span class="skill-cat">Web</span> HTML, CSS, VS Code, Vercel</li>
+              <li><span class="skill-cat">Collaboration</span> Notion, Google Sheets, GitHub</li>
+              <li><span class="skill-cat">AI-assisted</span> ChatGPT, Claude, AI Image Tool, Powershell</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================
+         [5] WHY UI/UX? — 깔때기 + 쏟아지는 키워드
+    ==================================================== -->
+    <section class="section section--why" id="why">
+      <!-- 깔때기 (Why 섹션 안에 있어 내용과 함께 스크롤됨) -->
+      <img class="morph-funnel" src="assets/images/img1.png" alt="" />
+
+      <h2 class="why-title">Why UI/UX?</h2>
+
+      <!-- 깔때기 목으로 쏟아져 쌓이는 키워드 조각 이미지들 (번호 순서대로 낙하)
+           각 이미지의 모양/기울기는 원본 그대로 사용. 위치는 data-x/-y (앵커 중심 기준 px) -->
+      <!-- 키워드 조각: data-x=좌측(left), data-y=상단(top) 절대 좌표(1920×1080 기준 박스 좌상단) -->
+      <div class="why-keywords">
+        <img class="why-cap" src="assets/images/w_img1.png"  data-x="962"  data-y="832" alt="" />
+        <img class="why-cap" src="assets/images/w_img2.png"  data-x="960"  data-y="812" alt="" />
+        <img class="why-cap" src="assets/images/w_img3.png"  data-x="938"  data-y="744" alt="" />
+        <img class="why-cap" src="assets/images/w_img4.png"  data-x="922"  data-y="627" alt="" />
+        <img class="why-cap" src="assets/images/w_img5.png"  data-x="976"  data-y="566" alt="" />
+        <img class="why-cap" src="assets/images/w_img6.png"  data-x="830"  data-y="554" alt="" />
+        <img class="why-cap" src="assets/images/w_img7.png"  data-x="937"  data-y="613" alt="" />
+        <img class="why-cap" src="assets/images/w_img8.png"  data-x="885"  data-y="532" alt="" />
+        <img class="why-cap" src="assets/images/w_img9.png"  data-x="1089" data-y="552" alt="" />
+        <img class="why-cap" src="assets/images/w_img10.png" data-x="806"  data-y="537" alt="" />
+        <img class="why-cap" src="assets/images/w_img11.png" data-x="994"  data-y="497" alt="" />
+        <img class="why-cap" src="assets/images/w_img12.png" data-x="822"  data-y="483" alt="" />
+        <img class="why-cap" src="assets/images/w_img13.png" data-x="954"  data-y="506" alt="" />
+        <img class="why-cap" src="assets/images/w_img14.png" data-x="838"  data-y="428" alt="" />
+      </div>
+
+      <p class="why-desc">
+        <em>사용자의 불편을 관찰했던 경험</em>과
+        <em>정보를 쉽게 정리해 전달했던 경험</em>을 바탕으로 UI/UX에 관심을 갖게 되었습니다.<br />
+        이제는 문제를 이해하는 데서 나아가, 화면 구조와 서비스 흐름으로 불편을 개선하는 디자이너로 성장하고자 합니다.
+      </p>
+    </section>
+
+    <!-- ===================================================
+         [6] PROJECT — 진입 화면
+    ==================================================== -->
+    <section class="section section--project" id="project">
+      <h2 class="project-title">Project</h2>
+
+      <!-- 우측 프로젝트 목록 + 하단 구분선 -->
+      <ul class="project-names">
+        <li>모카클래스 반응형 웹 UX 개선</li>
+        <li>시스템치과 반응형 웹 UX 개선</li>
+        <li>러닝 기록 앱 기획 및 제작</li>
+        <li>디지털 디톡스 앱 기획 및 제작</li>
+      </ul>
+      <span class="project-divider"></span>
+    </section>
+
+  </main>
+
+  <!-- ===== GSAP & ScrollTrigger ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- ===== Main script ===== -->
+  <script src="js/main.js"></script>
+</body>
+</html>
