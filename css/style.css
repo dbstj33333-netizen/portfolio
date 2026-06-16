@@ -630,10 +630,11 @@ em {
 }
 
 .why-desc {
-  /* 화면 상단으로부터 863px (절대 좌표) */
+  /* 화면 상단으로부터 863px (1920×1080 기준). 단, 뷰포트가 낮으면 잘리지 않도록
+     화면 하단에서 최소 90px 여유를 두고 위로 끌어올림 */
   position: absolute;
   z-index: 2; /* 깔때기 위에 표시 */
-  top: 863px;
+  top: min(863px, calc(100vh - 90px));
   left: 0;
   right: 0;
   margin: 0 auto;
