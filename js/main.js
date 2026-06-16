@@ -19,6 +19,7 @@
   const intro = document.getElementById("intro");
   const introInner = intro.querySelector(".intro-inner");
   const clearLayer = intro.querySelector(".intro-text--clear");
+  const scrollIndicator = intro.querySelector(".scroll-indicator");
   const circle = document.querySelector(".morph-circle");
   const funnel = document.querySelector(".morph-funnel");
 
@@ -77,27 +78,28 @@
   ======================================================= */
   const LENS_D = 280; // 인트로 렌즈 지름
   let pinActive = false; // Why 핀 진입 시 true → 원 제어를 GSAP 로 넘김
+  // 인트로 핀 — 첫 화면을 고정한 채 원이 INDEX 크기까지 '제자리에서' 성장
+  let introPinActive = false; // 인트로 핀 활성(성장) 구간 여부
+  let introGrow = 0; // 인트로 핀 진행도 0→1 (원이 다 커지면 1)
+  let pinReady = false; // 인트로 핀(ScrollTrigger) 생성 완료 여부 — 없으면 폴백(스크롤 성장)
 
   function frame() {
     // 마우스 부드럽게 보간
     current.x += (target.x - current.x) * 0.12;
     current.y += (target.y - current.y) * 0.12;
 
-    // (2) clip-path 렌즈 — 선명 텍스트를 마우스 위치 원형으로 노출
-    const rect = introInner.getBoundingClientRect();
-    clearLayer.style.setProperty("--lens-x", current.x - rect.left + "px");
-    clearLayer.style.setProperty("--lens-y", current.y - rect.top + "px");
-
     const p = scrollProgress();
+    const rect = introInner.getBoundingClientRect();
 
     /* ---------- 원(circle) ----------
-       p 0→0.9  : 마우스의 작은 렌즈가 '그 자리에서 점점 커지며' INDEX 큰 원으로
-       p 0.9→1.5: INDEX 위치 고정 (왼쪽 가장자리 = 화면 좌측 262px)
+       [성장] 인트로 핀 동안 첫 화면을 고정한 채, 마우스 렌즈 자리에서 INDEX 큰 원으로 자라남
+              · 핀이 있으면 introGrow(핀 진행도)로 구동
+              · 핀이 없으면(폴백/모션최소화) 예전처럼 스크롤 p 로 구동
+       p ~0→1.5 : INDEX 위치 고정 (왼쪽 가장자리 = 화면 좌측 262px)
        p 1.5→2.0: 오른쪽으로 이동 + 살짝 축소 (About 정보 등장, 왼쪽 가장자리 790px)
-       p 2.0→2.5: About 고정
-       p 2.5→3.0: 깔때기 '목'으로 모이며 작게 수축·소멸 → 깔때기로 자연스럽게 변형
+       p 2.0~   : About 고정 → 이후 Why 핀에서 깔때기로 변형(GSAP)
     */
-    // 핀 진입(=About 이 완전히 사라진 뒤) 후에는 GSAP 가 원을 제어 → rAF 는 건드리지 않음
+    // Why 핀 진입 후에는 GSAP 가 원을 제어 → rAF 는 건드리지 않음
     if (!pinActive) {
       const cx_i = 262 + S / 2; // INDEX 원 중심 X (왼쪽 가장자리 262px)
       const cy_i = vh * 0.72; // INDEX 원 중심 Y
@@ -105,8 +107,13 @@
       const cx_a = 790 + aboutD / 2; // About 원 중심 X (왼쪽 가장자리 790px)
       let cx, cy, d, op;
 
-      if (p <= 0.9) {
-        const t = smooth(p / 0.9);
+      // 인트로 '성장' 구간 판정
+      let inGrow = false, t = 0;
+      if (introPinActive) { inGrow = true; t = smooth(introGrow); }
+      else if (!pinReady && p <= 0.9) { inGrow = true; t = smooth(p / 0.9); }
+
+      if (inGrow) {
+        // 마우스 렌즈 자리에서 INDEX 큰 원으로 '제자리에서' 성장
         cx = lerp(current.x, cx_i, t);
         cy = lerp(current.y, cy_i, t);
         d = lerp(LENS_D, S, t);
@@ -114,8 +121,8 @@
       } else if (p <= 1.5) {
         cx = cx_i; cy = cy_i; d = S; op = 0.85;
       } else if (p <= 2.0) {
-        const t = smooth((p - 1.5) / 0.5);
-        cx = lerp(cx_i, cx_a, t); cy = cy_i; d = lerp(S, aboutD, t); op = lerp(0.85, 0.8, t);
+        const tt = smooth((p - 1.5) / 0.5);
+        cx = lerp(cx_i, cx_a, tt); cy = cy_i; d = lerp(S, aboutD, tt); op = lerp(0.85, 0.8, tt);
       } else {
         // About 위치에서 '고정' — About 섹션이 완전히 사라질 때(핀 시작)까지 그대로 유지
         cx = cx_a; cy = cy_i; d = aboutD; op = 0.8;
@@ -126,6 +133,17 @@
       circle.style.transform =
         "translate(" + cx + "px," + cy + "px) translate(-50%,-50%)";
       circle.style.opacity = op;
+
+      // 선명 텍스트 렌즈(clip-path) — 성장 구간엔 원과 똑같이 키워
+      //  원이 커질수록 'Make it Clear' 가 점점 또렷하게 드러나도록.
+      //  (그 외 구간은 인트로가 화면 밖이라 갱신할 필요 없음)
+      if (inGrow) {
+        const clip =
+          "circle(" + (d / 2) + "px at " +
+          (cx - rect.left) + "px " + (cy - rect.top) + "px)";
+        clearLayer.style.webkitClipPath = clip;
+        clearLayer.style.clipPath = clip;
+      }
     }
 
     // 깔때기(funnel)는 GSAP(핀 포함)이 제어하므로 여기서는 다루지 않는다.
@@ -164,6 +182,30 @@
   }
 
   if (!prefersReduced) {
+    /* [1→3] INTRO 핀 — 첫 화면(인트로)을 그대로 고정한 채, 원이 마우스 렌즈 자리에서
+       INDEX 크기까지 '제자리에서' 자라남. 다 자라면 핀이 풀리며 페이지가 아래로
+       스크롤되고, 다 큰 원은 그대로 INDEX 위치(rAF가 이어받음)에 놓인다. */
+    pinReady = true;
+    introPinActive = true; // 로드 시 첫 화면에 있으므로 성장 구간으로 시작
+    ScrollTrigger.create({
+      trigger: ".section--intro",
+      start: "top top",
+      end: "+=100%", // 한 화면 분량의 스크롤 동안: 화면 고정 + 원 성장
+      pin: true,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        introGrow = self.progress;
+        // 원이 커지는 동안 SCROLL 인디케이터는 서서히 사라짐
+        if (scrollIndicator) {
+          scrollIndicator.style.opacity = String(1 - smooth(self.progress));
+        }
+      },
+      onEnter: () => { introPinActive = true; },
+      onEnterBack: () => { introPinActive = true; },
+      onLeave: () => { introPinActive = false; }, // 핀 종료 → rAF 가 INDEX 위치에서 이어받음
+      onLeaveBack: () => { introPinActive = true; },
+    });
+
     // [3] INDEX
     revealOnEnter(".index-title", ".section--index", { stagger: 0 });
     revealOnEnter(".index-item", ".section--index", { start: "top 65%", stagger: 0.14 });
