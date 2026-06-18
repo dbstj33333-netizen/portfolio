@@ -1,0 +1,311 @@
+/* =========================================================
+   프로젝트 케이스 스터디 페이지 스타일 (project-*.html 공통)
+   style.css 의 디자인 토큰(:root)·폰트를 재사용한다.
+========================================================= */
+
+.cs {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* ---------------------------------------------------------
+   상단 네비게이션
+--------------------------------------------------------- */
+.cs-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem var(--pad-x);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border-bottom: 1px solid var(--blue-faint);
+}
+.cs-nav-home {
+  font-family: var(--font-en);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: color 0.25s ease;
+}
+.cs-nav-home:hover { color: var(--blue); }
+.cs-nav-label {
+  font-family: var(--font-en);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   히어로
+--------------------------------------------------------- */
+.cs-hero {
+  padding: 9vh 0 5vh;
+}
+.cs-category {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: var(--blue);
+  margin-bottom: 1.2rem;
+}
+.cs-title {
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.18;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.2rem;
+}
+.cs-summary {
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 720px;
+}
+.cs-summary em { color: var(--blue); font-weight: 400; font-style: normal; }
+
+/* 개요 메타 (역할 · 기간 · 툴 …) */
+.cs-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.6rem 2rem;
+  margin-top: 3.2rem;
+  padding-top: 2.4rem;
+  border-top: 1px solid var(--blue-faint);
+}
+.cs-meta dt {
+  font-family: var(--font-en);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+.cs-meta dd {
+  font-size: 0.98rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------
+   이미지 (실제 <img> 또는 placeholder)
+--------------------------------------------------------- */
+.cs-figure { margin: 4vh 0; }
+.cs-figure img,
+.cs-img {
+  display: block;
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--blue-faint);
+}
+.cs-figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* 이미지 자리표시자 — 실제 이미지 넣기 전 미리보기 */
+.cs-img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  border: 1px dashed var(--blue-soft);
+  background: linear-gradient(160deg, #fbfdff, #eef5ff);
+  color: var(--blue-soft);
+  font-family: var(--font-en);
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+}
+.cs-img-placeholder.is-tall { aspect-ratio: 4 / 3; }
+.cs-img-placeholder.is-phone { aspect-ratio: 9 / 16; }
+
+/* 갤러리 (주요 화면 여러 장) */
+.cs-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin: 4vh 0;
+}
+.cs-gallery .cs-img-placeholder { aspect-ratio: 9 / 16; }
+
+/* ---------------------------------------------------------
+   본문 섹션
+--------------------------------------------------------- */
+.cs-section {
+  padding: 5vh 0;
+  border-top: 1px solid #eef2f8;
+}
+.cs-section-num {
+  font-family: var(--font-en);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  color: var(--blue-soft);
+  margin-bottom: 0.8rem;
+}
+.cs-section-title {
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  color: var(--blue);
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.01em;
+}
+.cs-section-title .ko {
+  display: block;
+  font-family: var(--font-ko);
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  letter-spacing: 0;
+  margin-top: 0.3rem;
+}
+.cs-text {
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--ink);
+  max-width: 760px;
+}
+.cs-text + .cs-text { margin-top: 1.2rem; }
+.cs-text strong { font-weight: 500; color: var(--blue-strong); }
+
+/* 불릿 리스트 (문제점·개선점 등) */
+.cs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 760px;
+  margin-top: 1.4rem;
+}
+.cs-list li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 1.02rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.cs-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ring);
+}
+
+/* 2단 비교/포인트 카드 */
+.cs-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+  margin-top: 1.8rem;
+}
+.cs-card {
+  padding: 1.8rem;
+  border-radius: 14px;
+  border: 1px solid var(--blue-faint);
+  background: linear-gradient(160deg, #ffffff, #f6faff);
+}
+.cs-card h4 {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--blue);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.04em;
+}
+.cs-card p {
+  font-size: 0.98rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* 결과 지표 */
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin-top: 1.8rem;
+}
+.cs-stat {
+  text-align: center;
+  padding: 2rem 1rem;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #f3f8ff, #e7f0ff);
+}
+.cs-stat-num {
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  color: var(--blue-strong);
+  line-height: 1;
+}
+.cs-stat-label {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   하단 네비게이션
+--------------------------------------------------------- */
+.cs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 7vh 0 9vh;
+  padding-top: 3vh;
+  border-top: 1px solid var(--blue-faint);
+}
+.cs-footer a {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--ink);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.cs-footer a:hover { color: var(--blue); }
+.cs-footer .cs-next:hover { transform: translateX(6px); }
+.cs-footer .cs-prev:hover { transform: translateX(-6px); }
+.cs-footer .cs-home {
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   반응형
+--------------------------------------------------------- */
+@media (max-width: 760px) {
+  .cs-meta { grid-template-columns: repeat(2, 1fr); }
+  .cs-cards,
+  .cs-stats { grid-template-columns: 1fr; }
+  .cs-gallery { grid-template-columns: 1fr 1fr; }
+}

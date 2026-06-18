@@ -1,0 +1,655 @@
+/* =========================================================
+   시스템치과 반응형 웹 UI/UX 개선 — 상세 페이지 전용 스타일
+   · 클래스 접두사: system-dental- / 변수 접두사: --sd-
+   · 다른 페이지에 영향 없도록 .system-dental-page 하위로 한정
+   · 베이지·웜그레이 배경 + 버건디 레드 포인트 + 차콜 본문
+========================================================= */
+
+.system-dental-page {
+  /* 컬러 시스템 */
+  --sd-bg: #eee7e3;
+  --sd-bg-light: #f5f0ed;
+  --sd-primary: #a92d2e;
+  --sd-primary-light: #d33b3b;
+  --sd-text: #292626;
+  --sd-subtext: #66605d;
+  --sd-line: rgba(169, 45, 46, 0.22);
+  --sd-white: #ffffff;
+
+  /* 레이아웃 */
+  --sd-maxw: 1400px;
+  --sd-pad: clamp(22px, 6vw, 120px);
+
+  /* 폰트 — 기존 포트폴리오 폰트 재사용 */
+  --sd-font-en: 'Space Grotesk', var(--font-en);
+  --sd-font-ko: var(--font-ko);
+
+  background: var(--sd-bg);
+  color: var(--sd-text);
+  font-family: var(--sd-font-ko);
+  line-height: 1.7;
+}
+
+/* 공통 컨테이너 */
+.system-dental-wrap {
+  width: 100%;
+  max-width: var(--sd-maxw);
+  margin: 0 auto;
+  padding: 0 var(--sd-pad);
+}
+
+/* 섹션 — 한 화면처럼 충분한 세로 여백 */
+.system-dental-section {
+  padding-block: clamp(72px, 12vh, 150px);
+  border-top: 1px solid var(--sd-line);
+}
+.system-dental-section:first-of-type { border-top: 0; }
+
+/* 섹션 헤더 (좌측 소제목 + 우측 프로젝트명) */
+.system-dental-sectionhead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+}
+.system-dental-eyebrow {
+  font-family: var(--sd-font-en);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  color: var(--sd-primary);
+}
+.system-dental-projecttag {
+  font-size: clamp(0.82rem, 1vw, 0.95rem);
+  font-weight: 400;
+  color: var(--sd-subtext);
+  text-align: right;
+}
+
+/* 공통 타이포 */
+.system-dental-h2 {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.4vw, 3rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--sd-text);
+}
+.system-dental-h3 {
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  color: var(--sd-primary);
+  letter-spacing: 0.02em;
+}
+.system-dental-body {
+  font-size: clamp(0.98rem, 1.15vw, 1.12rem);
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--sd-subtext);
+  max-width: 60ch;
+}
+.system-dental-body strong { font-weight: 500; color: var(--sd-text); }
+.system-dental-body + .system-dental-body { margin-top: 1.4rem; }
+
+/* 이미지 공통 — 비어 있어도 레이아웃 유지(배경색 + 비율) */
+.system-dental-figure {
+  position: relative;
+  width: 100%;
+  background: var(--sd-bg-light);
+  border: 1px solid var(--sd-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.system-dental-figure img {
+  display: block;
+  width: 100%;
+  height: auto; /* 원본 비율 유지 — 긴 스크린샷도 잘리지 않음 */
+}
+/* 아직 이미지가 없는 영역(예: 제안 사진) 자리표시 */
+.system-dental-img-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  background: var(--sd-bg-light);
+  border: 1px dashed var(--sd-line);
+  border-radius: 8px;
+  color: var(--sd-subtext);
+  font-family: var(--sd-font-en);
+  letter-spacing: 0.06em;
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 1rem;
+}
+.system-dental-figcaption {
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+  color: var(--sd-subtext);
+}
+
+/* =========================================================
+   상단 네비게이션
+========================================================= */
+.system-dental-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem var(--sd-pad);
+  background: color-mix(in srgb, var(--sd-bg) 78%, transparent);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border-bottom: 1px solid var(--sd-line);
+}
+.system-dental-nav-home {
+  font-family: var(--sd-font-en);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  color: var(--sd-text);
+  transition: color 0.25s ease;
+}
+.system-dental-nav-home:hover,
+.system-dental-nav-home:focus-visible { color: var(--sd-primary); }
+.system-dental-nav-label {
+  font-family: var(--sd-font-en);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  color: var(--sd-subtext);
+}
+
+/* =========================================================
+   01. Project Overview
+========================================================= */
+.system-dental-overview {
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(80px, 14vh, 170px);
+}
+.system-dental-overview-num {
+  font-family: var(--sd-font-en);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--sd-primary);
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+.system-dental-overview-title {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 3.6vw, 3.2rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.6rem;
+}
+.system-dental-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sd-font-en);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--sd-primary);
+  border-bottom: 1.5px solid var(--sd-primary);
+  padding-bottom: 2px;
+  transition: gap 0.25s ease, color 0.25s ease;
+}
+.system-dental-link:hover,
+.system-dental-link:focus-visible { gap: 0.9rem; color: var(--sd-primary-light); }
+
+.system-dental-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.6rem;
+  margin: 1.4rem 0 1.6rem;
+  list-style: none;
+}
+.system-dental-tags li {
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--sd-subtext);
+}
+.system-dental-overview-desc {
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--sd-subtext);
+  margin-bottom: 2.4rem;
+}
+
+/* 프로젝트 정보 (Role / Tools / AI / Output) */
+.system-dental-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--sd-line);
+}
+.system-dental-info > div {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 1.4rem;
+  align-items: start;
+}
+.system-dental-info dt {
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-size: 0.86rem;
+  color: var(--sd-primary);
+  margin: 0;
+}
+.system-dental-info dd {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--sd-text);
+}
+
+/* 우측 목업 (데스크톱 + 모바일 겹침) */
+.system-dental-overview-visual {
+  position: relative;
+}
+.system-dental-mockup-desktop { width: 100%; }
+.system-dental-mockup-desktop img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 38px rgba(41, 38, 38, 0.22));
+}
+.system-dental-mockup-mobile {
+  position: absolute;
+  right: -2%;
+  bottom: -10%;
+  width: 24%;
+}
+.system-dental-mockup-mobile img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 28px rgba(41, 38, 38, 0.28));
+}
+
+/* =========================================================
+   02. 배경 및 문제 정의
+========================================================= */
+.system-dental-problem {
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.system-dental-problem-bullets {
+  list-style: none;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.system-dental-problem-bullets li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: clamp(0.96rem, 1.1vw, 1.05rem);
+  font-weight: 300;
+  color: var(--sd-text);
+}
+.system-dental-problem-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.7em;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+}
+.system-dental-callout {
+  margin-top: 2rem;
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--sd-text);
+}
+.system-dental-callout strong { color: var(--sd-primary); font-weight: 600; }
+
+/* =========================================================
+   03. 3-POINT 핵심 전략
+========================================================= */
+.system-dental-points-head { text-align: center; }
+.system-dental-points-title {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.system-dental-points-sub {
+  font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+  font-weight: 300;
+  color: var(--sd-subtext);
+  margin-bottom: clamp(3rem, 7vh, 5rem);
+}
+.system-dental-points {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  flex-wrap: wrap;
+}
+.system-dental-point {
+  flex: 0 1 320px;
+  aspect-ratio: 1 / 1;
+  max-width: 340px;
+  border-radius: 50%;
+  border: 1px solid rgba(169, 45, 46, 0.12);
+  background: radial-gradient(circle at 50% 42%, #f8f4f1, var(--sd-bg-light));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.4rem;
+}
+.system-dental-point-name {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  color: var(--sd-text);
+}
+/* 이름 아래 점선 구분(⋮) */
+.system-dental-point-dot {
+  color: var(--sd-primary);
+  font-size: 1.2rem;
+  line-height: 1;
+  margin: 0.5rem 0 0.9rem;
+}
+.system-dental-point-desc {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--sd-subtext);
+}
+.system-dental-points-goal {
+  max-width: 720px;
+  margin: clamp(3rem, 7vh, 5rem) auto 0;
+  text-align: center;
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--sd-text);
+}
+
+/* =========================================================
+   04. AS-IS / TO-BE / UX 개선 포인트
+========================================================= */
+.system-dental-solution {
+  display: grid;
+  grid-template-columns: 0.92fr 1.16fr 1fr;
+  gap: clamp(1.4rem, 3vw, 3rem);
+  align-items: start;
+}
+/* 04 섹션 이미지 — 거대해지지 않도록 썸네일 프리뷰 창(상단부터 보임) */
+.system-dental-shot {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--sd-bg-light);
+  border: 1px solid var(--sd-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.system-dental-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.system-dental-shot--tobe { aspect-ratio: 4 / 5; }
+.system-dental-col-label {
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  letter-spacing: 0.06em;
+  color: var(--sd-primary);
+  margin-bottom: 0.9rem;
+}
+.system-dental-col-desc {
+  font-size: 0.96rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--sd-subtext);
+  margin-bottom: 1.6rem;
+}
+.system-dental-tobe-stack { position: relative; }
+.system-dental-tobe-stack .system-dental-mockup-mobile {
+  width: 34%;
+  right: -4%;
+  bottom: -8%;
+}
+.system-dental-ux-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+.system-dental-ux-list li { position: relative; padding-left: 2.6rem; }
+.system-dental-ux-list .num {
+  position: absolute;
+  left: 0; top: 0.1em;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+  color: #fff;
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.system-dental-ux-list h4 {
+  font-family: var(--sd-font-ko);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--sd-text);
+  margin-bottom: 0.35rem;
+}
+.system-dental-ux-list p {
+  font-size: 0.93rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--sd-subtext);
+}
+
+/* =========================================================
+   05. AI 활용 / 디자인 기준
+========================================================= */
+.system-dental-ai {
+  display: grid;
+  grid-template-columns: 48fr 52fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.system-dental-ai-blocktitle {
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: var(--sd-primary);
+  margin-bottom: 1.4rem;
+}
+.system-dental-colors {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.system-dental-color {
+  border: 1px solid var(--sd-line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sd-white);
+}
+.system-dental-color-swatch { height: 80px; }
+.system-dental-color-info { padding: 0.7rem 0.9rem; }
+.system-dental-color-name {
+  font-family: var(--sd-font-en);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--sd-text);
+}
+.system-dental-color-hex {
+  font-family: var(--sd-font-en);
+  font-size: 0.82rem;
+  color: var(--sd-subtext);
+  letter-spacing: 0.04em;
+}
+.system-dental-type-samples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.system-dental-type-note {
+  font-size: 0.9rem;
+  color: var(--sd-subtext);
+  margin-bottom: 0.4rem;
+}
+.system-dental-type-samples span {
+  font-family: var(--sd-font-ko);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  color: var(--sd-text);
+  line-height: 1.25;
+}
+.system-dental-type-samples .w2 { font-weight: 200; }
+.system-dental-type-samples .w4 { font-weight: 400; }
+.system-dental-type-samples .w6 { font-weight: 600; }
+.system-dental-type-samples .w8 { font-weight: 800; }
+
+/* =========================================================
+   06. 회고 및 배운 점
+========================================================= */
+.system-dental-retro {
+  display: grid;
+  grid-template-columns: 42fr 58fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.system-dental-mobile-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.8rem, 1.6vw, 1.4rem);
+}
+.system-dental-mobile-gallery .system-dental-figure { aspect-ratio: 9 / 16; }
+/* 위·아래 일부는 잘린 듯한 리듬 */
+.system-dental-mobile-gallery .system-dental-figure:nth-child(1) { transform: translateY(-14%); }
+.system-dental-mobile-gallery .system-dental-figure:nth-child(3) { transform: translateY(10%); }
+.system-dental-mobile-gallery .system-dental-figure:nth-child(4) { transform: translateY(-6%); }
+.system-dental-mobile-gallery .system-dental-figure:nth-child(6) { transform: translateY(12%); }
+
+/* =========================================================
+   07. 실제 업체 제안
+========================================================= */
+.system-dental-proposal-imgs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  margin-top: 2.4rem;
+}
+.system-dental-proposal-imgs .system-dental-figure { aspect-ratio: 4 / 3; }
+
+/* =========================================================
+   하단 네비게이션
+========================================================= */
+.system-dental-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: clamp(3rem, 7vh, 5rem);
+  border-top: 1px solid var(--sd-line);
+}
+.system-dental-footer a {
+  font-family: var(--sd-font-en);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--sd-text);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.system-dental-footer a:hover,
+.system-dental-footer a:focus-visible { color: var(--sd-primary); }
+.system-dental-footer .system-dental-prev:hover { transform: translateX(-6px); }
+.system-dental-footer .system-dental-next:hover { transform: translateX(6px); }
+.system-dental-footer .system-dental-list { font-size: 0.9rem; letter-spacing: 0.08em; color: var(--sd-subtext); }
+
+/* =========================================================
+   스크롤 등장 애니메이션
+========================================================= */
+.system-dental-reveal,
+.system-dental-reveal-img {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.system-dental-reveal { transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.system-dental-reveal-img { transform: scale(0.985); transition: opacity 0.8s ease, transform 0.8s ease; }
+.system-dental-reveal.is-in,
+.system-dental-reveal-img.is-in { opacity: 1; transform: none; }
+
+/* =========================================================
+   반응형 — 태블릿
+========================================================= */
+@media (max-width: 1024px) {
+  .system-dental-info { gap: 1.2rem 1.4rem; }
+  .system-dental-solution { gap: 1.8rem; }
+  .system-dental-points { gap: 1.6rem; }
+  .system-dental-point { flex-basis: 240px; }
+}
+
+/* 반응형 — 모바일 (한 열) */
+@media (max-width: 720px) {
+  .system-dental-overview,
+  .system-dental-problem,
+  .system-dental-ai,
+  .system-dental-retro {
+    grid-template-columns: 1fr;
+  }
+  .system-dental-solution { grid-template-columns: 1fr; }
+  .system-dental-info { grid-template-columns: 1fr 1fr; }
+  .system-dental-colors { grid-template-columns: 1fr 1fr; }
+
+  /* 목업 겹침 → 정상 흐름으로 */
+  .system-dental-mockup-mobile {
+    position: static;
+    width: 55%;
+    margin: 1rem auto 0;
+    aspect-ratio: 9 / 19;
+  }
+  .system-dental-tobe-stack .system-dental-mockup-mobile { width: 55%; }
+
+  /* 전략 원 세로 배치 */
+  .system-dental-points { flex-direction: column; align-items: center; }
+  .system-dental-point { width: 78%; max-width: 320px; flex-basis: auto; }
+
+  /* 모바일 갤러리 2열 + 잘림 효과 제거 */
+  .system-dental-mobile-gallery { grid-template-columns: 1fr 1fr; }
+  .system-dental-mobile-gallery .system-dental-figure { transform: none !important; }
+
+  .system-dental-proposal-imgs { grid-template-columns: 1fr; }
+
+  .system-dental-body { font-size: 15px; }
+}
+
+/* 접근성 — 모션 최소화 */
+@media (prefers-reduced-motion: reduce) {
+  .system-dental-reveal,
+  .system-dental-reveal-img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

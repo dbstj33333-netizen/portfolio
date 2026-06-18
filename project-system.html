@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>시스템치과 반응형 웹 UI/UX 개선 — LEE YUN SEO</title>
+  <meta name="description" content="시스템치과 반응형 웹 UI/UX 개선 프로젝트 — 정보 구조와 시각적 신뢰도를 개선한 팀 프로젝트 케이스 스터디." />
+
+  <!-- Fonts (기존 포트폴리오와 동일) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles : 공통(style.css 의 리셋·폰트·토큰) + 이 페이지 전용 -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/system-dental.css" />
+</head>
+<body class="system-dental-page">
+
+  <!-- 상단 네비게이션 -->
+  <nav class="system-dental-nav" aria-label="페이지 네비게이션">
+    <a class="system-dental-nav-home" href="index.html">← LEE YUN SEO</a>
+    <span class="system-dental-nav-label">Project 02</span>
+  </nav>
+
+  <main>
+    <!-- ===================================================
+         01. PROJECT OVERVIEW
+    ==================================================== -->
+    <header class="system-dental-wrap system-dental-overview">
+      <div class="system-dental-overview-text">
+        <p class="system-dental-overview-num system-dental-reveal">Project 02</p>
+        <h1 class="system-dental-overview-title system-dental-reveal" data-sd-delay="0.05">
+          시스템치과 반응형 웹 UI/UX 개선
+        </h1>
+        <!-- TODO: 실제 시스템치과 웹사이트 주소로 href 변경 -->
+        <a class="system-dental-link system-dental-reveal" data-sd-delay="0.1"
+           href="#" target="_blank" rel="noopener">Go to Website</a>
+
+        <ul class="system-dental-tags system-dental-reveal" data-sd-delay="0.15">
+          <li>팀 프로젝트</li>
+          <li>UX/UI 개선 및 정보구조 정리 참여</li>
+        </ul>
+
+        <p class="system-dental-overview-desc system-dental-reveal" data-sd-delay="0.2">
+          기존 병원 웹사이트의 정보 구조와 시각적 신뢰도를 개선하고,
+          사용자가 진료 정보와 예약 정보를 더 쉽게 찾을 수 있도록 정리한 팀 프로젝트입니다.
+        </p>
+
+        <dl class="system-dental-info system-dental-reveal" data-sd-delay="0.25">
+          <div>
+            <dt>Role</dt>
+            <dd>메인 디자인, 서브 페이지 개발, 디자인 서포트, 화면 구성 지원, 콘텐츠 정리, UX 검토</dd>
+          </div>
+          <div>
+            <dt>Tools</dt>
+            <dd>Figma, Photoshop, VS Code</dd>
+          </div>
+          <div>
+            <dt>AI</dt>
+            <dd>Claude, Codex, Midjourney</dd>
+          </div>
+          <div>
+            <dt>Output</dt>
+            <dd>Web, 반응형</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="system-dental-overview-visual system-dental-reveal-img" data-sd-delay="0.15">
+        <div class="system-dental-mockup-desktop">
+          <img src="assets/images/p2_1.png"
+               alt="시스템치과 개선 웹사이트 데스크톱 메인 화면 목업" loading="lazy" />
+        </div>
+        <div class="system-dental-mockup-mobile">
+          <img src="assets/images/p2_2.png"
+               alt="시스템치과 개선 웹사이트 모바일 화면 목업" loading="lazy" />
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================================================
+         02. 프로젝트 배경 및 문제 정의
+    ==================================================== -->
+    <section class="system-dental-section" aria-labelledby="sd-problem-title">
+      <div class="system-dental-wrap">
+        <div class="system-dental-sectionhead system-dental-reveal">
+          <span class="system-dental-eyebrow">프로젝트 배경 및 문제정의</span>
+          <span class="system-dental-projecttag">시스템치과 반응형 웹 UI/UX 개선</span>
+        </div>
+
+        <div class="system-dental-problem">
+          <div class="system-dental-problem-text">
+            <h2 id="sd-problem-title" class="system-dental-h2 system-dental-reveal">
+              신뢰보다 가격 혜택이 먼저 보이는 첫인상
+            </h2>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.1" style="margin-top:1.6rem;">
+              기존 홈페이지는 첫 화면에 임플란트 할인과 전후 이미지를 크게 노출해,
+              병원의 전문성보다 가격 경쟁 중심의 인상을 전달하고 있었습니다.
+            </p>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.15">
+              또한 의료진, 진료 시스템, 치료 과정 등 신뢰를 형성할 수 있는 콘텐츠는 충분했지만,
+              정보가 효과적으로 분류되지 않아 사용자가 병원의 강점을 빠르게 파악하기 어려웠습니다.
+            </p>
+
+            <ul class="system-dental-problem-bullets system-dental-reveal" data-sd-delay="0.2">
+              <li>자극적인 전후 사진 중심 구성으로 시각적 피로감과 거부감 유발</li>
+              <li>전문성 부족으로 이어지는 연속적인 할인 혜택 강조</li>
+            </ul>
+
+            <p class="system-dental-callout system-dental-reveal" data-sd-delay="0.25">
+              이번 프로젝트에서는 단순한 화면 개선을 넘어,
+              <strong>병원의 전문성과 신뢰가 먼저 전달되도록</strong>
+              콘텐츠 구조와 시각적 우선순위를 재정비했습니다.
+            </p>
+          </div>
+
+          <figure class="system-dental-reveal-img" data-sd-delay="0.1" style="margin:0;">
+            <div class="system-dental-figure">
+              <img src="assets/images/p2_3.png"
+                   alt="기존 시스템치과 홈페이지 — 할인·전후 이미지 중심의 첫 화면" loading="lazy" />
+            </div>
+            <figcaption class="system-dental-figcaption">기존 홈페이지 — 가격·전후 이미지 중심 구성</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         03. 3-POINT 핵심 전략
+    ==================================================== -->
+    <section class="system-dental-section" aria-labelledby="sd-points-title">
+      <div class="system-dental-wrap">
+        <div class="system-dental-sectionhead system-dental-reveal">
+          <span class="system-dental-eyebrow">문제해결을 위한 3가지 point</span>
+          <span class="system-dental-projecttag">시스템치과 반응형 웹 UI/UX 개선</span>
+        </div>
+
+        <div class="system-dental-points-head">
+          <h2 id="sd-points-title" class="system-dental-points-title system-dental-reveal">
+            문제해결을 위한 3-POINT 핵심전략
+          </h2>
+          <p class="system-dental-points-sub system-dental-reveal" data-sd-delay="0.1">
+            신뢰감 있는 웹사이트를 만들기 위한 3가지 기준을 잡았습니다.
+          </p>
+        </div>
+
+        <div class="system-dental-points">
+          <div class="system-dental-point system-dental-reveal-img">
+            <h3 class="system-dental-point-name">가독성</h3>
+            <span class="system-dental-point-dot" aria-hidden="true">⋮</span>
+            <p class="system-dental-point-desc">
+              정보 위계를 정리해 사용자가 핵심 내용을 빠르게 이해할 수 있도록 개선
+            </p>
+          </div>
+          <div class="system-dental-point system-dental-reveal-img" data-sd-delay="0.12">
+            <h3 class="system-dental-point-name">통일성</h3>
+            <span class="system-dental-point-dot" aria-hidden="true">⋮</span>
+            <p class="system-dental-point-desc">
+              컬러, 컴포넌트, 레이아웃 규칙을 정리해 일관된 화면 경험 제공
+            </p>
+          </div>
+          <div class="system-dental-point system-dental-reveal-img" data-sd-delay="0.24">
+            <h3 class="system-dental-point-name">전문성</h3>
+            <span class="system-dental-point-dot" aria-hidden="true">⋮</span>
+            <p class="system-dental-point-desc">
+              의료진, 진료 시스템, 치료 과정을 중심으로 병원의 신뢰감 강화
+            </p>
+          </div>
+        </div>
+
+        <p class="system-dental-points-goal system-dental-reveal">
+          시스템치과의 강점과 신뢰를 보다 효과적으로 전달하고
+          상담 전환을 유도하는 구조를 목표로 설계했습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         04. AS-IS / TO-BE / UX 개선 포인트
+    ==================================================== -->
+    <section class="system-dental-section" aria-labelledby="sd-solution-eyebrow">
+      <div class="system-dental-wrap">
+        <div class="system-dental-sectionhead system-dental-reveal">
+          <span class="system-dental-eyebrow" id="sd-solution-eyebrow">문제 해결 방안</span>
+          <span class="system-dental-projecttag">시스템치과 반응형 웹 UI/UX 개선</span>
+        </div>
+
+        <div class="system-dental-solution">
+          <!-- AS-IS -->
+          <div class="system-dental-col">
+            <h3 class="system-dental-col-label system-dental-reveal">AS-IS</h3>
+            <p class="system-dental-col-desc system-dental-reveal" data-sd-delay="0.05">
+              전후 사진, 할인 혜택, 캐릭터 이미지 중심의 구성으로
+              병원의 전문성과 신뢰감이 약하게 전달되고 있었습니다.
+            </p>
+            <div class="system-dental-shot system-dental-reveal-img" style="margin-bottom:1.1rem;">
+              <img src="assets/images/p2_5.png" alt="기존 시스템치과 홈페이지 — 할인·전후 강조 화면" loading="lazy" />
+            </div>
+            <div class="system-dental-shot system-dental-reveal-img" data-sd-delay="0.08">
+              <img src="assets/images/p2_4.png" alt="기존 시스템치과 홈페이지 전체 화면" loading="lazy" />
+            </div>
+          </div>
+
+          <!-- TO-BE -->
+          <div class="system-dental-col">
+            <h3 class="system-dental-col-label system-dental-reveal">TO-BE</h3>
+            <p class="system-dental-col-desc system-dental-reveal" data-sd-delay="0.05">
+              의료진, 진료 시스템, 병원 공간, 치료 과정 중심으로 재구성해
+              사용자가 병원의 전문성을 빠르게 이해할 수 있도록 개선했습니다.
+            </p>
+            <div class="system-dental-tobe-stack system-dental-reveal-img">
+              <div class="system-dental-shot system-dental-shot--tobe">
+                <img src="assets/images/p2_6.png" alt="개선된 시스템치과 메인 페이지 전체 화면" loading="lazy" />
+              </div>
+              <div class="system-dental-mockup-mobile">
+                <img src="assets/images/p2_2.png" alt="개선된 시스템치과 모바일 반응형 화면" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <!-- UX 개선 포인트 -->
+          <div class="system-dental-col">
+            <h3 class="system-dental-col-label system-dental-reveal">UX 개선 포인트</h3>
+            <ul class="system-dental-ux-list system-dental-reveal" data-sd-delay="0.05">
+              <li>
+                <span class="num">1</span>
+                <h4>브랜드 신뢰 형성 콘텐츠</h4>
+                <p>의료진 수술 영상, 병원 인테리어, 전문 진료 이미지를 활용해 신뢰감 강화</p>
+              </li>
+              <li>
+                <span class="num">2</span>
+                <h4>진료 및 시스템 강점 소개</h4>
+                <p>서울대 출신 의료진, 디지털 장비, 진료 프로세스를 중심으로 전문성 전달</p>
+              </li>
+              <li>
+                <span class="num">3</span>
+                <h4>환자 안심 콘텐츠 구성</h4>
+                <p>치료 과정과 진료 시스템을 단계적으로 보여주어 사용자 불안감 완화</p>
+              </li>
+              <li>
+                <span class="num">4</span>
+                <h4>예약 전환 유도</h4>
+                <p>고정 플로팅 메뉴와 예약 CTA를 배치해 상담·예약 접근성 강화</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         05. AI 활용 구현 경험 및 디자인 기준
+    ==================================================== -->
+    <section class="system-dental-section" aria-labelledby="sd-ai-title">
+      <div class="system-dental-wrap">
+        <div class="system-dental-sectionhead system-dental-reveal">
+          <span class="system-dental-eyebrow">회고 및 배운점 - AI 활용 구현 경험</span>
+          <span class="system-dental-projecttag">시스템치과 반응형 웹 UI/UX 개선</span>
+        </div>
+
+        <div class="system-dental-ai">
+          <div class="system-dental-ai-text">
+            <h2 id="sd-ai-title" class="system-dental-h2 system-dental-reveal">
+              AI 활용 화면 구현을 통해 배운<br />디자인 기준의 중요성
+            </h2>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.1" style="margin-top:1.6rem;">
+              프로젝트의 메인 페이지는 사용자 흐름과 콘텐츠 구조를 분석한 뒤 직접 디자인했습니다.
+              이후 메인 디자인의 컬러, 컴포넌트, 레이아웃 규칙을 기준으로
+              서브페이지 확장과 반응형 웹 구현에는 Claude Code를 활용했습니다.
+            </p>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.15">
+              단순히 결과물을 생성하는 방식이 아니라,
+              디자인 의도와 화면 구조의 기준을 정립해 구체적으로 전달하고
+              결과물을 반복적으로 확인·수정하며 실제 화면으로 완성했습니다.
+            </p>
+          </div>
+
+          <div class="system-dental-ai-system">
+            <!-- COLOR SYSTEM -->
+            <div class="system-dental-reveal" data-sd-delay="0.1">
+              <p class="system-dental-ai-blocktitle">Color System</p>
+              <div class="system-dental-colors">
+                <div class="system-dental-color">
+                  <div class="system-dental-color-swatch" style="background:#A12D2E;"></div>
+                  <div class="system-dental-color-info">
+                    <p class="system-dental-color-name">Burgundy Red</p>
+                    <p class="system-dental-color-hex">#A12D2E</p>
+                  </div>
+                </div>
+                <div class="system-dental-color">
+                  <div class="system-dental-color-swatch" style="background:#D33B3B;"></div>
+                  <div class="system-dental-color-info">
+                    <p class="system-dental-color-name">Soft Red</p>
+                    <p class="system-dental-color-hex">#D33B3B</p>
+                  </div>
+                </div>
+                <div class="system-dental-color">
+                  <div class="system-dental-color-swatch" style="background:#E9E6E2;"></div>
+                  <div class="system-dental-color-info">
+                    <p class="system-dental-color-name">Light Gray</p>
+                    <p class="system-dental-color-hex">#E9E6E2</p>
+                  </div>
+                </div>
+                <div class="system-dental-color">
+                  <div class="system-dental-color-swatch" style="background:#333333;"></div>
+                  <div class="system-dental-color-info">
+                    <p class="system-dental-color-name">Charcoal</p>
+                    <p class="system-dental-color-hex">#333333</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TYPOGRAPHY -->
+            <div class="system-dental-reveal" data-sd-delay="0.18">
+              <p class="system-dental-ai-blocktitle">Typography</p>
+              <p class="system-dental-type-note">A2Z font 기반 적용 (굵기별 위계 사용)</p>
+              <div class="system-dental-type-samples">
+                <span class="w2">시스템치과의원</span>
+                <span class="w4">시스템치과의원</span>
+                <span class="w6">시스템치과의원</span>
+                <span class="w8">시스템치과의원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         06. 회고 및 배운 점
+    ==================================================== -->
+    <section class="system-dental-section" aria-labelledby="sd-retro-title">
+      <div class="system-dental-wrap">
+        <div class="system-dental-sectionhead system-dental-reveal">
+          <span class="system-dental-eyebrow">회고 및 배운 점</span>
+          <span class="system-dental-projecttag">시스템치과 반응형 웹 UI/UX 개선</span>
+        </div>
+
+        <div class="system-dental-retro">
+          <div class="system-dental-retro-text">
+            <h2 id="sd-retro-title" class="system-dental-h2 system-dental-reveal">
+              보기 좋은 화면보다<br />신뢰가 먼저 전달되는 구조
+            </h2>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.1" style="margin-top:1.6rem;">
+              의료 웹사이트에서는 시각적 완성도보다
+              사용자가 어떤 정보를 먼저 보고 신뢰를 형성하는지가 중요했습니다.
+            </p>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.15">
+              의료진, 진료 시스템, 치료 과정의 우선순위를 재구성하고
+              정보 탐색이 상담과 예약으로 이어지도록 흐름을 개선했습니다.
+            </p>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.2">
+              기존의 가격 혜택과 시술 전후 이미지 중심 화면을 분석하고,
+              의료진·진료 시스템·치료 과정이 먼저 보이도록 콘텐츠 우선순위를 재구성했습니다.
+            </p>
+            <p class="system-dental-body system-dental-reveal" data-sd-delay="0.25">
+              또한 흩어진 정보를 목적에 맞게 정리하고
+              상담·예약으로 이어지는 흐름을 설계하며,
+              시각적 개선을 넘어 실제 사용자 경험을 개선하는 과정을 경험했습니다.
+            </p>
+          </div>
+
+          <figure class="system-dental-reveal-img" style="margin:0;">
+            <div class="system-dental-figure">
+              <img src="assets/images/p2_8.png"
+                   alt="개선된 시스템치과 주요 모바일 화면 모음 — 디지털 장비, 지도 안내, 상담 신청, 치과 소개, 임플란트 상세, 찾아오시는 길" loading="lazy" />
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 하단 네비게이션 -->
+    <div class="system-dental-wrap">
+      <nav class="system-dental-footer" aria-label="프로젝트 이동">
+        <a class="system-dental-prev" href="project-mocha.html">← 이전 · 모카클래스</a>
+        <a class="system-dental-list" href="index.html#project">목록으로</a>
+        <a class="system-dental-next" href="project-running.html">다음 · 러닝 기록 앱 →</a>
+      </nav>
+    </div>
+  </main>
+
+  <script src="js/system-dental.js"></script>
+</body>
+</html>

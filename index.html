@@ -298,7 +298,11 @@
     ==================================================== -->
     <section class="section section--why" id="why">
       <!-- 깔때기 (Why 섹션 안에 있어 내용과 함께 스크롤됨) -->
-      <img class="morph-funnel" src="assets/images/img1.png" alt="" />
+      <div class="morph-funnel" aria-hidden="true">
+        <!-- 깔때기 내부 채움 — 큰 원 내부와 동일한 색(반투명 흰색 + 밝기 보정) -->
+        <div class="morph-funnel-fill"></div>
+        <img class="morph-funnel-img" src="assets/images/img1.png" alt="" />
+      </div>
 
       <h2 class="why-title">Why UI/UX?</h2>
 
@@ -337,10 +341,10 @@
 
       <!-- 우측 프로젝트 목록 + 하단 구분선 -->
       <ul class="project-names">
-        <li>모카클래스 반응형 웹 UX 개선</li>
-        <li>시스템치과 반응형 웹 UX 개선</li>
-        <li>러닝 기록 앱 기획 및 제작</li>
-        <li>디지털 디톡스 앱 기획 및 제작</li>
+        <li><a href="project-mocha.html">모카클래스 반응형 웹 UX 개선</a></li>
+        <li><a href="project-system.html">시스템치과 반응형 웹 UX 개선</a></li>
+        <li><a href="project-running.html">러닝 기록 앱 기획 및 제작</a></li>
+        <li><a href="project-detox.html">디지털 디톡스 앱 기획 및 제작</a></li>
       </ul>
       <span class="project-divider"></span>
     </section>

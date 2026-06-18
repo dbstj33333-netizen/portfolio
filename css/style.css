@@ -188,8 +188,8 @@ em {
   will-change: width, height, transform, opacity;
 }
 
-/* 깔때기 이미지 — Why UI/UX 단계에서 등장, Project 에서 펼쳐짐
-   (위치/크기/투명도는 JS 그래픽 컨트롤러가 매 프레임 제어) */
+/* 깔때기 — Why UI/UX 단계에서 등장, Project 에서 펼쳐짐
+   (위치/크기/투명도는 GSAP 가 매 프레임 제어) */
 .morph-funnel {
   position: absolute;
   /* 좌측 107px / 우측 77px (너비 1736 = 원본 크기). 목 = (975, 790) → top 3 */
@@ -201,6 +201,31 @@ em {
   /* transform-origin(50% 100%)·transform·opacity 는 GSAP 가 제어 */
   opacity: 0;
   will-change: transform, opacity;
+}
+.morph-funnel-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* 깔때기 내부 채움 — 큰 원(.morph-circle)과 동일한 반투명 흰색 + 밝기 보정.
+   외곽선 픽셀 좌표 기준 폴리곤(상단 104·1631, 목 827~908, 수렴 y≈697 / 1736×787). */
+.morph-funnel-fill {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(
+    6% 0%, 93.9% 0%,
+    52.3% 88.6%, 52.3% 100%,
+    47.6% 100%, 47.6% 88.6%
+  );
+  background: radial-gradient(circle at 50% 50%,
+              rgba(255, 255, 255, 0.62) 0%,
+              rgba(255, 255, 255, 0.42) 60%,
+              rgba(255, 255, 255, 0.12) 82%,
+              rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: brightness(1.05) saturate(1.06);
+  -webkit-backdrop-filter: brightness(1.05) saturate(1.06);
+  /* 내부 채움을 더 옅게 */
+  opacity: 0.5;
 }
 
 /* ---------------------------------------------------------
@@ -910,9 +935,17 @@ em {
 }
 .project-names li {
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--blue);
   letter-spacing: 0.01em;
+}
+.project-names li a {
+  display: inline-block;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.project-names li a:hover {
+  color: var(--blue-strong);
+  transform: translateX(-6px);
 }
 
 /* 하단 가로 구분선 */

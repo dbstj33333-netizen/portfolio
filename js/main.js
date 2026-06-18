@@ -381,8 +381,11 @@
   window.addEventListener("resize", measure);
   window.addEventListener("load", measure);
   // 깔때기 이미지 로드 후 목(neck) 좌표 재계산
-  if (funnel.complete) measure();
-  else funnel.addEventListener("load", measure);
+  const funnelImg = document.querySelector(".morph-funnel-img");
+  if (funnelImg) {
+    if (funnelImg.complete) measure();
+    else funnelImg.addEventListener("load", measure);
+  }
 
   /* =======================================================
      3. 섹션 콘텐츠 진입 애니메이션 (GSAP ScrollTrigger)
