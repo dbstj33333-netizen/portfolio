@@ -22,6 +22,33 @@
   const scrollIndicator = intro.querySelector(".scroll-indicator");
   const circle = document.querySelector(".morph-circle");
   const funnel = document.querySelector(".morph-funnel");
+  const feTurb = document.querySelector("#waterRipple feTurbulence");
+  const feDisp = document.querySelector("#waterRipple feDisplacementMap");
+  const lens = document.querySelector(".intro-lens");
+  const lensBg = document.querySelector(".intro-lens-bg");
+  const lensVp = document.querySelector(".intro-lens-vp");
+  const lensRing = document.querySelector(".intro-lens-ring");
+
+  /* ===== 진입 연출: 물방울이 떨어지며 첫 화면이 선명해짐 ===== */
+  // introRevealed: 선명해진 뒤 true → 그때부터 마우스 원/커서 물결이 보임
+  let introRevealed = false;
+  let introCircleFade = 0; // 원이 톡 튀지 않게 부드럽게 나타나는 0→1 페이드
+
+  if (prefersReduced) {
+    intro.classList.add("intro-clear"); // 즉시 선명 상태
+    introRevealed = true;
+  } else {
+    // 흐릿한 초기 상태가 한 번 그려진 뒤(다음 프레임) 물방울 낙하 시작
+    requestAnimationFrame(function () {
+      intro.classList.add("intro-play");
+    });
+    // 선명해지는 애니메이션(clarify)이 끝나면 비로소 마우스 원을 보이게 함
+    clearLayer.addEventListener("animationend", function () {
+      introRevealed = true;
+    });
+    // 안전장치: animationend 가 오지 않아도 일정 시간 뒤 표시
+    setTimeout(function () { introRevealed = true; }, 1800);
+  }
 
   /* ===== 유틸 ===== */
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -38,7 +65,118 @@
   intro.addEventListener("pointermove", (e) => {
     target.x = e.clientX;
     target.y = e.clientY;
+    spawnCursorRipple(e.clientX, e.clientY);
+    hasPointer = true; // 커서가 화면에 들어온 뒤부터 표면 일렁임 활성
+
+    // 제목(고정) 위를 지나갈 때만 물결 에너지 충전 → 그 순간만 표면이 일렁임
+    if (titleEls.length) {
+      const tx = titleBaseX - (window.scrollX || 0);
+      const ty = titleBaseY - (window.scrollY || 0);
+      const d = Math.hypot(e.clientX - tx, e.clientY - ty);
+      const RT = 380;
+      if (d < RT) {
+        rippleScale = Math.min(16, rippleScale + (1 - d / RT) * 5);
+      }
+    }
   });
+
+  /* ===== 글자 표면 일렁임 (마우스가 닿는 부분만 물결처럼) ===== */
+  let waveSpans = [];
+  let waveTime = 0;
+  let hasPointer = false;
+
+  // 텍스트를 낱글자 span 으로 분리 (공백 유지)
+  function splitLetters(el) {
+    const text = el.textContent;
+    el.textContent = "";
+    const frag = document.createDocumentFragment();
+    let i = 0;
+    for (const ch of text) {
+      const span = document.createElement("span");
+      span.className = "wave-ch";
+      span.dataset.i = i++;
+      if (ch === " ") span.innerHTML = "&nbsp;";
+      else span.textContent = ch;
+      frag.appendChild(span);
+    }
+    el.appendChild(frag);
+  }
+
+  // 제목은 낱글자 분리에서 제외(연결 유지). 위치는 고정하고, 마우스가 지날 때만
+  //  SVG 디스플레이스먼트로 표면만 물결치게 함.
+  let titleEls = [];
+  let titleBaseX = 0;
+  let titleBaseY = 0;
+  let rippleScale = 0; // 디스플레이스먼트 세기(마우스가 지나면 충전, 평소 0=고정)
+  let rippleT = 0;
+  let titleRippleActive = false;
+  if (!prefersReduced) {
+    // 실제 텍스트 레이어(blur/clear)만 분리/제어 — 렌즈 사본(.intro-lens)은 제외
+    intro
+      .querySelectorAll(
+        ":is(.intro-text--blur, .intro-text--clear) :is(.intro-sub, .intro-name)"
+      )
+      .forEach(splitLetters);
+    // 렌즈 사본도 동일하게 낱글자로 쪼개 렌더링을 일치시킴(자간 어긋남 방지).
+    //  waveSpans 쿼리는 blur/clear 로 한정되어 있어 이 사본은 물결 대상에서 제외됨.
+    intro
+      .querySelectorAll(".intro-lens :is(.intro-sub, .intro-name)")
+      .forEach(splitLetters);
+    waveSpans = intro.querySelectorAll(
+      ":is(.intro-text--blur, .intro-text--clear) .wave-ch"
+    );
+    titleEls = intro.querySelectorAll(
+      ":is(.intro-text--blur, .intro-text--clear) .intro-title"
+    );
+  }
+
+  // 변형이 없는 상태의 낱글자/제목 중심 좌표(페이지 기준)를 캐시 — 커서와의 거리 계산용
+  function measureWave() {
+    const sx = window.scrollX || 0;
+    const sy = window.scrollY || 0;
+    for (let k = 0; k < waveSpans.length; k++) waveSpans[k].style.transform = "";
+    for (let k = 0; k < titleEls.length; k++) titleEls[k].style.transform = "";
+    for (let k = 0; k < waveSpans.length; k++) {
+      const r = waveSpans[k].getBoundingClientRect();
+      waveSpans[k]._bx = r.left + sx + r.width / 2;
+      waveSpans[k]._by = r.top + sy + r.height / 2;
+    }
+    if (titleEls.length) {
+      const r = titleEls[0].getBoundingClientRect();
+      titleBaseX = r.left + sx + r.width / 2;
+      titleBaseY = r.top + sy + r.height / 2;
+    }
+  }
+
+  /* ===== 마우스(원)가 지나는 자리에 촤르르 퍼지는 물결 ===== */
+  let lastRippleT = 0;
+  let lastRippleX = 0;
+  let lastRippleY = 0;
+  function spawnCursorRipple(x, y) {
+    if (prefersReduced) return;
+    // 물방울이 떨어져 선명해진 뒤(마우스 원이 보일 때)부터 물결 생성
+    if (!introRevealed) return;
+    // 인트로 화면일 때만 (스크롤로 벗어나면 생성하지 않음)
+    if ((window.scrollY || window.pageYOffset || 0) > vh * 0.6) return;
+    const now = performance.now();
+    const dist = Math.hypot(x - lastRippleX, y - lastRippleY);
+    // 너무 자주 생기지 않도록 시간·이동거리로 솎아냄
+    if (now - lastRippleT < 55 || dist < 16) return;
+    lastRippleT = now;
+    lastRippleX = x;
+    lastRippleY = y;
+    const r = document.createElement("span");
+    r.className = "cursor-ripple";
+    // 살짝 크기·위치를 흩뿌려 물결처럼 자연스럽게
+    const jx = (Math.random() - 0.5) * 14;
+    const jy = (Math.random() - 0.5) * 14;
+    const scale = 0.8 + Math.random() * 0.6;
+    r.style.left = x + jx + "px";
+    r.style.top = y + jy + "px";
+    r.style.transform = "scale(" + scale * 0.2 + ")";
+    document.body.appendChild(r);
+    r.addEventListener("animationend", () => r.remove());
+  }
 
   /* ===== 화면/섹션 측정 (리사이즈·로드 시 갱신) ===== */
   let vw = window.innerWidth;
@@ -57,6 +195,7 @@
     // 깔때기 목 = 깔때기 이미지의 아래 중앙 (offsetTop + 높이)
     neckX = funnel.offsetLeft + funnel.offsetWidth / 2;
     neckY = funnel.offsetTop + funnel.offsetHeight;
+    measureWave(); // 낱글자 기준 좌표도 함께 갱신
   }
 
   // 섹션 단위 진행도 p (0=인트로, 1=INDEX, 2=About, 3=Why, 4=Project 가 화면 중앙)
@@ -76,7 +215,7 @@
   /* =======================================================
      그래픽 컨트롤러 (매 프레임)
   ======================================================= */
-  const LENS_D = 280; // 인트로 렌즈 지름
+  const LENS_D = 170; // 인트로 렌즈(마우스 원) 지름 — 작게
   let pinActive = false; // Why 핀 진입 시 true → 원 제어를 GSAP 로 넘김
   // 인트로 핀 — 첫 화면을 고정한 채 원이 INDEX 크기까지 '제자리에서' 성장
   let introPinActive = false; // 인트로 핀 활성(성장) 구간 여부
@@ -88,8 +227,61 @@
     current.x += (target.x - current.x) * 0.12;
     current.y += (target.y - current.y) * 0.12;
 
+    /* 글자 표면 일렁임 — 커서 주변(반경 R) 글자만 거리에 따라 물결처럼 흔들림.
+       커서를 중심으로 동심원 잔물결이 퍼지고, 멀어질수록 잦아든다(물 표면 느낌). */
+    if (hasPointer && (waveSpans.length || titleEls.length)) {
+      waveTime += 0.16;
+      const sx = window.scrollX || 0;
+      const sy = window.scrollY || 0;
+      const onIntro = sy < vh * 0.85;
+      const cx = current.x;
+      const cy = current.y;
+      const R = 210; // 일렁임이 닿는 반경(px)
+      for (let k = 0; k < waveSpans.length; k++) {
+        const sp = waveSpans[k];
+        let on = false;
+        if (onIntro) {
+          const dx = sp._bx - sx - cx;
+          const dy = sp._by - sy - cy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < R) {
+            const fall = 1 - dist / R; // 가까울수록 1
+            const ph = dist * 0.05 - waveTime; // 바깥으로 퍼지는 동심원 위상
+            const w = Math.sin(ph);
+            const amp = fall * fall * 11;
+            const oy = amp * w;
+            const ox = amp * 0.45 * Math.cos(ph);
+            const sc = 1 + 0.05 * fall * w;
+            sp.style.transform =
+              "translate(" + ox.toFixed(2) + "px," + oy.toFixed(2) +
+              "px) scale(" + sc.toFixed(3) + ")";
+            on = true;
+          }
+        }
+        if (!on && sp._wave) sp.style.transform = "";
+        sp._wave = on;
+      }
+
+      // 제목은 위치 고정 — 마우스가 지나갈 때만 표면이 물결치고(scale↑), 곧 잦아듦(scale→0)
+      if (titleEls.length && feDisp) {
+        if (rippleScale > 0.02) {
+          rippleT += 0.03;
+          rippleScale *= 0.93; // 서서히 잦아들어 고정 상태로
+          const bf = 0.011 + 0.004 * Math.sin(rippleT); // 물이 천천히 흐르듯
+          feTurb.setAttribute(
+            "baseFrequency",
+            bf.toFixed(4) + " " + (bf * 1.7).toFixed(4)
+          );
+          feDisp.setAttribute("scale", rippleScale.toFixed(2));
+          titleRippleActive = true;
+        } else if (titleRippleActive) {
+          feDisp.setAttribute("scale", "0"); // 완전히 고정(또렷)
+          titleRippleActive = false;
+        }
+      }
+    }
+
     const p = scrollProgress();
-    const rect = introInner.getBoundingClientRect();
 
     /* ---------- 원(circle) ----------
        [성장] 인트로 핀 동안 첫 화면을 고정한 채, 마우스 렌즈 자리에서 INDEX 큰 원으로 자라남
@@ -128,22 +320,55 @@
         cx = cx_a; cy = cy_i; d = aboutD; op = 0.8;
       }
 
+      // 마우스 원은 물방울 연출로 선명해진 뒤(introRevealed)부터 부드럽게 등장
+      if (introRevealed && introCircleFade < 1) {
+        introCircleFade = Math.min(1, introCircleFade + 0.05);
+      }
+
       circle.style.width = d + "px";
       circle.style.height = d + "px";
       circle.style.transform =
         "translate(" + cx + "px," + cy + "px) translate(-50%,-50%)";
-      circle.style.opacity = op;
+      circle.style.opacity = op * introCircleFade;
 
-      // 선명 텍스트 렌즈(clip-path) — 성장 구간엔 원과 똑같이 키워
-      //  원이 커질수록 'Make it Clear' 가 점점 또렷하게 드러나도록.
-      //  (그 외 구간은 인트로가 화면 밖이라 갱신할 필요 없음)
-      if (inGrow) {
-        const clip =
-          "circle(" + (d / 2) + "px at " +
-          (cx - rect.left) + "px " + (cy - rect.top) + "px)";
-        clearLayer.style.webkitClipPath = clip;
-        clearLayer.style.clipPath = clip;
+      // 유리 렌즈를 마우스 원(circle)과 같은 중심·크기에 둠 →
+      //  스크롤하면 렌즈(마우스 원) 자체가 그대로 커진다. 커질수록 유리효과는 잦아듦.
+      if (lens && !prefersReduced) {
+        const lensActive =
+          introRevealed && hasPointer && inGrow &&
+          (window.scrollY || window.pageYOffset || 0) < vh * 1.1;
+        if (lensActive) {
+          const r = d / 2;
+          const M = 1.45; // 볼록렌즈 확대 배율
+          lens.style.width = d + "px";
+          lens.style.height = d + "px";
+          lens.style.transform =
+            "translate(" + (cx - r) + "px," + (cy - r) + "px)";
+          // 배경 사본은 1:1 (주변 배경과 이음새 없이 원본 텍스트를 덮음)
+          if (lensBg) {
+            lensBg.style.transform =
+              "translate(" + (r - cx) + "px," + (r - cy) + "px)";
+          }
+          // 글자 사본만 커서 중심으로 살짝 확대 → 볼록렌즈로 들여다본 느낌
+          lensVp.style.transform =
+            "translate(" + (r - M * cx) + "px," + (r - M * cy) +
+            "px) scale(" + M + ")";
+          lensRing.style.width = d + "px";
+          lensRing.style.height = d + "px";
+          lensRing.style.transform =
+            "translate(" + cx + "px," + cy + "px) translate(-50%,-50%)";
+          // 원이 커질수록(성장 t↑) 렌즈 효과는 서서히 사라짐
+          const fade = 1 - smooth(clamp(t / 0.5, 0, 1));
+          lens.style.opacity = fade.toFixed(3);
+          lensRing.style.opacity = (fade * 0.9).toFixed(3);
+        } else {
+          lens.style.opacity = "0";
+          lensRing.style.opacity = "0";
+        }
       }
+
+      // 선명 텍스트는 진입 물방울 연출(clarify)이 한 번에 드러내므로
+      //  여기서 clip-path 를 매 프레임 만지지 않는다.
     }
 
     // 깔때기(funnel)는 GSAP(핀 포함)이 제어하므로 여기서는 다루지 않는다.
@@ -291,6 +516,8 @@
       })
       // (2) 같은 목 지점에서 깔때기가 탄성으로 자라남
       .to(".morph-funnel", { scale: 1, opacity: 1, ease: "back.out(1.2)", duration: 0.7 }, "-=0.32")
+      // INDEX 의 'Why UI/UX?' 클릭 시 바로 점프할 지점(깔때기 등장 완료)
+      .addLabel("funnelShown")
       // (3) 제목
       .to(".why-title", { opacity: 1, y: 0, ease: "power2.out", duration: 0.45 }, ">-0.1")
       // (4) 키워드 조각들이 '번호 순서대로' 위에서 떨어져 깔때기에 쌓임
@@ -307,6 +534,23 @@
       )
       // (5) 설명
       .to(".why-desc", { opacity: 1, y: 0, ease: "power2.out", duration: 0.55 }, ">+0.2");
+
+    /* INDEX → 'Why UI/UX?' 클릭: 원이 깔때기로 변형되는 앞부분을 건너뛰고
+       깔때기가 다 나타난 지점(funnelShown)으로 바로 스크롤 */
+    const whyLink = document.querySelector('.index-item[href="#why"]');
+    if (whyLink) {
+      whyLink.addEventListener("click", function (e) {
+        const st = whyPin.scrollTrigger;
+        if (!st) return; // 핀이 없으면 기본 앵커 동작
+        e.preventDefault();
+        ScrollTrigger.refresh(); // 최신 레이아웃 기준으로 start/end 보정
+        const dur = whyPin.duration();
+        const t = whyPin.labels.funnelShown || 0;
+        const frac = dur ? t / dur : 0;
+        const y = st.start + frac * (st.end - st.start);
+        window.scrollTo({ top: y, behavior: "smooth" });
+      });
+    }
 
     // (Why 내용이 모두 뜬 뒤에도 깔때기는 사라지지 않고 그대로 유지)
     //  → 별도의 펼침/소멸 트윈을 두지 않음.
