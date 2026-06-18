@@ -100,6 +100,56 @@ em {
   background: radial-gradient(circle, rgba(180, 205, 255, 0.32) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
+/* 몽환적인 파스텔 색상 블러 — 여러 색의 큰 글로우가 은은하게 떠다님 */
+.bg-gradient .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform;
+  animation: glowDrift 22s ease-in-out infinite alternate;
+}
+.glow--cyan {
+  width: 48vw;
+  height: 48vw;
+  top: 6%;
+  left: 26%;
+  background: radial-gradient(circle, rgba(150, 235, 245, 0.34) 0%, transparent 70%);
+  animation-duration: 24s;
+}
+.glow--lavender {
+  width: 52vw;
+  height: 52vw;
+  bottom: 0%;
+  left: 14%;
+  background: radial-gradient(circle, rgba(190, 175, 255, 0.32) 0%, transparent 70%);
+  animation-duration: 28s;
+  animation-delay: -6s;
+}
+.glow--pink {
+  width: 42vw;
+  height: 42vw;
+  top: 24%;
+  right: 4%;
+  background: radial-gradient(circle, rgba(255, 196, 226, 0.26) 0%, transparent 70%);
+  animation-duration: 26s;
+  animation-delay: -3s;
+}
+.glow--sky {
+  width: 46vw;
+  height: 46vw;
+  bottom: 8%;
+  right: 18%;
+  background: radial-gradient(circle, rgba(140, 180, 255, 0.30) 0%, transparent 70%);
+  animation-duration: 30s;
+  animation-delay: -10s;
+}
+
+@keyframes glowDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(4%, -3%) scale(1.08); }
+  100% { transform: translate(-3%, 4%) scale(0.96); }
+}
+
 /* ---------------------------------------------------------
    3. 모핑 그래픽 레이어
    스크롤 내내 변형되며 이어지는 핵심 그래픽
@@ -353,8 +403,13 @@ em {
   margin-left: -8px;
   margin-top: -10px;
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  background: radial-gradient(circle at 35% 28%, #ffffff 0%, var(--blue) 48%, var(--blue-strong) 100%);
-  box-shadow: 0 6px 14px rgba(47, 107, 255, 0.28);
+  /* 맑은 물방울 — 흰 하이라이트 → 연한 시안/하늘색, 반투명 유리물 느낌 */
+  background: radial-gradient(circle at 34% 26%,
+              rgba(255, 255, 255, 0.98) 0%,
+              rgba(198, 240, 252, 0.9) 42%,
+              rgba(130, 200, 255, 0.6) 100%);
+  box-shadow: 0 6px 16px rgba(120, 195, 255, 0.3),
+              inset 0 -3px 6px rgba(120, 195, 255, 0.25);
   opacity: 0;
 }
 
@@ -938,4 +993,5 @@ em {
   .intro-drop, .intro-ripple { display: none; }
   .intro-title { filter: none; }
   .intro-lens, .intro-lens-ring { display: none; }
+  .bg-gradient .glow { animation: none; }
 }
