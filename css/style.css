@@ -24,7 +24,7 @@
   --font-ko: 'Paperlogy', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
   /* 레이아웃 */
-  --pad-x: 8.3vw;           /* 좌우 공통 여백 (1920px 기준 ≈ 160px) */
+  --pad-x: 5.2vw;           /* 좌우 공통 여백 (1920px 기준 ≈ 100px) — 콘텐츠 폭 넓힘 */
   --lens-size: 280px;       /* 인트로 렌즈 지름 */
 }
 
@@ -38,7 +38,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* 부드러운 스크롤은 Lenis 가 담당 (CSS smooth 와 충돌 방지) */
+  scroll-behavior: auto;
 }
 
 body {
@@ -171,18 +172,19 @@ em {
   /* 지름(width/height)은 JS가 px 로 직접 지정 → 어느 크기에서도 border 1.5px 유지 */
   width: 280px;
   height: 280px;
-  border: 1.5px solid var(--ring);
+  /* 테두리 — 적당히 또렷하게 */
+  border: 1.5px solid rgba(174, 213, 246, 0.8);
   border-radius: 50%;
   transform-origin: center center;
-  /* 원 안쪽을 반투명 흰색으로 채워, 흐릿한 배경 위에서 내부가 더 선명·밝아 보이게 */
+  /* 원 안쪽 반투명 흰색 — 원래보단 옅되 잘 보이는 정도 */
   background: radial-gradient(circle at 50% 50%,
-              rgba(255, 255, 255, 0.62) 0%,
-              rgba(255, 255, 255, 0.42) 60%,
-              rgba(255, 255, 255, 0.12) 82%,
+              rgba(255, 255, 255, 0.46) 0%,
+              rgba(255, 255, 255, 0.30) 60%,
+              rgba(255, 255, 255, 0.09) 82%,
               rgba(255, 255, 255, 0) 100%);
-  /* 원 내부 영역을 살짝 밝고 선명하게 (배경 블러와 대비) */
-  backdrop-filter: brightness(1.05) saturate(1.06);
-  -webkit-backdrop-filter: brightness(1.05) saturate(1.06);
+  /* 내부 밝기 보정 */
+  backdrop-filter: brightness(1.035) saturate(1.045);
+  -webkit-backdrop-filter: brightness(1.035) saturate(1.045);
   /* 초기 상태: JS 그래픽 컨트롤러가 width/height/transform/opacity 를 매 프레임 제어 */
   opacity: 0;
   will-change: width, height, transform, opacity;
@@ -218,14 +220,14 @@ em {
     47.6% 100%, 47.6% 88.6%
   );
   background: radial-gradient(circle at 50% 50%,
-              rgba(255, 255, 255, 0.62) 0%,
-              rgba(255, 255, 255, 0.42) 60%,
-              rgba(255, 255, 255, 0.12) 82%,
+              rgba(255, 255, 255, 0.30) 0%,
+              rgba(255, 255, 255, 0.18) 60%,
+              rgba(255, 255, 255, 0.05) 82%,
               rgba(255, 255, 255, 0) 100%);
-  backdrop-filter: brightness(1.05) saturate(1.06);
-  -webkit-backdrop-filter: brightness(1.05) saturate(1.06);
-  /* 내부 채움을 더 옅게 */
-  opacity: 0.5;
+  backdrop-filter: brightness(1.02) saturate(1.03);
+  -webkit-backdrop-filter: brightness(1.02) saturate(1.03);
+  /* 내부 채움을 더 옅게 (존재감 축소) */
+  opacity: 0.32;
 }
 
 /* ---------------------------------------------------------
@@ -346,7 +348,7 @@ em {
 .intro-inner {
   position: relative;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1560px;
   height: 60vh;
   display: flex;
   align-items: center;
@@ -458,6 +460,53 @@ em {
   0%   { transform: scale(0.2); opacity: 0.6; }
   60%  { opacity: 0.32; }
   100% { transform: scale(3.4); opacity: 0; }
+}
+
+/* =========================================================
+   파란(물속) 화면용 물결 커서 — Project 섹션에서 마우스를 따라다니며
+   파란 원이 계속 잔물결을 퍼뜨림 ("물속 포폴을 위에서 내려다보는" 컨셉)
+========================================================= */
+.water-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(47, 107, 255, 0.5);
+  background: radial-gradient(circle at 50% 42%,
+              rgba(255, 255, 255, 0.35) 0%,
+              rgba(130, 190, 255, 0.22) 38%,
+              rgba(120, 185, 255, 0) 72%);
+  box-shadow: 0 0 18px rgba(47, 107, 255, 0.18),
+              inset 0 0 14px rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  will-change: transform;
+}
+
+/* 커서에서 계속 번지는 파란 잔물결 (JS가 주기적으로 생성/제거) */
+.water-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(47, 107, 255, 0.4);
+  pointer-events: none;
+  z-index: 6;
+  will-change: transform, opacity;
+  animation: waterRingExpand 1.5s ease-out forwards;
+}
+@keyframes waterRingExpand {
+  0%   { transform: scale(0.45); opacity: 0.55; }
+  70%  { opacity: 0.18; }
+  100% { transform: scale(3.6); opacity: 0; }
 }
 
 /* 부딪힌 자리에서 퍼지는 물결 */
@@ -688,6 +737,23 @@ em {
 }
 
 /* =========================================================
+   글씨 물결 — INDEX / About Me 텍스트에 마우스를 올리면
+   첫 화면 제목처럼 글자 '표면'이 물결에 흔들린다.
+   실제 굴절(흔들림)은 JS가 #textRipple 필터를 호버 동안만 구동.
+   (display:inline-block → 호버 영역·필터 영역을 글자에 딱 맞춤)
+========================================================= */
+.index-title,
+.about-title {
+  display: inline-block;
+  cursor: default;
+  will-change: filter;
+}
+.index-en {
+  display: inline-block;
+  will-change: filter;
+}
+
+/* =========================================================
    [4] ABOUT ME — 2단 레이아웃
 ========================================================= */
 .section--about {
@@ -700,9 +766,9 @@ em {
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 7vw;
+  gap: 6vw;
   width: 100%;
-  max-width: 1500px;
+  max-width: 1640px;
 }
 
 /* --- 왼쪽 --- */
@@ -724,25 +790,26 @@ em {
 .about-intro em { color: var(--blue); font-weight: 400; }
 
 .about-profile {
+  /* 이미지 → 이름·연락처 세로 나열 */
   display: flex;
-  align-items: flex-end;
-  gap: 1.4rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
   margin-bottom: 1.4rem;
 }
 
-/* 프로필 이미지 placeholder */
+/* 프로필 이미지 — 세로 배치, 살짝 더 크게 */
 .profile-photo {
-  width: 240px;
-  height: 300px;
+  width: 290px;
+  height: 360px;
   flex-shrink: 0;
-  border: 1px solid var(--blue-faint);
   background: #eef5ff url("../assets/images/about%20me_img.png") center / cover no-repeat;
 }
 
 .profile-name {
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 0.1rem;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 .profile-role {
   font-size: 20px;
@@ -869,6 +936,22 @@ em {
   margin-bottom: 0;
 }
 
+/* 반응형 스케일 스테이지 — 1920×1080 디자인 좌표 박스를 통째로 축소.
+   --scene-k(=min(vw/1920, vh/1080, 1))는 JS가 매 측정 시 갱신.
+   transform-origin: top center → 스테이지 윗변이 섹션 상단에 고정된 채 축소됨
+   (JS의 neck 좌표 계산식과 정확히 일치). */
+.why-stage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translateX(-50%) scale(var(--scene-k, 1));
+  transform-origin: top center;
+  z-index: 1; /* 제목(why-title z-index:2) 아래 */
+  pointer-events: none;
+}
+
 /* 키워드 캡슐 더미 — 깔때기 목 위쪽 중앙에 모이는 앵커(0크기) 지점.
    각 캡슐은 JS(GSAP)가 data 좌표로 배치 */
 /* 키워드 조각 컨테이너 — 섹션(=화면) 좌상단 (0,0) 기준.
@@ -882,6 +965,7 @@ em {
   z-index: 2; /* 깔때기 위에 표시 */
 }
 
+
 /* 키워드 조각 이미지 — 원본 모양/기울기 그대로, 위치/낙하는 GSAP 가 제어 */
 .why-cap {
   position: absolute;
@@ -894,20 +978,21 @@ em {
   user-select: none;
 }
 
+
 .why-desc {
   /* 화면 상단으로부터 863px (1920×1080 기준). 단, 뷰포트가 낮으면 잘리지 않도록
      화면 하단에서 최소 90px 여유를 두고 위로 끌어올림 */
   position: absolute;
   z-index: 2; /* 깔때기 위에 표시 */
-  top: min(863px, calc(100vh - 90px));
+  top: min(710px, calc(100vh - 210px)); /* 기존보다 10px 아래로 */
   left: 0;
   right: 0;
   margin: 0 auto;
-  max-width: 1300px;
+  max-width: 1480px;
   text-align: center;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.6;
   color: var(--ink);
 }
 .why-desc em { color: var(--blue-strong); font-weight: 500; }
@@ -918,8 +1003,15 @@ em {
 .section--project {
   min-height: 100vh;
   justify-content: center;
-  /* 하단으로 갈수록 연한 블루가 더해지는 그라데이션 */
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(210,228,255,0.55) 100%);
+  /* Why(핀) 가 끝난 뒤 프로젝트가 너무 빨리 나오지 않도록 위쪽 간격 확보 */
+  margin-top: clamp(18vh, 26vh, 32vh);
+  /* 연한 블루가 카드 영역에서 가장 진하고 위·아래로는 자연스럽게 사라짐
+     → 다음(케이스 스터디) 구간과 부드럽게 이어짐 (띠/seam 없음) */
+  background: linear-gradient(180deg,
+              rgba(210, 228, 255, 0) 0%,
+              rgba(210, 228, 255, 0.42) 48%,
+              rgba(210, 228, 255, 0.16) 82%,
+              rgba(210, 228, 255, 0) 100%);
 }
 
 /* Project 섹션 우측 프로젝트 목록 (우측 정렬) */
@@ -959,17 +1051,282 @@ em {
 }
 
 .project-title {
+  position: relative;
   font-family: var(--font-en);
-  font-weight: 300;
-  font-size: clamp(5rem, 16vw, 17rem);
+  font-weight: 500; /* 미디움 */
+  font-size: clamp(3.5rem, 9vw, 11rem);
   line-height: 1;
   color: var(--blue);
   letter-spacing: -0.01em;
+  flex-shrink: 0;
+  margin-bottom: 45px; /* 카드 최하단보다 45px 위 */
+}
+/* 'Project' 글씨 아래 45px — 너비 886px, #3a7ffe 직선 */
+.project-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(100% + 45px);
+  width: min(886px, 90vw);
+  height: 1px;
+  background: #3a7ffe;
 }
 
 /* 이후 프로젝트 카드/리스트 자리 */
 .project-list {
   margin-top: 4vh;
+}
+
+/* =========================================================
+   프로젝트 케이스 스터디 스크롤 스트림 + 우측 플로팅 메뉴
+========================================================= */
+.projects-stream {
+  position: relative;
+  z-index: 1;
+  /* 프로젝트 첫 화면(타이틀+카드)과 케이스 스터디 사이 간격 */
+  margin-top: clamp(14vh, 20vh, 26vh);
+}
+
+.proj-embed {
+  position: relative;
+  /* 고정 헤더가 없으므로 0, 앵커 점프 시 살짝 여유 */
+  scroll-margin-top: 12px;
+}
+.proj-embed + .proj-embed {
+  border-top: 1px solid var(--blue-faint);
+}
+/* 시스템치과 임베드는 자체 베이지 배경으로 구분 → 경계선 불필요 */
+.proj-embed--system + .proj-embed,
+.proj-embed--system {
+  border-top: 0;
+}
+
+/* 우측 플로팅 메뉴 */
+.proj-float {
+  position: fixed;
+  top: 50%;
+  right: clamp(14px, 2.2vw, 38px);
+  transform: translateY(-50%) translateX(24px);
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.proj-float.is-on {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+.proj-float ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  align-items: flex-end;
+}
+.proj-float a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  font-family: var(--font-en);
+  color: var(--ink-soft);
+  transition: color 0.3s ease;
+}
+.proj-float-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+  white-space: nowrap;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.45s ease, opacity 0.45s ease;
+}
+.proj-float-num {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--blue-soft);
+  min-width: 1.6em;
+  text-align: right;
+}
+/* 끝 점(원) */
+.proj-float a::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--blue-soft);
+  flex-shrink: 0;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.proj-float a:hover { color: var(--blue); }
+/* 현재 보고 있는 프로젝트(활성) 또는 호버 시 이름이 펼쳐짐 */
+.proj-float a:hover .proj-float-name,
+.proj-float a.is-active .proj-float-name { max-width: 200px; opacity: 1; }
+.proj-float a.is-active { color: var(--blue-strong); }
+.proj-float a.is-active .proj-float-name { font-weight: 500; }
+.proj-float a.is-active .proj-float-num { color: var(--blue); }
+.proj-float a.is-active::after {
+  background: var(--blue-strong);
+  border-color: var(--blue-strong);
+  transform: scale(1.2);
+}
+
+/* =========================================================
+   프로젝트 화면 — 썸네일 카드 (참고: 프로젝트.png)
+========================================================= */
+/* ver2: 좌측 큰 타이틀 + 우측 세로 카드 리스트 */
+.project-layout {
+  display: flex;
+  align-items: flex-end; /* 하단 기준 — 타이틀을 카드 최하단에 맞춤 */
+  gap: clamp(2rem, 6vw, 7rem);
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.project-cards {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.8rem, 1.4vw, 1.2rem);
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 680px;
+}
+/* 카드 — 썸네일(좌) + 텍스트(우) 가로 배치 */
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 1.6vw, 1.6rem);
+  padding: clamp(0.8rem, 1.1vw, 1.1rem) clamp(1rem, 1.4vw, 1.4rem);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--blue-faint);
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.project-card:hover {
+  transform: translateX(6px);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 28px rgba(47, 107, 255, 0.12);
+}
+.project-card-thumb {
+  flex-shrink: 0;
+  width: clamp(120px, 12vw, 168px);
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eef5ff;
+}
+.project-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* 앱 카드 — 아이콘 2개 */
+.project-card-thumb--apps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
+  background: linear-gradient(160deg, #f3f8ff, #e7f0ff);
+}
+.project-card-thumb--apps img {
+  width: 42%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 22%;
+}
+/* 그래픽 카드 — 비어있는 자리표시 */
+.project-card-thumb--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--blue-soft);
+  background: linear-gradient(160deg, #fbfdff, #eef5ff);
+  border: 1px dashed var(--blue-soft);
+}
+.project-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.project-card-name {
+  font-size: 25px;
+  font-weight: 400; /* 레귤러 */
+  color: var(--ink);
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+.project-card:hover .project-card-name { color: var(--blue); }
+.project-card-sub {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* =========================================================
+   그래픽 디자인 — 대각선 카드 스택 (참고: 예시.png)
+   hover / 포커스 시 해당 카드가 앞으로 뽑혀 나옴
+========================================================= */
+.gd-stack {
+  position: relative;
+  height: clamp(330px, 48vh, 470px);
+  margin-top: 5vh;
+  --gd-step: clamp(74px, 9vw, 120px); /* 카드 사이 가로 간격 */
+}
+.gd-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: clamp(150px, 15vw, 205px);
+  height: clamp(230px, 32vh, 325px);
+  border-radius: 12px;
+  background: var(--gd-color, #3b6bff);
+  box-shadow: -8px 12px 26px rgba(20, 30, 60, 0.18);
+  transform: translate(calc(var(--i) * var(--gd-step)), calc(var(--i) * -22px)) skewY(-7deg);
+  transform-origin: bottom left;
+  z-index: calc(10 - var(--i)); /* 앞(좌하단)부터 뒤(우상단)로 쌓임 */
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.42s ease;
+  outline: none;
+}
+.gd-card-img { position: absolute; inset: 0; }
+.gd-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gd-card-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+}
+.gd-card-no { font-family: var(--font-en); font-size: 0.72rem; letter-spacing: 0.14em; opacity: 0.9; }
+.gd-card-label { font-size: 0.85rem; font-weight: 400; opacity: 0.92; }
+/* 뽑혀 나옴 */
+.gd-card:hover,
+.gd-card:focus-visible {
+  transform: translate(calc(var(--i) * var(--gd-step) - 14px), calc(var(--i) * -22px - 30px)) skewY(-7deg) scale(1.05);
+  z-index: 20;
+  box-shadow: -16px 20px 44px rgba(20, 30, 60, 0.32);
+}
+/* 색상 팔레트 (예시 이미지 톤) */
+.gd-card:nth-child(6n + 1) { --gd-color: #ff5fa2; }
+.gd-card:nth-child(6n + 2) { --gd-color: #3b6bff; }
+.gd-card:nth-child(6n + 3) { --gd-color: #ffd23b; }
+.gd-card:nth-child(6n + 4) { --gd-color: #2fd0e6; }
+.gd-card:nth-child(6n + 5) { --gd-color: #9b6bff; }
+.gd-card:nth-child(6n + 6) { --gd-color: #ff8a3b; }
+/* 밝은(노랑/시안) 카드는 어두운 글씨가 더 잘 보임 */
+.gd-card:nth-child(6n + 3) .gd-card-cap,
+.gd-card:nth-child(6n + 4) .gd-card-cap {
+  color: #2a2300;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
 }
 
 /* =========================================================
@@ -1000,23 +1357,116 @@ em {
     grid-template-columns: 1fr;
     gap: 4rem;
   }
+
+  /* About 정보가 한 화면에 안 들어와도 자연스럽게 스크롤되도록 */
+  .section--about { padding-top: 10vh; padding-bottom: 10vh; }
+}
+
+/* 작은 태블릿 / 큰 모바일 (~768px) */
+@media (max-width: 768px) {
+  /* 섹션 세로 여백을 줄여 한 화면 흐름을 유지 */
+  .section { min-height: auto; padding-top: 14vh; padding-bottom: 14vh; }
+  .section--intro { min-height: 100vh; padding-top: 0; padding-bottom: 0; }
+  .section--why { min-height: 100vh; }
+  /* Project 는 '물속' 파란 화면을 한 화면 가득 유지 */
+  .section--project { min-height: 100vh; }
+
+  .index-menu { margin-left: 0; max-width: 100%; }
+
+  /* 프로젝트 — 타이틀 위, 카드 아래 세로 배치 */
+  .project-layout { flex-direction: column; align-items: stretch; gap: 2rem; }
+  .project-cards { max-width: 100%; }
+  /* 그래픽 대각선 카드 간격 축소 */
+  .gd-stack { --gd-step: 60px; }
+  .gd-card { width: clamp(130px, 22vw, 180px); height: clamp(200px, 34vw, 280px); }
 }
 
 /* 모바일 (~640px) */
 @media (max-width: 640px) {
   :root { --pad-x: 6vw; --lens-size: 200px; }
 
-  .intro-sub  { font-size: 1.05rem; letter-spacing: 0.14em; }
-  .intro-title { font-size: 1.5rem; }
+  /* 인트로 — 자간 줄여 가로 넘침 방지 */
+  .intro-name { letter-spacing: 0.3em; font-size: 0.7rem; }
+  .intro-sub  { font-size: 1rem; letter-spacing: 0.18em; }
+  .intro-title { font-size: clamp(2.4rem, 13vw, 3.4rem); }
 
-  .index-menu { margin-left: 0; }
+  /* INDEX */
+  .index-title { font-size: 2rem; margin-bottom: 3vh; }
+  .index-menu { margin-left: 0; gap: 2.4rem; }
   .index-item-head { flex-direction: column; gap: 0.2rem; }
+  .index-en { font-size: 1.7rem; }
+  .index-ko { font-size: 16px; }
+  .index-projects li { font-size: 15px; }
+  .index-line--xshort { width: 70%; }
+  .index-line--short  { width: 80%; }
+  .index-line--long   { width: 100%; }
 
-  .about-profile { flex-direction: column; align-items: flex-start; }
+  /* About — 글자 크기 축소 + 프로필 세로 배치 */
+  .about-title { font-size: 1.7rem; }
+  .about-intro { font-size: 17px; }
+  .about-profile { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .profile-photo { width: 200px; height: 250px; }
+  .profile-name, .profile-role, .profile-meta { font-size: 16px; }
+  .approach-title, .approach-desc { font-size: 15px; }
+  .resume-title { font-size: 17px; }
+  .resume-list li { flex-direction: column; gap: 0.3rem; }
+  .resume-org, .resume-detail, .resume-date { font-size: 15px; }
+  .skills-list li { font-size: 15px; }
+  .skill-cat { min-width: 96px; }
 
-  .resume-list li { flex-direction: column; gap: 0.4rem; }
+  /* Why — 설명 글자 크기 축소 */
+  .why-title { font-size: 1.8rem; }
+  .why-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 0 4vw;
+    top: auto;
+    bottom: 6vh;
+  }
 
-  .project-title { font-size: 4rem; }
+  /* Project — 목록을 제목 아래로 자연스럽게 흐르게 */
+  .project-title { font-size: clamp(3.2rem, 22vw, 5rem); }
+  .project-names {
+    position: static;
+    text-align: left;
+    margin-top: 2.5rem;
+    gap: 1rem;
+  }
+  .project-names li a:hover { transform: translateX(6px); }
+  .project-divider { display: none; }
+
+  /* 플로팅 메뉴 — 모바일에선 점만 작게(이름은 활성 시에만) */
+  .proj-float { right: 10px; }
+  .proj-float ul { gap: 0.85rem; }
+  .proj-float-name { font-size: 0.82rem; }
+  .proj-float a:hover .proj-float-name,
+  .proj-float a.is-active .proj-float-name { max-width: 130px; }
+
+  /* 프로젝트 카드 — 한 화면에 맞게 (작은 폰은 1열) */
+  .project-cards { gap: 1.2rem 1rem; }
+
+  /* 그래픽 대각선 스택 → 모바일에선 세로 카드 목록으로 (대각선 배치 해제) */
+  .gd-stack {
+    height: auto;
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .gd-card {
+    position: static;
+    width: 100%;
+    height: clamp(170px, 44vw, 230px);
+    transform: none;
+    z-index: auto;
+  }
+  .gd-card:hover,
+  .gd-card:focus-visible { transform: translateY(-6px) scale(1.02); }
+}
+
+/* 아주 작은 화면 — 프로젝트 카드 1열 */
+@media (max-width: 460px) {
+  .project-cards { grid-template-columns: 1fr; }
 }
 
 /* 접근성: 모션 최소화 선호 시 애니메이션 약화 */
@@ -1027,4 +1477,12 @@ em {
   .intro-title { filter: none; }
   .intro-lens, .intro-lens-ring { display: none; }
   .bg-gradient .glow { animation: none; }
+  .water-cursor, .water-ring { display: none; }
+  .index-title:hover, .about-title:hover,
+  .index-item:hover .index-en { animation: none; }
+}
+
+/* 터치 기기(마우스 없음) — 물결 커서·찰랑임은 마우스 전용이므로 숨김 */
+@media (hover: none) {
+  .water-cursor, .water-ring { display: none; }
 }

@@ -20,13 +20,16 @@
   var io = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
+        var el = entry.target;
         if (entry.isIntersecting) {
-          var el = entry.target;
           // 같은 그룹 안에서 0.1초 간격 스태거 (data-sd-delay)
           var delay = parseFloat(el.getAttribute("data-sd-delay")) || 0;
           el.style.transitionDelay = delay + "s";
           el.classList.add("is-in");
-          io.unobserve(el);
+        } else {
+          // 화면을 벗어나면 다시 숨김 → 위로 올리면 역재생
+          el.style.transitionDelay = "0s";
+          el.classList.remove("is-in");
         }
       });
     },

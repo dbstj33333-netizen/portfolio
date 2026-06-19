@@ -14,6 +14,7 @@
   "use strict";
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let lenis = null; // 부드러운 스크롤 인스턴스 (GSAP ticker 로 구동)
 
   /* ===== 요소 ===== */
   const intro = document.getElementById("intro");
@@ -22,8 +23,12 @@
   const scrollIndicator = intro.querySelector(".scroll-indicator");
   const circle = document.querySelector(".morph-circle");
   const funnel = document.querySelector(".morph-funnel");
+  const whyDesc = document.querySelector(".why-desc");
+  const firstCap = document.querySelector(".why-cap"); // w_img1 (가장 아래 키워드)
   const feTurb = document.querySelector("#waterRipple feTurbulence");
   const feDisp = document.querySelector("#waterRipple feDisplacementMap");
+  const txtTurb = document.querySelector("#textRipple feTurbulence");
+  const txtDisp = document.querySelector("#textRipple feDisplacementMap");
   const lens = document.querySelector(".intro-lens");
   const lensBg = document.querySelector(".intro-lens-bg");
   const lensVp = document.querySelector(".intro-lens-vp");
@@ -178,6 +183,86 @@
     r.addEventListener("animationend", () => r.remove());
   }
 
+  /* ===== 파란(물속) 화면용 물결 커서 — Project 섹션 ===== */
+  // 마우스를 따라다니는 파란 원 + 계속 번지는 잔물결.
+  // "물속 포폴을 위에서 내려다보는" 컨셉을 살림.
+  const waterCursor = document.createElement("div");
+  waterCursor.className = "water-cursor";
+  waterCursor.style.opacity = "0";
+  document.body.appendChild(waterCursor);
+
+  let pageMouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let waterCur = { x: pageMouse.x, y: pageMouse.y };
+  let overWater = false; // 물결 커서를 보일 구간(인트로 제외 전 구간)에 커서가 있는지
+  let waterTick = 0;
+
+  window.addEventListener("pointermove", (e) => {
+    pageMouse.x = e.clientX;
+    pageMouse.y = e.clientY;
+    // 첫 화면(인트로)은 유리 렌즈 연출이 있으므로 제외하고,
+    // 그 외 모든 섹션(INDEX·About·Why·Project)에서 파란 원이 따라다님.
+    overWater = !!(
+      !prefersReduced &&
+      e.target &&
+      e.target.closest &&
+      !e.target.closest(".section--intro")
+    );
+  });
+  window.addEventListener("pointerleave", () => { overWater = false; });
+
+  function spawnWaterRing(x, y) {
+    const r = document.createElement("span");
+    r.className = "water-ring";
+    r.style.left = x + "px";
+    r.style.top = y + "px";
+    document.body.appendChild(r);
+    r.addEventListener("animationend", () => r.remove());
+  }
+
+  /* ===== 글씨 물결 (INDEX / About 호버) =====
+     호버 동안 #textRipple 필터의 굴절 세기(scale)·노이즈(baseFrequency)를
+     부드럽게 키웠다 줄이며, 글자 표면이 물결에 흔들리게 한다. */
+  let txtLevel = 0;   // 현재 굴절 세기(0→1, 부드럽게 보간)
+  let txtTarget = 0;  // 목표(호버 중=1)
+  let txtPhase = 0;
+  const txtApplied = new Set(); // 현재 필터가 걸린 글자들
+  const txtActive = new Set();  // 현재 호버 중인 글자들
+  function txtApply(el) {
+    el.style.filter = "url(#textRipple)";
+    el.style.webkitFilter = "url(#textRipple)";
+    txtApplied.add(el);
+  }
+  function txtClear(el) {
+    el.style.filter = "";
+    el.style.webkitFilter = "";
+    txtApplied.delete(el);
+  }
+  if (!prefersReduced && txtDisp) {
+    const bindSlosh = (hoverEl, fxEl) => {
+      hoverEl.addEventListener("pointerenter", () => {
+        txtApply(fxEl);
+        txtActive.add(fxEl);
+        txtTarget = 1;
+      });
+      hoverEl.addEventListener("pointerleave", () => {
+        txtActive.delete(fxEl);
+        // 다른 글자를 계속 호버 중이면 이 글자는 즉시 또렷하게,
+        // 마지막 글자라면 잦아든 뒤(frame) 필터를 제거.
+        if (txtActive.size > 0) txtClear(fxEl);
+        else txtTarget = 0;
+      });
+    };
+    // 제목류: 자기 자신에 필터
+    document
+      .querySelectorAll(".index-title, .about-title")
+      .forEach((el) => bindSlosh(el, el));
+    // INDEX 메뉴: 아이템 어디를 호버해도 내부 영문 글자가 흔들리게
+    document.querySelectorAll(".index-item").forEach((item) => {
+      const en = item.querySelector(".index-en");
+      if (en) bindSlosh(item, en);
+    });
+  }
+
   /* ===== 화면/섹션 측정 (리사이즈·로드 시 갱신) ===== */
   let vw = window.innerWidth;
   let vh = window.innerHeight;
@@ -192,9 +277,32 @@
     S = Math.min(vw * 1.2, 2000);
     const secs = Array.prototype.slice.call(document.querySelectorAll(".section"));
     centers = secs.map((s) => s.offsetTop + s.offsetHeight / 2 - vh / 2);
-    // 깔때기 목 = 깔때기 이미지의 아래 중앙 (offsetTop + 높이)
-    neckX = funnel.offsetLeft + funnel.offsetWidth / 2;
-    neckY = funnel.offsetTop + funnel.offsetHeight;
+
+    /* Why 스케일 스테이지 — 1920×1080 디자인을 화면에 맞춰 축소.
+       --scene-k 를 CSS 에 내려 .why-stage 가 동일 비율로 줄어든다. */
+    const k = Math.min(vw / 1920, vh / 1080, 1);
+    document.documentElement.style.setProperty("--scene-k", k);
+
+    // Why 하단 글씨를 w_img1(가장 아래 키워드)의 아래에서 20px 떨어지게 배치.
+    //  w_img1 의 안착 위치 = data-y(=832) + 자체 높이, 스테이지 스케일 k 적용.
+    if (whyDesc && firstCap) {
+      if (vw > 640) {
+        const capBottom = (parseFloat(firstCap.dataset.y || 0) + firstCap.offsetHeight) * k;
+        whyDesc.style.top = Math.round(capBottom + 20) + "px"; // 정수 픽셀(서브픽셀 흐림 방지)
+        whyDesc.style.bottom = "auto";
+      } else {
+        whyDesc.style.top = "";
+        whyDesc.style.bottom = "";
+      }
+    }
+
+    // 깔때기 목 = 깔때기 아래 중앙. funnel.offset* 은 스테이지(1920 좌표) 기준의
+    //  '미축소' 값 → 스테이지 배치식(left:50%, origin top center, scale k)을 그대로
+    //  적용해 뷰포트(모핑 원과 같은 좌표계) 위치로 환산한다.
+    const localNeckX = funnel.offsetLeft + funnel.offsetWidth / 2; // ≈975
+    const localNeckY = funnel.offsetTop + funnel.offsetHeight;     // ≈790
+    neckX = vw / 2 + (localNeckX - 960) * k;
+    neckY = localNeckY * k;
     measureWave(); // 낱글자 기준 좌표도 함께 갱신
   }
 
@@ -281,6 +389,39 @@
       }
     }
 
+    /* ---------- 파란 물결 커서 (Project 섹션) ---------- */
+    // 마우스를 부드럽게 따라가고, 위에 있는 동안 잔물결을 주기적으로 퍼뜨림
+    waterCur.x += (pageMouse.x - waterCur.x) * 0.18;
+    waterCur.y += (pageMouse.y - waterCur.y) * 0.18;
+    waterCursor.style.transform =
+      "translate(" + waterCur.x + "px," + waterCur.y + "px)";
+    waterCursor.style.opacity = overWater ? "1" : "0";
+    if (overWater) {
+      waterTick++;
+      // 약 0.7초마다(42프레임≈60fps) 잔물결 하나 생성
+      if (waterTick % 42 === 0) spawnWaterRing(waterCur.x, waterCur.y);
+    }
+
+    /* ---------- 글씨 물결(호버) ---------- */
+    if (txtDisp) {
+      txtLevel += (txtTarget - txtLevel) * 0.12;
+      if (txtLevel > 0.004 || txtTarget > 0) {
+        txtPhase += 0.05;
+        // 노이즈가 천천히 흐르며 표면이 일렁이도록 baseFrequency 를 미세 변동
+        const bf = 0.018 + 0.006 * Math.sin(txtPhase * 0.7);
+        txtTurb.setAttribute(
+          "baseFrequency",
+          bf.toFixed(4) + " " + (bf * 1.5).toFixed(4)
+        );
+        const amp = txtLevel * (6 + 1.6 * Math.sin(txtPhase * 1.3));
+        txtDisp.setAttribute("scale", amp.toFixed(2));
+      } else if (txtApplied.size) {
+        // 완전히 잦아듦 → 필터 제거(또렷한 글자로 복귀)
+        txtDisp.setAttribute("scale", "0");
+        Array.from(txtApplied).forEach(txtClear);
+      }
+    }
+
     const p = scrollProgress();
 
     /* ---------- 원(circle) ----------
@@ -296,7 +437,8 @@
       const cx_i = 262 + S / 2; // INDEX 원 중심 X (왼쪽 가장자리 262px)
       const cy_i = vh * 0.72; // INDEX 원 중심 Y
       const aboutD = S * 0.86; // About 원 지름 (살짝 축소)
-      const cx_a = 790 + aboutD / 2; // About 원 중심 X (왼쪽 가장자리 790px)
+      // About 원을 좌측으로: 원의 우측 끝이 화면 오른쪽에서 1014px 떨어지도록
+      const cx_a = vw - 1014 - aboutD / 2;
       let cx, cy, d, op;
 
       // 인트로 '성장' 구간 판정
@@ -309,15 +451,16 @@
         cx = lerp(current.x, cx_i, t);
         cy = lerp(current.y, cy_i, t);
         d = lerp(LENS_D, S, t);
-        op = lerp(0.9, 0.85, t);
+        // 존재감: 작은 렌즈는 또렷, 커질수록 약간 옅어짐 (원래보단 낮게)
+        op = lerp(0.72, 0.6, t);
       } else if (p <= 1.5) {
-        cx = cx_i; cy = cy_i; d = S; op = 0.85;
+        cx = cx_i; cy = cy_i; d = S; op = 0.6;
       } else if (p <= 2.0) {
         const tt = smooth((p - 1.5) / 0.5);
-        cx = lerp(cx_i, cx_a, tt); cy = cy_i; d = lerp(S, aboutD, tt); op = lerp(0.85, 0.8, tt);
+        cx = lerp(cx_i, cx_a, tt); cy = cy_i; d = lerp(S, aboutD, tt); op = lerp(0.6, 0.54, tt);
       } else {
         // About 위치에서 '고정' — About 섹션이 완전히 사라질 때(핀 시작)까지 그대로 유지
-        cx = cx_a; cy = cy_i; d = aboutD; op = 0.8;
+        cx = cx_a; cy = cy_i; d = aboutD; op = 0.54;
       }
 
       // 마우스 원은 물방울 연출로 선명해진 뒤(introRevealed)부터 부드럽게 등장
@@ -395,6 +538,31 @@
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
+  // 3D 변형(translate3d) 레이어로 인한 텍스트 서브픽셀 흐림 방지 → 2D 변형 강제
+  gsap.defaults({ force3D: false });
+
+  /* ===== 부드러운 스크롤 (Lenis + GSAP ticker) =====
+     휠/스크롤이 관성으로 부드럽게 내려감. ScrollTrigger·핀과 함께 동작.
+     모션 최소화 환경에서는 비활성화. */
+  if (typeof Lenis !== "undefined" && !prefersReduced) {
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // 해시(#) 링크 클릭 → 부드럽게 이동 (Why 깔때기 점프는 자체 처리하므로 제외)
+    document.addEventListener("click", function (e) {
+      const a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a) return;
+      if (a.matches('.index-item[href="#why"]')) return;
+      const href = a.getAttribute("href");
+      if (!href || href.length < 2) return;
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el);
+    });
+  }
 
   // 공통 헬퍼 — 요소들을 위로 부드럽게 등장
   function revealOnEnter(targets, trigger, opts) {
@@ -405,7 +573,12 @@
       duration: opts.duration != null ? opts.duration : 0.9,
       ease: "power2.out",
       stagger: opts.stagger != null ? opts.stagger : 0.12,
-      scrollTrigger: { trigger: trigger, start: opts.start || "top 70%" },
+      scrollTrigger: {
+        trigger: trigger,
+        start: opts.start || "top 70%",
+        // 위로 올리면 역재생 (다시 사라짐)
+        toggleActions: "play none none reverse",
+      },
     });
   }
 
@@ -485,7 +658,7 @@
       scrollTrigger: {
         trigger: ".section--why",
         start: "top top", // About 이 완전히 사라지는 지점
-        end: "+=200%",
+        end: "+=130%",
         pin: true,
         scrub: 1,
         invalidateOnRefresh: true,
@@ -502,8 +675,8 @@
         {
           width: () => S * 0.86, height: () => S * 0.86,
           xPercent: -50, yPercent: -50,
-          x: () => 790 + (S * 0.86) / 2, y: () => vh * 0.72,
-          scaleX: 1, scaleY: 1, opacity: 0.8,
+          x: () => vw - 1014 - (S * 0.86) / 2, y: () => vh * 0.72,
+          scaleX: 1, scaleY: 1, opacity: 0.3,
         },
         {
           x: () => neckX, y: () => neckY * 0.9,
@@ -517,23 +690,24 @@
         width: () => S * 0.05, height: () => S * 0.05,
         opacity: 0, ease: "power1.in", duration: 0.45,
       })
-      // (2) 같은 목 지점에서 깔때기가 탄성으로 자라남
-      .to(".morph-funnel", { scale: 1, opacity: 1, ease: "back.out(1.2)", duration: 0.7 }, "-=0.32")
+      // (2) 같은 목 지점에서 깔때기가 탄성으로 자라남 (존재감 축소: 반투명)
+      .to(".morph-funnel", { scale: 1, opacity: 0.5, ease: "back.out(1.2)", duration: 0.7 }, "-=0.32")
       // INDEX 의 'Why UI/UX?' 클릭 시 바로 점프할 지점(깔때기 등장 완료)
       .addLabel("funnelShown")
       // (3) 제목
       .to(".why-title", { opacity: 1, y: 0, ease: "power2.out", duration: 0.45 }, ">-0.1")
-      // (4) 키워드 조각들이 '번호 순서대로' 위에서 떨어져 깔때기에 쌓임
+      // (4) 키워드 — 짧은 구간에 거의 한꺼번에 낙하(한 번 스크롤로도 모두 떨어짐).
+      //     스크럽이라 위로 올리면 그대로 역재생되어 다시 올라감.
       .to(
         ".why-cap",
         {
           y: (i, el) => parseFloat(el.dataset.y),
           opacity: 1,
           ease: "back.out(1.4)",
-          stagger: { each: 0.12, from: "start" },
-          duration: 0.55,
+          stagger: { each: 0.03, from: "start" },
+          duration: 0.4,
         },
-        ">+0.1"
+        ">+0.05"
       )
       // (5) 설명
       .to(".why-desc", { opacity: 1, y: 0, ease: "power2.out", duration: 0.55 }, ">+0.2");
@@ -551,7 +725,8 @@
         const t = whyPin.labels.funnelShown || 0;
         const frac = dur ? t / dur : 0;
         const y = st.start + frac * (st.end - st.start);
-        window.scrollTo({ top: y, behavior: "smooth" });
+        if (lenis) lenis.scrollTo(y);
+        else window.scrollTo({ top: y, behavior: "smooth" });
       });
     }
 

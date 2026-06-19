@@ -6,9 +6,11 @@
 .cs {
   position: relative;
   z-index: 1;
-  max-width: 1040px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 var(--pad-x);
+  /* 프로젝트 설명 본문 폰트 — Pretendard */
+  font-family: 'Pretendard', var(--font-ko);
 }
 
 /* ---------------------------------------------------------
@@ -63,7 +65,7 @@
 }
 .cs-title {
   font-weight: 600;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-size: clamp(28px, 4.5vw, 40px);
   line-height: 1.18;
   color: var(--ink);
   letter-spacing: -0.01em;
@@ -112,7 +114,6 @@
   display: block;
   width: 100%;
   border-radius: 14px;
-  border: 1px solid var(--blue-faint);
 }
 .cs-figcaption {
   margin-top: 0.9rem;
@@ -164,9 +165,9 @@
   margin-bottom: 0.8rem;
 }
 .cs-section-title {
-  font-family: var(--font-en);
+  font-family: 'Pretendard', var(--font-ko);
   font-weight: 600;
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: clamp(28px, 4.5vw, 40px);
   color: var(--blue);
   margin-bottom: 1.6rem;
   letter-spacing: -0.01em;
@@ -301,6 +302,41 @@
 }
 
 /* ---------------------------------------------------------
+   앱 묶음 섹션 (러닝 + 디톡스를 한 케이스 스터디로)
+--------------------------------------------------------- */
+.cs-app { margin-top: 7vh; }
+.cs-app + .cs-app {
+  margin-top: 8vh;
+  padding-top: 7vh;
+  border-top: 1px solid var(--blue-faint);
+}
+.cs-app-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: clamp(28px, 4.5vw, 40px);
+  line-height: 1.25;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 3vh;
+}
+.cs-app-num {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 0.62em;
+  color: var(--blue);
+  letter-spacing: 0.04em;
+}
+.cs-app-tag {
+  font-size: 0.46em;
+  font-weight: 400;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+
+/* ---------------------------------------------------------
    반응형
 --------------------------------------------------------- */
 @media (max-width: 760px) {
@@ -309,3 +345,19 @@
   .cs-stats { grid-template-columns: 1fr; }
   .cs-gallery { grid-template-columns: 1fr 1fr; }
 }
+
+@media (max-width: 480px) {
+  .cs-meta { grid-template-columns: 1fr; }
+  .cs-gallery { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   프로젝트 설명 본문 — 가장 작은 글씨 20px (그 이하 금지)
+========================================================= */
+.cs-text,
+.cs-list li,
+.cs-card h4,
+.cs-card p,
+.cs-meta dd,
+.cs-stat-label { font-size: 20px; }
+.cs-summary { font-size: 22px; }
