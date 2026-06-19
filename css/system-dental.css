@@ -363,6 +363,19 @@
   height: auto;
 }
 
+/* 메인 페이지 임베드: 좌측 박스는 짧게, 우측 이미지는 더 크게 */
+.proj-embed--system .system-dental-problem {
+  grid-template-columns: 52fr 48fr;
+  gap: clamp(2rem, 3.6vw, 4rem);
+}
+.proj-embed--system .system-dental-problem-text {
+  max-width: 760px;
+}
+.proj-embed--system .system-dental-problem-figure img {
+  width: 112%;
+  max-width: 820px;
+}
+
 /* =========================================================
    03. 3-POINT 핵심 전략
 ========================================================= */
@@ -672,6 +685,8 @@
   /* 문제정의 — 좁은 화면에선 상단 간격·박스 패딩 축소 */
   .system-dental-problem-text { padding-top: 0; }
   .system-dental-problem-bullets { padding: 26px 28px; }
+  .proj-embed--system .system-dental-problem-text { max-width: none; }
+  .proj-embed--system .system-dental-problem-figure img { width: 100%; max-width: 100%; }
 
   /* 목업 겹침 → 정상 흐름으로 */
   .system-dental-mockup-mobile {
