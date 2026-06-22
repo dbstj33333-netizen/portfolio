@@ -30,6 +30,7 @@
   <!-- 프로젝트 케이스 스터디(메인에서 스크롤로 노출) 스타일 -->
   <link rel="stylesheet" href="css/project.css" />
   <link rel="stylesheet" href="css/system-dental.css" />
+  <link rel="stylesheet" href="css/mocha-class.css" />
 </head>
 <body>
   <!-- =========================================================
@@ -410,74 +411,317 @@
     ==================================================== -->
     <div class="projects-stream">
 
-      <!-- 01 · 모카클래스 -->
-      <section class="proj-embed" id="proj-mocha">
-        <div class="cs">
-          <header class="cs-hero">
-            <span class="cs-category">Responsive Web · UX 개선</span>
-            <h1 class="cs-title">모카클래스 반응형 웹 UX 개선</h1>
-            <p class="cs-summary">
-              <em>한 줄 요약을 적어주세요.</em> 어떤 서비스의 어떤 불편을, 어떤 방향으로 개선했는지
-              2~3문장으로 소개합니다.
-            </p>
-            <dl class="cs-meta">
-              <div><dt>Role</dt><dd>UX 리서치 · UI 디자인</dd></div>
-              <div><dt>Period</dt><dd>2026.0X – 2026.0X</dd></div>
-              <div><dt>Tools</dt><dd>Figma · Photoshop</dd></div>
-              <div><dt>Type</dt><dd>개인 / 팀 프로젝트</dd></div>
-            </dl>
+      <!-- 01 · 모카클래스 (시스템치과 레이아웃 재사용 + 모카 팔레트) -->
+      <section class="proj-embed proj-embed--mocha system-dental-page mocha-class-page" id="proj-mocha">
+        <div class="system-dental-main">
+          <header class="system-dental-wrap system-dental-overview">
+            <div class="system-dental-overview-text">
+              <p class="system-dental-overview-num system-dental-reveal">Project 01</p>
+              <h2 class="system-dental-overview-title system-dental-reveal" data-sd-delay="0.05">
+                모카클래스 웹 UI/UX 개선
+              </h2>
+              <!-- TODO: 실제 모카클래스 웹사이트 주소로 href 변경 -->
+              <a class="system-dental-link system-dental-reveal" data-sd-delay="0.1"
+                 href="#" target="_blank" rel="noopener">Go to Website</a>
+              <ul class="system-dental-tags mocha-class-tags system-dental-reveal" data-sd-delay="0.15">
+                <li>개선 100%</li>
+              </ul>
+              <p class="system-dental-overview-desc system-dental-reveal" data-sd-delay="0.2">
+                클래스 형태 과정에서 복잡하게 느껴지는 정보 구조를 개선하고,
+                사용자가 원하는 클래스를 더 쉽게 찾을 수 있도록 리디자인한 UX 개선 프로젝트입니다.
+              </p>
+              <dl class="system-dental-info system-dental-reveal" data-sd-delay="0.25">
+                <div><dt>Role</dt><dd>UI/UX 디자인</dd></div>
+                <div><dt>Tools</dt><dd>Figma, Photoshop, HTML, CSS, VS Code</dd></div>
+                <div><dt>AI</dt><dd>Codex</dd></div>
+                <div><dt>Output</dt><dd>web, 반응형</dd></div>
+              </dl>
+            </div>
+            <div class="system-dental-overview-visual system-dental-reveal-img" data-sd-delay="0.15">
+              <div class="system-dental-mockup-desktop">
+                <img src="assets/images/p1_1.png" alt="모카클래스 개선 웹사이트 데스크톱 메인 화면 목업" loading="lazy" />
+              </div>
+              <div class="system-dental-mockup-mobile">
+                <img src="assets/images/p1_2.png" alt="모카클래스 개선 웹사이트 모바일 화면 목업" loading="lazy" />
+              </div>
+            </div>
           </header>
-          <figure class="cs-figure"><div class="cs-img-placeholder">COVER IMAGE</div></figure>
-          <section class="cs-section">
-            <p class="cs-section-num">01</p>
-            <h2 class="cs-section-title">Overview <span class="ko">프로젝트 개요</span></h2>
-            <p class="cs-text">모카클래스가 어떤 서비스인지, 왜 이 개선을 진행하게 되었는지 설명합니다.</p>
-          </section>
-          <section class="cs-section">
-            <p class="cs-section-num">02</p>
-            <h2 class="cs-section-title">Problem <span class="ko">문제 정의</span></h2>
-            <p class="cs-text">사용자 흐름에서 발견한 불편과 문제점을 정리합니다.</p>
-            <ul class="cs-list">
-              <li>문제점 1 — 무엇이 어떻게 불편했는지</li>
-              <li>문제점 2 — 데이터/관찰 근거가 있다면 함께</li>
-              <li>문제점 3</li>
-            </ul>
-          </section>
-          <section class="cs-section">
-            <p class="cs-section-num">03</p>
-            <h2 class="cs-section-title">Goal &amp; Approach <span class="ko">목표와 해결 방향</span></h2>
-            <div class="cs-cards">
-              <div class="cs-card"><h4>Goal</h4><p>이 프로젝트로 달성하려는 목표를 적습니다.</p></div>
-              <div class="cs-card"><h4>Approach</h4><p>어떤 방식·전략으로 접근했는지 적습니다.</p></div>
+
+          <!-- 1) Background -->
+          <section class="system-dental-section" aria-labelledby="mc-bg-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Background</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-bg-title" class="system-dental-problem-title system-dental-reveal">
+                복잡하게 나열된 클래스 탐색 구조
+              </h3>
+              <p class="system-dental-body system-dental-reveal" data-sd-delay="0.05" style="margin-bottom:2.4rem;">
+                수업 형태, 지역, 카테고리, 이용 목적 등 서로 다른 탐색 기준이 같은 위계로 반복 노출되어
+                사용자가 원하는 클래스를 어떤 경로로 찾아야 하는지 파악하기 어려웠습니다.
+              </p>
+              <figure class="mocha-figure system-dental-reveal-img" data-sd-delay="0.05" style="margin-bottom:2.4rem;">
+                <div class="mocha-ph" style="aspect-ratio: 16 / 10;">
+                  <span class="ph-label">기존 사이트 — 메인</span>
+                  <code>public/images/mochaclass/asis-main.png</code>
+                </div>
+              </figure>
+              <div class="mocha-callout system-dental-reveal" data-sd-delay="0.1">
+                <span class="mocha-callout-label">기존 사이트의 문제점</span>
+                <ul class="mocha-bullets">
+                  <li>혼재된 탐색 기준</li>
+                  <li>반복되는 클래스 목록</li>
+                  <li>불명확한 콘텐츠 선정 기준</li>
+                  <li>과도하게 강조된 필터 영역</li>
+                </ul>
+              </div>
             </div>
           </section>
-          <section class="cs-section">
-            <p class="cs-section-num">04</p>
-            <h2 class="cs-section-title">Process <span class="ko">진행 과정</span></h2>
-            <p class="cs-text">리서치, 경쟁 서비스 분석, 정보 구조 설계, 와이어프레임 등 진행 과정을 설명합니다.</p>
-            <figure class="cs-figure">
-              <div class="cs-img-placeholder is-tall">PROCESS IMAGE</div>
-              <figcaption class="cs-figcaption">과정 이미지 설명</figcaption>
-            </figure>
-          </section>
-          <section class="cs-section">
-            <p class="cs-section-num">05</p>
-            <h2 class="cs-section-title">Design <span class="ko">화면 설계 · 주요 화면</span></h2>
-            <p class="cs-text">개선 전/후 또는 주요 화면을 소개합니다.</p>
-            <div class="cs-gallery">
-              <div class="cs-img-placeholder">SCREEN 1</div>
-              <div class="cs-img-placeholder">SCREEN 2</div>
-              <div class="cs-img-placeholder">SCREEN 3</div>
+
+          <!-- 2) Problem & Goal -->
+          <section class="system-dental-section" aria-labelledby="mc-pg-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Problem &amp; Goal</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-pg-title" class="system-dental-points-title system-dental-reveal" style="text-align:left;margin-bottom:2.4rem;">
+                핵심 문제 3가지
+              </h3>
+              <div class="mocha-cards">
+                <div class="mocha-card system-dental-reveal-img">
+                  <p class="mocha-card-num">01</p>
+                  <h4 class="mocha-card-title">탐색 기준 혼재</h4>
+                  <p class="mocha-card-desc">서로 다른 기준의 카테고리가 같은 위계로 노출됨</p>
+                </div>
+                <div class="mocha-card system-dental-reveal-img" data-sd-delay="0.1">
+                  <p class="mocha-card-num">02</p>
+                  <h4 class="mocha-card-title">반복되는 콘텐츠</h4>
+                  <p class="mocha-card-desc">유사한 클래스 목록의 차이와 목적이 명확하지 않음</p>
+                </div>
+                <div class="mocha-card system-dental-reveal-img" data-sd-delay="0.2">
+                  <p class="mocha-card-num">03</p>
+                  <h4 class="mocha-card-title">필터의 높은 시각적 비중</h4>
+                  <p class="mocha-card-desc">필터가 실제 클래스 콘텐츠보다 먼저 강조됨</p>
+                </div>
+              </div>
+              <div class="mocha-callout system-dental-reveal" data-sd-delay="0.1" style="margin-top:2.4rem;">
+                <span class="mocha-callout-label">Goal</span>
+                복잡한 정보 구조를 정리해 사용자가 원하는 클래스를 쉽고 빠르게 찾을 수 있는 탐색 경험을 설계했습니다.
+              </div>
             </div>
           </section>
-          <section class="cs-section">
-            <p class="cs-section-num">06</p>
-            <h2 class="cs-section-title">Result &amp; Reflection <span class="ko">결과와 회고</span></h2>
-            <p class="cs-text">개선으로 달라진 점과 프로젝트를 통해 배운 점을 정리합니다.</p>
-            <div class="cs-stats">
-              <div class="cs-stat"><div class="cs-stat-num">00%</div><div class="cs-stat-label">지표 설명</div></div>
-              <div class="cs-stat"><div class="cs-stat-num">00</div><div class="cs-stat-label">지표 설명</div></div>
-              <div class="cs-stat"><div class="cs-stat-num">00</div><div class="cs-stat-label">지표 설명</div></div>
+
+          <!-- 3) Information Architecture -->
+          <section class="system-dental-section" aria-labelledby="mc-ia-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Information Architecture</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-ia-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:2.4rem;">
+                정보 구조 재설계 — AS-IS / TO-BE
+              </h3>
+              <div class="mocha-compare">
+                <div class="mocha-col mocha-col--asis system-dental-reveal">
+                  <span class="mocha-compare-label">AS-IS</span>
+                  <p class="mocha-compare-desc" style="margin-top:0;">
+                    탐색 기준이 상단 메뉴에 평면적으로 나열되어 위계가 드러나지 않았습니다.
+                  </p>
+                  <ul class="mocha-chips" style="margin-top:1.2rem;">
+                    <li>수업 형태</li><li>지역별</li><li>내 주변</li><li>카테고리별</li>
+                    <li>이용 목적</li><li>오프라인</li><li>라이브</li><li>단체</li>
+                  </ul>
+                </div>
+                <div class="mocha-col mocha-col--tobe system-dental-reveal" data-sd-delay="0.1">
+                  <span class="mocha-compare-label">TO-BE</span>
+                  <ul class="mocha-menu">
+                    <li>
+                      <span class="mocha-menu-top">서비스 소개</span>
+                      <ul class="mocha-menu-sub"><li>모카클래스 소개</li><li>이용 가이드</li><li>자주 묻는 질문</li><li>클래스 후기</li></ul>
+                    </li>
+                    <li>
+                      <span class="mocha-menu-top">클래스 찾기</span>
+                      <ul class="mocha-menu-sub"><li>오프라인 클래스</li><li>라이브 클래스</li></ul>
+                    </li>
+                    <li><span class="mocha-menu-top">단체 클래스</span></li>
+                    <li><span class="mocha-menu-top">파트너 등록</span></li>
+                    <li><span class="mocha-menu-top">마이페이지</span></li>
+                  </ul>
+                </div>
+              </div>
+              <p class="mocha-note system-dental-reveal" data-sd-delay="0.15">
+                <strong>지역별·내 주변·카테고리별</strong> 탐색은 상단 메뉴가 아닌
+                메인페이지의 <strong>‘빠른 탐색’</strong> 영역으로 분리해, 상단 메뉴는 서비스의 핵심 흐름만 담도록 정리했습니다.
+              </p>
+            </div>
+          </section>
+
+          <!-- 4) Main Page Improvement -->
+          <section class="system-dental-section" aria-labelledby="mc-main-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Main Page Improvement</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-main-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:2.4rem;">
+                리디자인한 메인페이지
+              </h3>
+              <div class="mocha-split">
+                <figure class="mocha-figure system-dental-reveal-img">
+                  <div class="mocha-ph" style="aspect-ratio: 16 / 11;">
+                    <span class="ph-label">개선 메인페이지 전체</span>
+                    <code>public/images/mochaclass/tobe-main.png</code>
+                  </div>
+                </figure>
+                <ul class="system-dental-ux-list system-dental-reveal" data-sd-delay="0.1">
+                  <li><span class="num">1</span><h4>반복 요소 축소</h4><p>반복되는 카테고리와 콘텐츠를 정리해 화면 밀도를 낮췄습니다.</p></li>
+                  <li><span class="num">2</span><h4>빠른 탐색 영역 구성</h4><p>지역·내 주변·카테고리 탐색을 메인의 빠른 탐색 영역으로 모았습니다.</p></li>
+                  <li><span class="num">3</span><h4>선정 기준 명확화</h4><p>섹션별 클래스 선정 기준을 분명히 드러냈습니다.</p></li>
+                  <li><span class="num">4</span><h4>단체 클래스 CTA 배치</h4><p>사용자 흐름에 맞춰 단체 클래스 CTA를 배치했습니다.</p></li>
+                  <li><span class="num">5</span><h4>후기로 신뢰 보완</h4><p>후기 콘텐츠로 서비스 신뢰를 보완했습니다.</p></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5) Search & Filter -->
+          <section class="system-dental-section" aria-labelledby="mc-filter-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Search &amp; Filter</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-filter-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:2.4rem;">
+                검색·필터 구조 개선
+              </h3>
+              <div class="mocha-compare">
+                <div class="mocha-col mocha-col--asis system-dental-reveal-img">
+                  <span class="mocha-compare-label">AS-IS</span>
+                  <figure class="mocha-figure">
+                    <div class="mocha-ph" style="aspect-ratio: 4 / 3;">
+                      <span class="ph-label">기존 필터</span>
+                      <code>public/images/mochaclass/asis-filter.png</code>
+                    </div>
+                  </figure>
+                  <p class="mocha-compare-desc">필터 영역이 크게 강조되어 클래스 결과가 첫 화면에서 잘 보이지 않았습니다.</p>
+                </div>
+                <div class="mocha-col mocha-col--tobe system-dental-reveal-img" data-sd-delay="0.1">
+                  <span class="mocha-compare-label">TO-BE</span>
+                  <figure class="mocha-figure">
+                    <div class="mocha-ph" style="aspect-ratio: 4 / 3;">
+                      <span class="ph-label">개선 필터</span>
+                      <code>public/images/mochaclass/tobe-filter.png</code>
+                    </div>
+                  </figure>
+                  <p class="mocha-compare-desc">주요 조건만 우선 노출하고 높이를 줄여 클래스 결과가 먼저 보이도록 개선했습니다.</p>
+                </div>
+              </div>
+              <div class="mocha-callout system-dental-reveal" data-sd-delay="0.1" style="margin-top:2.4rem;">
+                <span class="mocha-callout-label">개선 내용</span>
+                <ul class="mocha-bullets">
+                  <li>주요 탐색 조건 우선 노출</li>
+                  <li>세부 조건은 필요할 때 펼치는 구조</li>
+                  <li>선택된 조건을 칩 형태로 표시</li>
+                  <li>필터 높이를 줄여 클래스 결과가 첫 화면에 보이도록 개선</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6) Visual & Responsive -->
+          <section class="system-dental-section" aria-labelledby="mc-visual-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Visual &amp; Responsive</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-visual-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:2.4rem;">
+                디자인 시스템 &amp; 반응형
+              </h3>
+              <div class="mocha-ds">
+                <div class="system-dental-reveal">
+                  <p class="mocha-ds-title">Color</p>
+                  <div class="mocha-swatches">
+                    <div class="mocha-swatch"><div class="chip" style="background:#E08A45;"></div><span class="hex">#E08A45</span></div>
+                    <div class="mocha-swatch"><div class="chip" style="background:#F2A45F;"></div><span class="hex">#F2A45F</span></div>
+                    <div class="mocha-swatch"><div class="chip" style="background:#FAF4EE;"></div><span class="hex">#FAF4EE</span></div>
+                    <div class="mocha-swatch"><div class="chip" style="background:#2C2622;"></div><span class="hex">#2C2622</span></div>
+                  </div>
+                  <p class="mocha-ds-title" style="margin-top:2rem;">Typography</p>
+                  <div class="mocha-type">
+                    <span class="w3">모카클래스</span>
+                    <span class="w5">모카클래스</span>
+                    <span class="w7">모카클래스</span>
+                  </div>
+                </div>
+                <div class="system-dental-reveal" data-sd-delay="0.1">
+                  <p class="mocha-ds-title">Button</p>
+                  <div class="mocha-buttons">
+                    <button type="button" class="mocha-btn mocha-btn--solid">클래스 둘러보기</button>
+                    <button type="button" class="mocha-btn mocha-btn--ghost">더보기</button>
+                  </div>
+                  <p class="mocha-ds-title" style="margin-top:2rem;">Card</p>
+                  <div class="mocha-sample-card">
+                    <div class="thumb"></div>
+                    <div class="body"><strong>클래스 카드</strong><em>썸네일 · 제목 · 메타 정보</em></div>
+                  </div>
+                </div>
+              </div>
+              <p class="system-dental-body system-dental-reveal" data-sd-delay="0.1" style="margin-bottom:1.6rem;">
+                기존 로고의 오렌지 컬러와 친근한 분위기를 유지하면서 컬러·타이포그래피·버튼·카드 규칙을 정리했습니다.
+                화면 폭에 따라 레이아웃만 바뀌고 콘텐츠 우선순위는 동일하게 유지됩니다.
+              </p>
+              <div class="mocha-devices">
+                <figure class="mocha-device system-dental-reveal-img">
+                  <div class="mocha-ph" style="aspect-ratio: 16 / 10;">
+                    <span class="ph-label">Desktop</span>
+                    <code>public/images/mochaclass/responsive-desktop.png</code>
+                  </div>
+                  <figcaption>Desktop</figcaption>
+                </figure>
+                <figure class="mocha-device system-dental-reveal-img" data-sd-delay="0.08">
+                  <div class="mocha-ph" style="aspect-ratio: 3 / 4;">
+                    <span class="ph-label">Tablet</span>
+                    <code>public/images/mochaclass/responsive-tablet.png</code>
+                  </div>
+                  <figcaption>Tablet</figcaption>
+                </figure>
+                <figure class="mocha-device system-dental-reveal-img" data-sd-delay="0.16">
+                  <div class="mocha-ph" style="aspect-ratio: 9 / 19;">
+                    <span class="ph-label">Mobile</span>
+                    <code>public/images/mochaclass/responsive-mobile.png</code>
+                  </div>
+                  <figcaption>Mobile</figcaption>
+                </figure>
+              </div>
+              <p class="mocha-note system-dental-reveal" data-sd-delay="0.1">
+                <strong>PC</strong>는 넓은 여백과 2열 비교 구조, <strong>태블릿</strong>은 여백을 좁힌 유동 그리드,
+                <strong>모바일</strong>은 모든 콘텐츠를 1열로 재배치해 가로 스크롤 없이 탐색하도록 구성했습니다.
+              </p>
+            </div>
+          </section>
+
+          <!-- 7) Result & Learnings -->
+          <section class="system-dental-section" aria-labelledby="mc-result-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">Result &amp; Learnings</span>
+                <span class="system-dental-projecttag">모카클래스 웹 UI/UX 개선</span>
+              </div>
+              <h3 id="mc-result-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.6rem;">
+                정돈된 구조로 완성한 클래스 탐색 경험
+              </h3>
+              <p class="system-dental-body system-dental-reveal mocha-result-lead" data-sd-delay="0.05">
+                흩어져 있던 탐색 기준을 사용 목적에 맞게 정리하고, 반복 콘텐츠와 필터의 시각적 비중을 조절해
+                각 화면의 역할이 명확하게 드러나도록 개선했습니다.
+              </p>
+              <div class="mocha-callout system-dental-reveal" data-sd-delay="0.1" style="margin-top:2.4rem;">
+                <span class="mocha-callout-label">회고</span>
+                기능을 많이 제공하는 것보다 사용자가 어떤 기준부터 선택해야 하는지 명확하게 안내하는 것이 중요했습니다.
+                또한 반복되는 CTA를 단순히 제거하지 않고 서비스의 사업 목적과 사용자 흐름을 함께 고려해 우선순위를 조정했습니다.
+              </div>
             </div>
           </section>
         </div>
@@ -500,7 +744,7 @@
               </ul>
               <p class="system-dental-overview-desc system-dental-reveal" data-sd-delay="0.2">
                 기존 병원 웹사이트의 정보 구조와 시각적 신뢰도를 개선하고,
-                사용자가 진료 정보와 예약 정보를 더 쉽게 찾을 수 있도록 정리한 팀 프로젝트입니다.
+                사용자가 진료 정보와 예약 정보를 더 쉽게 찾을 수 있도록 정리한 <br />팀 프로젝트입니다.
               </p>
               <dl class="system-dental-info system-dental-reveal" data-sd-delay="0.25">
                 <div><dt>Role</dt><dd>메인 디자인, 서브 페이지 개발, 디자인 서포트, 화면 구성 지원, 콘텐츠 정리, UX 검토</dd></div>
@@ -525,11 +769,11 @@
                 <span class="system-dental-eyebrow">프로젝트 배경 및 문제정의</span>
                 <span class="system-dental-projecttag">시스템치과 웹 UI/UX 개선</span>
               </div>
-              <h3 id="sd-problem-title" class="system-dental-problem-title system-dental-reveal">
-                신뢰보다 가격 혜택이 먼저 보이는 첫인상
-              </h3>
               <div class="system-dental-problem">
                 <div class="system-dental-problem-text">
+                  <h3 id="sd-problem-title" class="system-dental-problem-title system-dental-reveal">
+                    신뢰보다 가격 혜택이 먼저 보이는 첫인상
+                  </h3>
                   <ul class="system-dental-problem-bullets system-dental-reveal" data-sd-delay="0.1">
                     <li>자극적인 전 후 사진 중심 구성으로 시각적 피로감과 거부감 유발</li>
                     <li>전문성 부족으로 이어지는 연속적인 할인혜택 강조</li>
@@ -596,38 +840,45 @@
                 <span class="system-dental-eyebrow" id="sd-solution-eyebrow">문제 해결 방안</span>
                 <span class="system-dental-projecttag">시스템치과 웹 UI/UX 개선</span>
               </div>
-              <div class="system-dental-solution">
-                <div class="system-dental-col">
-                  <h4 class="system-dental-col-label system-dental-reveal">AS-IS</h4>
-                  <p class="system-dental-col-desc system-dental-reveal" data-sd-delay="0.05">
-                    전후 사진, 할인 혜택, 캐릭터 이미지 중심의 구성으로
-                    병원의 전문성과 신뢰감이 약하게 전달되고 있었습니다.
-                  </p>
-                  <div class="system-dental-shotpair system-dental-reveal-img" data-sd-delay="0.05">
-                    <span class="sd-shot sd-shot-a"><img src="assets/images/p2_4.png" alt="기존 시스템치과 홈페이지 전체 화면" loading="lazy" /></span>
-                    <span class="sd-shot sd-shot-b"><img src="assets/images/p2_5.png" alt="기존 시스템치과 홈페이지 — 할인·전후 강조 화면" loading="lazy" /></span>
+              <div class="system-dental-solution2">
+                <!-- 좌측: p2_4·5·6·7 을 좌표대로 겹쳐 한 화면에 (원본 비율 유지) -->
+                <div class="sd-sol-stage">
+                  <div class="sd-sol-heads system-dental-reveal">
+                    <div class="sd-sol-head">
+                      <h4 class="system-dental-col-label">AS-IS</h4>
+                      <p class="system-dental-col-desc">
+                        전후 사진, 할인 혜택, 캐릭터 이미지 중심의 구성으로
+                        병원의 전문성과 신뢰감이 약하게 전달되고 있었습니다.
+                      </p>
+                    </div>
+                    <div class="sd-sol-head">
+                      <h4 class="system-dental-col-label">TO-BE</h4>
+                      <p class="system-dental-col-desc">
+                        의료진, 진료 시스템, 병원 공간, 치료 과정 중심으로 재구성해
+                        사용자가 병원의 전문성을 빠르게 이해할 수 있도록 개선했습니다.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="sd-sol-imgs system-dental-reveal-img" data-sd-delay="0.05">
+                    <figure class="sd-shotabs sd-img4"><img src="assets/images/p2_4.png" alt="기존 시스템치과 홈페이지 전체 화면" loading="lazy" /></figure>
+                    <figure class="sd-shotabs sd-img5"><img src="assets/images/p2_5.png" alt="기존 시스템치과 홈페이지 — 할인·전후 강조 화면" loading="lazy" /></figure>
+                    <figure class="sd-shotabs sd-img6"><img src="assets/images/p2_6.png" alt="개선된 시스템치과 메인 페이지 전체 화면" loading="lazy" /></figure>
+                    <figure class="sd-shotabs sd-img7"><img src="assets/images/p2_7.png" alt="개선된 시스템치과 모바일 전체 화면" loading="lazy" /></figure>
                   </div>
                 </div>
-                <div class="system-dental-col">
-                  <h4 class="system-dental-col-label system-dental-reveal">TO-BE</h4>
-                  <p class="system-dental-col-desc system-dental-reveal" data-sd-delay="0.05">
-                    의료진, 진료 시스템, 병원 공간, 치료 과정 중심으로 재구성해
-                    사용자가 병원의 전문성을 빠르게 이해할 수 있도록 개선했습니다.
-                  </p>
-                  <div class="system-dental-shotpair system-dental-reveal-img" data-sd-delay="0.05">
-                    <span class="sd-shot sd-shot-a"><img src="assets/images/p2_6.png" alt="개선된 시스템치과 메인 페이지 전체 화면" loading="lazy" /></span>
-                    <span class="sd-shot sd-shot-b"><img src="assets/images/p2_7.png" alt="개선된 시스템치과 모바일 전체 화면" loading="lazy" /></span>
+
+                <!-- 우측: 스크롤을 따라 내려오는 sticky UX 개선 포인트 -->
+                <aside class="sd-sol-aside">
+                  <div class="sd-sol-sticky system-dental-reveal" data-sd-delay="0.1">
+                    <h4 class="system-dental-col-label">UX 개선 포인트</h4>
+                    <ul class="system-dental-ux-list">
+                      <li><span class="num">1</span><h4>브랜드 신뢰 형성 콘텐츠</h4><p>의료진 수술 영상, 병원 인테리어, 전문 진료 이미지를 활용해 신뢰감 강화</p></li>
+                      <li><span class="num">2</span><h4>진료 및 시스템 강점 소개</h4><p>서울대 출신 의료진, 디지털 장비, 진료 프로세스를 중심으로 전문성 전달</p></li>
+                      <li><span class="num">3</span><h4>환자 안심 콘텐츠 구성</h4><p>치료 과정과 진료 시스템을 단계적으로 보여주어 사용자 불안감 완화</p></li>
+                      <li><span class="num">4</span><h4>예약 전환 유도</h4><p>고정 플로팅 메뉴와 예약 CTA를 배치해 상담·예약 접근성 강화</p></li>
+                    </ul>
                   </div>
-                </div>
-                <div class="system-dental-col">
-                  <h4 class="system-dental-col-label system-dental-reveal">UX 개선 포인트</h4>
-                  <ul class="system-dental-ux-list system-dental-reveal" data-sd-delay="0.05">
-                    <li><span class="num">1</span><h4>브랜드 신뢰 형성 콘텐츠</h4><p>의료진 수술 영상, 병원 인테리어, 전문 진료 이미지를 활용해 신뢰감 강화</p></li>
-                    <li><span class="num">2</span><h4>진료 및 시스템 강점 소개</h4><p>서울대 출신 의료진, 디지털 장비, 진료 프로세스를 중심으로 전문성 전달</p></li>
-                    <li><span class="num">3</span><h4>환자 안심 콘텐츠 구성</h4><p>치료 과정과 진료 시스템을 단계적으로 보여주어 사용자 불안감 완화</p></li>
-                    <li><span class="num">4</span><h4>예약 전환 유도</h4><p>고정 플로팅 메뉴와 예약 CTA를 배치해 상담·예약 접근성 강화</p></li>
-                  </ul>
-                </div>
+                </aside>
               </div>
             </div>
           </section>
@@ -644,10 +895,10 @@
                     <span class="sd-accent">AI 활용 화면 구현을 통해 배운</span><br />디자인 기준의 중요성
                   </h3>
                   <p class="system-dental-body system-dental-reveal" data-sd-delay="0.1" style="margin-top:1.6rem;">
-                    메인 페이지는 직접 디자인하고,<br />서브페이지와 반응형 구현에는 Claude Code를 활용했습니다.
+                    메인 페이지는 직접 디자인하고,<br />서브페이지와 반응형 구현에는 <strong>Claude Code</strong>를 활용했습니다.
                   </p>
                   <p class="system-dental-body system-dental-reveal" data-sd-delay="0.15">
-                    단순히 결과물을 생성하는 데 그치지 않고,<br />컬러·타이포·레이아웃 기준을 구체적으로 전달해<br />결과물을 반복적으로 확인하며 수정하며 디자인 의도를 구현했습니다.
+                    단순히 결과물을 생성하는 데 그치지 않고,<br /><strong>컬러·타이포·레이아웃 기준을 구체적으로 전달</strong>해<br />결과물을 반복적으로 확인하며 수정하며 디자인 의도를 구현했습니다.
                   </p>
                 </div>
                 <figure class="system-dental-ai-figure system-dental-reveal-img" data-sd-delay="0.1">
@@ -669,21 +920,14 @@
                     보기 좋은 화면보다<br />신뢰가 먼저 전달되는 구조
                   </h3>
                   <p class="system-dental-body system-dental-reveal" data-sd-delay="0.1" style="margin-top:1.6rem;">
-                    의료 웹사이트에서는 시각적 완성도보다
-                    사용자가 어떤 정보를 먼저 보고 신뢰를 형성하는지가 중요했습니다.
+                    의료 웹사이트에서는 시각적 완성도보다 사용자가 어떤 정보를 먼저 보고 신뢰를
+                    형성하는지가 중요하다고 판단했습니다.
                   </p>
                   <p class="system-dental-body system-dental-reveal" data-sd-delay="0.15">
-                    의료진, 진료 시스템, 치료 과정의 우선순위를 재구성하고
-                    정보 탐색이 상담과 예약으로 이어지도록 흐름을 개선했습니다.
-                  </p>
-                  <p class="system-dental-body system-dental-reveal" data-sd-delay="0.2">
                     기존의 가격 혜택과 시술 전후 이미지 중심 화면을 분석하고,
                     의료진·진료 시스템·치료 과정이 먼저 보이도록 콘텐츠 우선순위를 재구성했습니다.
-                  </p>
-                  <p class="system-dental-body system-dental-reveal" data-sd-delay="0.25">
-                    또한 흩어진 정보를 목적에 맞게 정리하고
-                    상담·예약으로 이어지는 흐름을 설계하며,
-                    시각적 개선을 넘어 실제 사용자 경험을 개선하는 과정을 경험했습니다.
+                    또한 흩어진 정보를 정리해 탐색이 상담과 예약으로 자연스럽게 이어지도록
+                    흐름을 개선했습니다.
                   </p>
                 </div>
                 <figure class="system-dental-reveal-img" style="margin:0;">

@@ -1,0 +1,370 @@
+/* =========================================================
+   모카클래스 웹 UI/UX 개선 — 상세 페이지 전용 팔레트
+   · 레이아웃·위치는 system-dental.css 를 그대로 재사용(글씨·이미지 위치 동일)
+   · 이 파일은 .mocha-class-page 하위에서 --sd-* 토큰만 모카 팔레트로 덮어씀
+   · 화이트 배경 + 웜 오렌지 포인트 + 차콜 본문 (레퍼런스와 동일)
+========================================================= */
+.mocha-class-page {
+  --sd-bg: #ffffff;
+  --sd-bg-light: #faf4ee;
+  --sd-primary: #e08a45;
+  --sd-primary-light: #f2a45f;
+  --sd-text: #2c2622;
+  --sd-subtext: #6b635c;
+  --sd-line: rgba(224, 138, 69, 0.24);
+  --sd-white: #ffffff;
+}
+
+/* Go to Website — 라운드 아웃라인 버튼(레퍼런스와 동일 형태) */
+.mocha-class-page .system-dental-link {
+  border-bottom: none;
+  border: 1.5px solid var(--sd-line);
+  border-radius: 999px;
+  padding: 0.55rem 1.3rem;
+  color: var(--sd-text);
+}
+.mocha-class-page .system-dental-link:hover,
+.mocha-class-page .system-dental-link:focus-visible {
+  border-color: var(--sd-primary);
+  color: var(--sd-primary);
+  gap: 0.9rem;
+}
+
+/* 개선 100% — 피치 톤 단일 pill */
+.mocha-class-tags { margin-top: 1.2rem; }
+.mocha-class-tags li {
+  border: none;
+  background: rgba(224, 138, 69, 0.14);
+  color: #c9702f;
+  font-weight: 500;
+}
+
+/* =========================================================
+   모카클래스 제작 과정 — 전용 레이아웃 헬퍼
+   · 모두 .mocha-class-page 하위로만 한정(다른 페이지·시스템치과에 영향 없음)
+   · 색/폰트/간격은 기존 --sd-* 토큰 재사용, 새 라이브러리 없음
+========================================================= */
+
+/* 이미지 플레이스홀더 — 실제 이미지 추가 전에도 비율 유지 + 파일명 표시(에러 방지) */
+.mocha-class-page .mocha-ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  background: var(--sd-bg-light);
+  border: 1px dashed var(--sd-line);
+  border-radius: 10px;
+  color: var(--sd-subtext);
+  text-align: center;
+  padding: 1.4rem;
+}
+.mocha-class-page .mocha-ph .ph-label {
+  font-family: var(--sd-font-en);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.mocha-class-page .mocha-ph code {
+  font-family: var(--sd-font-en);
+  font-size: 0.9rem;
+  color: var(--sd-primary);
+  background: rgba(224, 138, 69, 0.1);
+  border-radius: 6px;
+  padding: 0.28rem 0.65rem;
+  word-break: break-all;
+}
+
+/* 단일 이미지 figure (이미지 비율 그대로, 자르지 않음) */
+.mocha-class-page .mocha-figure { margin: 0; }
+.mocha-class-page .mocha-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.mocha-class-page .mocha-figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.92rem;
+  color: var(--sd-subtext);
+}
+
+/* 강조 박스(연한 오렌지) — 문제점 묶음 / 목표 / 회고 공통 */
+.mocha-class-page .mocha-callout {
+  background: rgba(224, 138, 69, 0.09);
+  border-left: 3px solid var(--sd-primary);
+  border-radius: 10px;
+  padding: clamp(1.4rem, 2.4vw, 2rem) clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.85;
+  color: var(--sd-text);
+}
+.mocha-class-page .mocha-callout-label {
+  display: block;
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--sd-primary);
+  margin-bottom: 0.7rem;
+}
+
+/* 오렌지 점 불릿(줄바꿈 허용 — 가로 스크롤 방지) */
+.mocha-class-page .mocha-bullets {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.mocha-class-page .mocha-bullets li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--sd-text);
+}
+.mocha-class-page .mocha-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+}
+
+/* Problem & Goal — 3 카드 */
+.mocha-class-page .mocha-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+}
+.mocha-class-page .mocha-card {
+  background: var(--sd-white);
+  border: 1px solid var(--sd-line);
+  border-radius: 14px;
+  padding: clamp(1.6rem, 2.4vw, 2.2rem);
+}
+.mocha-class-page .mocha-card-num {
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--sd-primary);
+  margin-bottom: 0.9rem;
+}
+.mocha-class-page .mocha-card-title {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  color: var(--sd-text);
+  margin-bottom: 0.55rem;
+}
+.mocha-class-page .mocha-card-desc {
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--sd-subtext);
+}
+
+/* 2열 비교(AS-IS / TO-BE) — IA · 검색/필터 공통 */
+.mocha-class-page .mocha-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.4rem, 3vw, 3rem);
+  align-items: start;
+}
+.mocha-class-page .mocha-compare-label {
+  display: inline-block;
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.9rem;
+}
+.mocha-class-page .mocha-col--asis .mocha-compare-label { color: var(--sd-subtext); }
+.mocha-class-page .mocha-col--tobe .mocha-compare-label { color: var(--sd-primary); }
+.mocha-class-page .mocha-compare-desc {
+  margin-top: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--sd-subtext);
+}
+
+/* 이미지 wider 2열 (메인페이지 개선 — 이미지 크게 + 번호 설명) */
+.mocha-class-page .mocha-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(1.6rem, 3.5vw, 3.5rem);
+  align-items: center;
+}
+
+/* IA — 메뉴 트리 */
+.mocha-class-page .mocha-menu { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.mocha-class-page .mocha-menu > li {
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--sd-line);
+}
+.mocha-class-page .mocha-menu > li:last-child { border-bottom: none; }
+.mocha-class-page .mocha-menu-top {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--sd-text);
+}
+.mocha-class-page .mocha-menu-sub {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+  list-style: none;
+}
+.mocha-class-page .mocha-menu-sub li {
+  font-size: 0.9rem;
+  color: var(--sd-subtext);
+  background: var(--sd-bg-light);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+}
+.mocha-class-page .mocha-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+.mocha-class-page .mocha-chips li {
+  list-style: none;
+  font-size: 0.9rem;
+  color: var(--sd-subtext);
+  border: 1px solid var(--sd-line);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+}
+.mocha-class-page .mocha-note {
+  margin-top: 1.4rem;
+  line-height: 1.7;
+  color: var(--sd-subtext);
+  font-weight: 300;
+}
+.mocha-class-page .mocha-note strong { color: var(--sd-primary); font-weight: 600; }
+
+/* Visual & Responsive — 디자인 시스템 + 디바이스 3종 */
+.mocha-class-page .mocha-ds {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.6rem, 3vw, 2.6rem);
+  align-items: start;
+  margin-bottom: clamp(2.4rem, 5vh, 4rem);
+}
+.mocha-class-page .mocha-ds-title {
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: var(--sd-primary);
+  margin-bottom: 1.2rem;
+}
+.mocha-class-page .mocha-swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
+}
+.mocha-class-page .mocha-swatch .chip {
+  height: 64px;
+  border-radius: 8px;
+  border: 1px solid var(--sd-line);
+}
+.mocha-class-page .mocha-swatch .hex {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--sd-font-en);
+  font-size: 0.78rem;
+  color: var(--sd-subtext);
+  letter-spacing: 0.03em;
+}
+.mocha-class-page .mocha-type {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.mocha-class-page .mocha-type span {
+  font-family: var(--sd-font-ko);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  color: var(--sd-text);
+  line-height: 1.2;
+}
+.mocha-class-page .mocha-type .w3 { font-weight: 300; }
+.mocha-class-page .mocha-type .w5 { font-weight: 500; }
+.mocha-class-page .mocha-type .w7 { font-weight: 700; }
+.mocha-class-page .mocha-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.mocha-class-page .mocha-btn {
+  font-family: var(--sd-font-ko);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  padding: 0.7rem 1.5rem;
+  border: 1.5px solid var(--sd-primary);
+}
+.mocha-class-page .mocha-btn--solid { background: var(--sd-primary); color: #fff; }
+.mocha-class-page .mocha-btn--ghost { background: transparent; color: var(--sd-primary); }
+.mocha-class-page .mocha-sample-card {
+  background: var(--sd-white);
+  border: 1px solid var(--sd-line);
+  border-radius: 14px;
+  overflow: hidden;
+  max-width: 220px;
+}
+.mocha-class-page .mocha-sample-card .thumb { aspect-ratio: 4 / 3; background: var(--sd-bg-light); }
+.mocha-class-page .mocha-sample-card .body { padding: 0.85rem 1rem 1.1rem; }
+.mocha-class-page .mocha-sample-card .body strong { display: block; font-weight: 600; color: var(--sd-text); margin-bottom: 0.3rem; }
+.mocha-class-page .mocha-sample-card .body em { font-style: normal; font-size: 0.85rem; color: var(--sd-subtext); }
+
+.mocha-class-page .mocha-devices {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.62fr;
+  gap: clamp(1rem, 2vw, 1.8rem);
+  align-items: end;
+}
+.mocha-class-page .mocha-device { margin: 0; }
+.mocha-class-page .mocha-device figcaption {
+  margin-top: 0.7rem;
+  font-family: var(--sd-font-en);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--sd-subtext);
+  text-align: center;
+}
+
+/* 결과 — 텍스트 중심 */
+.mocha-class-page .mocha-result-lead { max-width: 72ch; }
+
+/* 반응형 — 모바일 1열 (가로 스크롤 방지) */
+@media (max-width: 900px) {
+  .mocha-class-page .mocha-cards,
+  .mocha-class-page .mocha-compare,
+  .mocha-class-page .mocha-split,
+  .mocha-class-page .mocha-ds,
+  .mocha-class-page .mocha-devices { grid-template-columns: 1fr; }
+  .mocha-class-page .mocha-swatches { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 본문 글씨 — 기존 시스템치과 본문과 동일한 최소 크기(20px) 유지 */
+.mocha-class-page .mocha-card-desc,
+.mocha-class-page .mocha-bullets li,
+.mocha-class-page .mocha-compare-desc,
+.mocha-class-page .mocha-note,
+.mocha-class-page .mocha-callout { font-size: 20px; }
+
+@media (max-width: 720px) {
+  .mocha-class-page .mocha-card-desc,
+  .mocha-class-page .mocha-bullets li,
+  .mocha-class-page .mocha-compare-desc,
+  .mocha-class-page .mocha-note,
+  .mocha-class-page .mocha-callout { font-size: 16px; }
+}

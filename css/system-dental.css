@@ -597,6 +597,12 @@
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
 }
+/* 회고 섹션 우측 이미지 — 뒤 배경(연한 박스) 제거 */
+.system-dental-retro .system-dental-figure {
+  background: transparent;
+  border-radius: 0;
+}
+
 .system-dental-mobile-gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -778,4 +784,97 @@
   width: 50%;
   height: 86%;
   z-index: 2;
+}
+
+/* =========================================================
+   문제 해결 방안 — p2_4·5·6·7 을 좌표대로 겹쳐 한 화면에 + 우측 sticky UX 포인트
+   · 좌표/사이즈는 이미지 영역(설계 1254px) 기준 비율(%)로 환산 → 화면 폭에 비례 축소
+   · 이미지는 원본 비율 그대로(자르지 않음), 4장 동시 표시
+   · 우측 UX 박스는 스크롤을 따라오다 이미지가 끝나면(섹션 종료) 다음 섹션으로 해제
+   · 설계 좌표(px): p2_4 left51 / p2_5 left357 / p2_6 left721 / p2_7 left1040,
+     사이즈 386×1649 · 212×1027 · 386×1729 · 214×1129, UX박스는 p2_7 우측 31px
+========================================================= */
+.system-dental-solution2 {
+  display: grid;
+  grid-template-columns: 65fr 35fr;    /* 이미지영역 : UX박스 — UX 박스 넉넉히(약 35%) */
+  column-gap: clamp(16px, 2vw, 31px);  /* p2_7 ↔ UX 박스 간격(최대 31px) */
+  align-items: stretch;                /* UX 칼럼이 이미지 높이만큼 늘어나 sticky 구간 확보 */
+}
+.sd-sol-stage { min-width: 0; }
+
+/* AS-IS / TO-BE 라벨 — 이미지 무대 위 2열 */
+.sd-sol-heads {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  margin-bottom: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+/* 이미지 무대 — 이 영역 width(설계 1254px) 기준으로 이미지 좌표 환산 */
+.sd-sol-imgs {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1174 / 1729; /* 무대 폭 1174(=p2_7 우측끝, TO-BE 추가 30px 이동) · 높이 1729(p2_6) 기준 */
+}
+.sd-sol-imgs .sd-shotabs { position: absolute; margin: 0; }
+.sd-sol-imgs .sd-shotabs img {
+  display: block;
+  width: 100%;
+  height: auto; /* 원본 비율 유지 — 자르지 않음 */
+  border-radius: 6px;
+}
+/* left/width = 무대 width(1204) 대비 %, bottom = 무대 height(1729) 대비 %,
+   작은 이미지는 짝 이미지 하단에 맞춰 겹침(z-index 위). TO-BE는 50px 좌측 이동 적용 */
+.sd-sol-imgs .sd-img4 { left: 4.344%;  width: 32.879%; top: 0;        z-index: 1; }
+.sd-sol-imgs .sd-img5 { left: 30.409%; width: 18.058%; bottom: 4.627%; z-index: 2; }
+.sd-sol-imgs .sd-img6 { left: 54.600%; width: 32.879%; top: 0;        z-index: 1; }
+.sd-sol-imgs .sd-img7 { left: 81.772%; width: 18.228%; bottom: 0;     z-index: 2; }
+
+/* 이미지 아래쪽 — 배경색으로 페이드되어 자연스럽게 끊기는 그라데이션 */
+.sd-sol-imgs::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+  background: linear-gradient(
+    to bottom,
+    rgba(238, 231, 227, 0) 0%,
+    rgba(238, 231, 227, 0.6) 32%,
+    rgba(238, 231, 227, 0.92) 58%,
+    var(--sd-bg) 80%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 우측 UX 포인트 — 스크롤 따라오는 sticky, #F1EBE8 박스 안에 표시 */
+.sd-sol-aside { min-width: 0; }
+.sd-sol-sticky {
+  position: sticky;
+  top: clamp(80px, 12vh, 120px);
+  background: #f1ebe8;
+  border-radius: 14px;
+  padding: clamp(1.8rem, 2.6vw, 2.6rem);
+}
+/* UX 개선 포인트 제목 — 박스 기준 가운데 정렬 */
+.sd-sol-sticky .system-dental-col-label {
+  display: block;
+  text-align: center;
+  margin-bottom: clamp(1.4rem, 2.4vw, 2rem);
+}
+
+/* 태블릿/모바일 — 1열, 이미지 일반 흐름으로 풀고 sticky 해제 */
+@media (max-width: 900px) {
+  .system-dental-solution2 { grid-template-columns: 1fr; row-gap: 2rem; }
+  .sd-sol-heads { grid-template-columns: 1fr; gap: 1rem; }
+  .sd-sol-imgs { aspect-ratio: auto; display: flex; flex-direction: column; gap: 1.2rem; align-items: center; }
+  .sd-sol-imgs::after { display: none; } /* 1열에서는 페이드 미적용 */
+  .sd-sol-imgs .sd-shotabs {
+    position: static;
+    width: 100% !important;
+    max-width: 460px;
+  }
+  .sd-sol-sticky { position: static; }
 }
