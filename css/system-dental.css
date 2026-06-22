@@ -7,13 +7,13 @@
 
 .system-dental-page {
   /* 컬러 시스템 */
-  --sd-bg: #eee7e3;
+  --sd-bg: #f1ebe8;
   --sd-bg-light: #f5f0ed;
-  --sd-primary: #a92d2e;
+  --sd-primary: #a52a2c;
   --sd-primary-light: #d33b3b;
-  --sd-text: #292626;
+  --sd-text: #222222;
   --sd-subtext: #66605d;
-  --sd-line: rgba(169, 45, 46, 0.22);
+  --sd-line: rgba(165, 42, 44, 0.22);
   --sd-white: #ffffff;
 
   /* 레이아웃 */
@@ -38,9 +38,9 @@
   padding: 0 var(--sd-pad);
 }
 
-/* 섹션 — 한 화면처럼 충분한 세로 여백 */
+/* 섹션 — 공통 세로 간격 토큰(데스크톱 120 / 태블릿 96 / 모바일 64) */
 .system-dental-section {
-  padding-block: clamp(72px, 12vh, 150px);
+  padding-block: var(--sec-pad);
 }
 
 /* 섹션 헤더 (좌측 소제목 + 우측 프로젝트명) */
@@ -70,8 +70,8 @@
 .system-dental-h2 {
   font-family: var(--sd-font-ko);
   font-weight: 600;
-  font-size: clamp(28px, 4.5vw, 40px);
-  line-height: 1.3;
+  font-size: var(--fs-h2);          /* 40px → 행간 120% */
+  line-height: var(--lh-lg);
   letter-spacing: -0.01em;
   color: var(--sd-text);
 }
@@ -79,13 +79,14 @@
   font-family: var(--sd-font-en);
   font-weight: 600;
   font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  line-height: var(--lh-md);        /* 소제목 130% */
   color: var(--sd-primary);
   letter-spacing: 0.02em;
 }
 .system-dental-body {
   font-size: clamp(0.98rem, 1.15vw, 1.12rem);
   font-weight: 300;
-  line-height: 1.9;
+  line-height: var(--lh-body);      /* 본문 ≤20px → 140% */
   color: var(--sd-subtext);
   max-width: 60ch;
 }
@@ -169,7 +170,7 @@
   grid-template-columns: 36fr 64fr;
   gap: clamp(1.5rem, 4vw, 4rem);
   align-items: center;
-  padding-block: clamp(80px, 14vh, 170px);
+  padding-block: var(--sec-pad);
 }
 .system-dental-overview-num {
   font-family: var(--sd-font-en);
@@ -182,8 +183,8 @@
 .system-dental-overview-title {
   font-family: var(--sd-font-ko);
   font-weight: 600;
-  font-size: clamp(30px, 5.5vw, 50px);
-  line-height: 1.25;
+  font-size: var(--fs-hero);        /* 히어로 50px → 행간 110% */
+  line-height: var(--lh-xl);
   letter-spacing: -0.02em;
   margin-bottom: 1.6rem;
 }
@@ -221,7 +222,7 @@
 .system-dental-overview-desc {
   font-size: clamp(0.98rem, 1.2vw, 1.12rem);
   font-weight: 300;
-  line-height: 1.9;
+  line-height: var(--lh-body);      /* 본문 140% */
   color: var(--sd-subtext);
   margin-bottom: 2.4rem;
 }
@@ -251,7 +252,7 @@
 .system-dental-info dd {
   font-size: 0.95rem;
   font-weight: 300;
-  line-height: 1.6;
+  line-height: var(--lh-body);
   color: var(--sd-text);
 }
 
@@ -295,8 +296,8 @@
 .system-dental-problem-title {
   font-family: var(--sd-font-ko);
   font-weight: 600;
-  font-size: clamp(28px, 4.5vw, 40px);
-  line-height: 1.3;
+  font-size: var(--fs-h2);          /* 40px → 행간 120% */
+  line-height: var(--lh-lg);
   letter-spacing: -0.01em;
   color: var(--sd-primary);
   margin-bottom: 36px; /* 메인카피 아래 36px 지점에 박스 */
@@ -318,7 +319,7 @@
   padding-left: 1.4rem;
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: var(--lh-body);
   color: var(--sd-text);
   white-space: nowrap; /* 불릿 문장 한 줄 유지 */
 }
@@ -347,7 +348,7 @@
   text-align: center;
   font-size: clamp(1rem, 1.25vw, 1.16rem);
   font-weight: 300;
-  line-height: 1.7;
+  line-height: var(--lh-body);
 }
 .system-dental-problem-conclusion strong { font-weight: 700; }
 /* 우측 전단지 이미지 — 가운데 정렬, 적당한 폭 */
@@ -383,7 +384,8 @@
 .system-dental-points-title {
   font-family: var(--sd-font-ko);
   font-weight: 600;
-  font-size: clamp(28px, 4.5vw, 40px);
+  font-size: var(--fs-h2);          /* 40px → 행간 120% */
+  line-height: var(--lh-lg);
   letter-spacing: -0.01em;
   margin-bottom: 1rem;
 }
@@ -429,7 +431,7 @@
 .system-dental-point-desc {
   font-size: 0.95rem;
   font-weight: 300;
-  line-height: 1.7;
+  line-height: var(--lh-body);
   color: var(--sd-subtext);
 }
 .system-dental-points-goal {
@@ -437,7 +439,7 @@
   text-align: center;
   font-size: clamp(1.05rem, 1.4vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.8;
+  line-height: var(--lh-md);        /* 20~30px → 130% */
   color: var(--sd-text);
   white-space: nowrap; /* 한 줄 유지(크기 축소 없이) */
 }
@@ -478,7 +480,7 @@
 .system-dental-col-desc {
   font-size: 0.96rem;
   font-weight: 300;
-  line-height: 1.8;
+  line-height: var(--lh-body);
   color: var(--sd-subtext);
   margin-bottom: 1.6rem;
 }
@@ -519,7 +521,7 @@
 .system-dental-ux-list p {
   font-size: 0.93rem;
   font-weight: 300;
-  line-height: 1.7;
+  line-height: var(--lh-body);
   color: var(--sd-subtext);
 }
 
@@ -840,9 +842,9 @@
   height: 30%;
   background: linear-gradient(
     to bottom,
-    rgba(238, 231, 227, 0) 0%,
-    rgba(238, 231, 227, 0.6) 32%,
-    rgba(238, 231, 227, 0.92) 58%,
+    rgba(241, 235, 232, 0) 0%,
+    rgba(241, 235, 232, 0.6) 32%,
+    rgba(241, 235, 232, 0.92) 58%,
     var(--sd-bg) 80%
   );
   pointer-events: none;
@@ -857,6 +859,9 @@
   background: #f1ebe8;
   border-radius: 14px;
   padding: clamp(1.8rem, 2.6vw, 2.6rem);
+  /* 섹션 배경(#F1EBE8)과 같은 색이라 사각형이 보이도록 은은한 테두리+그림자로 분리 */
+  border: 1px solid rgba(165, 42, 44, 0.14);
+  box-shadow: 0 8px 28px rgba(34, 34, 34, 0.07);
 }
 /* UX 개선 포인트 제목 — 박스 기준 가운데 정렬 */
 .sd-sol-sticky .system-dental-col-label {

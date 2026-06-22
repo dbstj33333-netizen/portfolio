@@ -5,39 +5,20 @@
    · 화이트 배경 + 웜 오렌지 포인트 + 차콜 본문 (레퍼런스와 동일)
 ========================================================= */
 .mocha-class-page {
-  --sd-bg: #ffffff;
-  --sd-bg-light: #faf4ee;
-  --sd-primary: #e08a45;
-  --sd-primary-light: #f2a45f;
-  --sd-text: #2c2622;
+  --sd-bg: #fff6ee;
+  --sd-bg-light: #fdeede;
+  --sd-primary: #f38f39;
+  --sd-primary-light: #f7a55c;
+  --sd-text: #222222;
   --sd-subtext: #6b635c;
-  --sd-line: rgba(224, 138, 69, 0.24);
+  --sd-line: rgba(243, 143, 57, 0.26);
   --sd-white: #ffffff;
 }
 
-/* Go to Website — 라운드 아웃라인 버튼(레퍼런스와 동일 형태) */
-.mocha-class-page .system-dental-link {
-  border-bottom: none;
-  border: 1.5px solid var(--sd-line);
-  border-radius: 999px;
-  padding: 0.55rem 1.3rem;
-  color: var(--sd-text);
-}
-.mocha-class-page .system-dental-link:hover,
-.mocha-class-page .system-dental-link:focus-visible {
-  border-color: var(--sd-primary);
-  color: var(--sd-primary);
-  gap: 0.9rem;
-}
-
-/* 개선 100% — 피치 톤 단일 pill */
+/* Go to Website : 시스템치과와 동일하게 밑줄 링크 사용(별도 박스 테두리 없음)
+   개선 100% : 시스템치과 태그(.system-dental-tags li)와 동일한 아웃라인 pill 사용
+   → 두 요소 모두 system-dental 기본 스타일을 그대로 따르므로 별도 override 없음 */
 .mocha-class-tags { margin-top: 1.2rem; }
-.mocha-class-tags li {
-  border: none;
-  background: rgba(224, 138, 69, 0.14);
-  color: #c9702f;
-  font-weight: 500;
-}
 
 /* =========================================================
    모카클래스 제작 과정 — 전용 레이아웃 헬퍼
