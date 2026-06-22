@@ -325,6 +325,319 @@
 /* 결과 — 텍스트 중심 */
 .mocha-class-page .mocha-result-lead { max-width: 72ch; }
 
+/* =========================================================
+   케이스스터디 상세 — 섹션별 추가 컴포넌트
+   · .mocha-class-page 한정, --sd-* 토큰 재사용, 새 라이브러리 없음
+   · 이미지는 contain(자르지 않음), 미존재 시 비율 유지 플레이스홀더
+========================================================= */
+
+/* 이미지/플레이스홀더 공통 박스 — 비율 고정 + contain */
+.mocha-class-page .mocha-shot {
+  position: relative;
+  width: 100%;
+  background: var(--sd-bg-light);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.mocha-class-page .mocha-shot > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;       /* 비율 그대로 — 자르지 않음 */
+}
+.mocha-class-page .mocha-shot > .mocha-ph {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  border: 1px dashed var(--sd-line);
+  border-radius: 10px;
+}
+
+/* 이미지 위 주석 오버레이(원형 포인트 + 오렌지 영역) 컨테이너 */
+.mocha-class-page .mocha-shotwrap { position: relative; }
+.mocha-class-page .mocha-point {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+  color: #fff;
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px rgba(243, 143, 57, 0.18);
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+.mocha-class-page .mocha-region {
+  position: absolute;
+  border: 2px solid var(--sd-primary);
+  border-radius: 8px;
+  background: rgba(243, 143, 57, 0.06);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 주석 레이아웃 — 이미지 + 번호 설명(점선 원형 포인트) */
+.mocha-class-page .mocha-annot {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(1.6rem, 3.5vw, 3.5rem);
+  align-items: center;
+}
+.mocha-class-page .mocha-annot-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.mocha-class-page .mocha-annot-list li {
+  position: relative;
+  padding-left: 3rem;
+}
+.mocha-class-page .mocha-annot-list .no {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+  color: #fff;
+  font-family: var(--sd-font-en);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 항목 사이 점선 연결 모티프 */
+.mocha-class-page .mocha-annot-list .no::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 2px);
+  height: calc(1.4rem - 4px);
+  border-left: 2px dotted var(--sd-line);
+}
+.mocha-class-page .mocha-annot-list li:last-child .no::after { display: none; }
+.mocha-class-page .mocha-annot-list h4 {
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--sd-text);
+  margin-bottom: 0.3rem;
+}
+.mocha-class-page .mocha-annot-list p {
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--sd-subtext);
+}
+
+/* 두 화면 겹침 — 메인(좌상) + 필터(우하) */
+.mocha-class-page .mocha-overlap {
+  position: relative;
+  padding-bottom: 6%;
+  padding-right: 4%;
+}
+.mocha-class-page .mocha-overlap .mocha-overlap-main { width: 74%; }
+.mocha-class-page .mocha-overlap .mocha-overlap-sub {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 40%;
+  box-shadow: 0 14px 34px rgba(34, 34, 34, 0.14);
+  border-radius: 10px;
+}
+
+/* 전략 박스 — 연한 피치 배경 + 약한 그림자, 번호 좌측(참고화면과 동일) */
+.mocha-class-page .mocha-card--peach {
+  background: var(--sd-bg-light);
+  border: 1px solid var(--sd-line);
+  box-shadow: 7px 9px 18px rgba(214, 118, 31, 0.16);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+.mocha-class-page .mocha-card--peach .mocha-card-num {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  margin: 0;
+}
+.mocha-class-page .mocha-card--peach .mocha-card-title { margin-bottom: 0.25rem; }
+
+/* TO-BE 밝은 강조 박스 */
+.mocha-class-page .mocha-tobe-box {
+  background: var(--sd-white);
+  border: 1px solid var(--sd-line);
+  border-radius: 16px;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  box-shadow: 0 10px 30px rgba(243, 143, 57, 0.1);
+}
+
+/* 사선 분할 느낌(필터 AS-IS / TO-BE) — 가운데 사선 구분선 */
+.mocha-class-page .mocha-diagonal {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.6rem, 3.5vw, 3.6rem);
+  align-items: start;
+}
+.mocha-class-page .mocha-diagonal::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -2%;
+  bottom: -2%;
+  width: 2px;
+  background: linear-gradient(160deg, transparent, var(--sd-line) 20%, var(--sd-line) 80%, transparent);
+  transform: rotate(8deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* 개선 결과 — 좌 텍스트 / 우 PC+모바일 목업 겹침 */
+.mocha-class-page .mocha-result {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1.8rem, 4vw, 4rem);
+  align-items: center;
+}
+.mocha-class-page .mocha-result-visual {
+  position: relative;
+  padding-bottom: 8%;
+  padding-left: 4%;
+}
+.mocha-class-page .mocha-result-visual .result-desktop { width: 100%; }
+.mocha-class-page .mocha-result-visual .result-mobile {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 26%;
+  box-shadow: 0 14px 34px rgba(34, 34, 34, 0.16);
+  border-radius: 14px;
+}
+.mocha-class-page .mocha-effects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  margin-top: clamp(2.4rem, 5vh, 4rem);
+}
+
+/* 주석 깃발 — 오렌지 원형 포인트 + 점선 연결 + 캡션(참고 화면의 점선·포인트 재현) */
+.mocha-class-page .mocha-flags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.8rem, 5.5vh, 3.6rem);
+}
+.mocha-class-page .mocha-flags li {
+  position: relative;
+  padding-left: 2.6rem;
+}
+.mocha-class-page .mocha-flags li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+  box-shadow: 0 0 0 4px rgba(243, 143, 57, 0.18);
+}
+.mocha-class-page .mocha-flags li::after {
+  content: "";
+  position: absolute;
+  left: -2.2rem;
+  top: calc(0.35em + 6px);
+  width: 2.2rem;
+  border-top: 2px dotted var(--sd-line);
+}
+.mocha-class-page .mocha-flags strong {
+  display: block;
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--sd-text);
+}
+.mocha-class-page .mocha-flags span {
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--sd-subtext);
+}
+/* 좌측 스크린샷 세로 스택 */
+.mocha-class-page .mocha-stack { display: flex; flex-direction: column; gap: clamp(1.2rem, 2.5vw, 1.8rem); }
+@media (max-width: 900px) {
+  .mocha-class-page .mocha-flags li::after { display: none; } /* 모바일 점선 단순화 */
+}
+
+/* 제작 과정 보드 — 완성 이미지를 그대로 풀폭으로(반응형: 폭에 맞춰 비례 축소) */
+.mocha-class-page .mocha-board { margin: 0; }
+.mocha-class-page .mocha-board img {
+  display: block;
+  width: 100%;
+  height: auto;          /* 원본 비율 유지 — 자르지 않음 */
+  border-radius: 10px;
+}
+/* 보드 이미지는 자체 여백이 있으므로 섹션 세로 간격을 줄여 빈 공간 과다 방지 */
+.mocha-class-page .mocha-board-section { padding-block: clamp(14px, 3vh, 40px); }
+
+/* 회고 — 연한 피치 배경 구분 */
+.mocha-class-page .mocha-retro {
+  background: var(--sd-bg-light);
+  border-top: 1px solid var(--sd-line);
+  border-radius: 16px;
+  padding: clamp(2.4rem, 5vw, 4rem);
+}
+.mocha-class-page .mocha-retro-lead { max-width: 70ch; }
+
+/* 반응형 — 태블릿/모바일 (1열, 가로 스크롤 방지, 점선 단순화) */
+@media (max-width: 900px) {
+  .mocha-class-page .mocha-annot,
+  .mocha-class-page .mocha-diagonal,
+  .mocha-class-page .mocha-result,
+  .mocha-class-page .mocha-effects { grid-template-columns: 1fr; }
+
+  /* 겹침 → 정상 흐름(세로) */
+  .mocha-class-page .mocha-overlap { padding: 0; }
+  .mocha-class-page .mocha-overlap .mocha-overlap-main { width: 100%; }
+  .mocha-class-page .mocha-overlap .mocha-overlap-sub {
+    position: static;
+    width: 64%;
+    margin: 1rem auto 0;
+  }
+  .mocha-class-page .mocha-result-visual { padding: 0; }
+  .mocha-class-page .mocha-result-visual .result-mobile {
+    position: static;
+    width: 50%;
+    margin: 1rem auto 0;
+  }
+  /* 사선 구분선 제거 */
+  .mocha-class-page .mocha-diagonal::before { display: none; }
+  /* 이미지 위 영역 강조는 모바일에서 숨김(설명은 이미지 아래로) */
+  .mocha-class-page .mocha-region { display: none; }
+}
+
+/* 새 컴포넌트 본문 — 20px 기준 유지 */
+.mocha-class-page .mocha-annot-list p,
+.mocha-class-page .mocha-result-lead,
+.mocha-class-page .mocha-retro-lead { font-size: 20px; }
+@media (max-width: 720px) {
+  .mocha-class-page .mocha-annot-list p,
+  .mocha-class-page .mocha-result-lead,
+  .mocha-class-page .mocha-retro-lead { font-size: 16px; }
+}
+
 /* 반응형 — 모바일 1열 (가로 스크롤 방지) */
 @media (max-width: 900px) {
   .mocha-class-page .mocha-cards,
