@@ -431,7 +431,7 @@
                 사용자가 원하는 클래스를 더 쉽게 찾을 수 있도록 리디자인한 UX 개선 프로젝트입니다.
               </p>
               <dl class="system-dental-info system-dental-reveal" data-sd-delay="0.25">
-                <div><dt>Role</dt><dd>UI/UX 디자인</dd></div>
+                <div><dt>Role</dt><dd>UX 개선, UI/UX 디자인</dd></div>
                 <div><dt>Tools</dt><dd>Figma, Photoshop, HTML, CSS, VS Code</dd></div>
                 <div><dt>AI</dt><dd>Codex</dd></div>
                 <div><dt>Output</dt><dd>web, 반응형</dd></div>
@@ -461,26 +461,39 @@
                 수업 형태, 지역, 카테고리, 이용 목적 등 서로 다른 탐색 기준이 한 화면에 혼재되어
                 원하는 클래스를 찾는 경로가 명확하지 않았습니다.
               </p>
-              <div class="mocha-annot">
-                <div class="mocha-stack system-dental-reveal-img">
+              <div class="mocha-annot mc-callout system-dental-reveal-img">
+                <!-- 메인 화면(상단·좌측) — 네비/카테고리 영역 강조 -->
+                <div class="mc-shot mc-shot--main">
                   <div class="mocha-shotwrap">
                     <figure class="mocha-figure">
                       <img src="assets/images/sub1_1.png" alt="기존 모카클래스 메인 화면 — 단체 클래스 배너와 카테고리, 클래스 목록이 한 화면에 나열" loading="lazy" />
                     </figure>
-                    <span class="mocha-region" style="left:1.5%;top:2%;width:97%;height:13%;"></span>
-                    <span class="mocha-region" style="left:1.5%;top:37%;width:97%;height:20%;"></span>
+                    <span class="mocha-region" style="left:1.5%;top:1.5%;width:97%;height:9%;"></span>
+                    <span class="mocha-region" style="left:1.5%;top:25%;width:97%;height:14%;"></span>
                   </div>
+                </div>
+                <!-- 필터 화면(하단·우측, 더 넓게) -->
+                <div class="mc-shot mc-shot--filter">
                   <div class="mocha-shotwrap">
                     <figure class="mocha-figure">
                       <img src="assets/images/sub1_2.png" alt="기존 모카클래스 필터 화면 — 지역·카테고리·요일·난이도 등 여러 조건이 동시에 노출" loading="lazy" />
                     </figure>
-                    <span class="mocha-region" style="left:1.5%;top:2%;width:97%;height:95%;"></span>
+                    <span class="mocha-region" style="left:1%;top:2%;width:98%;height:94%;"></span>
                   </div>
                 </div>
-                <ul class="mocha-flags system-dental-reveal" data-sd-delay="0.1">
-                  <li><strong>탐색 기준이 불분명한 네비게이션</strong></li>
-                  <li><strong>서로 다른 기준이 혼재된 카테고리</strong></li>
-                  <li><strong>콘텐츠보다 과도하게 강조된 필터 영역</strong></li>
+
+                <!-- 연결 점선(ㄱ자) — viewBox 0~100, 비율 왜곡 무시 + 선 두께 고정 -->
+                <svg class="mc-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  <polyline class="mc-line" points="37,5.5 73,5.5" />
+                  <polyline class="mc-line" points="37,27 60,27 60,34 73,34" />
+                  <polyline class="mc-line" points="70,80 72.5,80 72.5,88 75,88" />
+                </svg>
+
+                <!-- 우측 라벨(끝점 원형 포인트) -->
+                <ul class="mocha-flags mc-labels">
+                  <li class="mc-label mc-label--1"><strong>탐색 기준이 불분명한 네비게이션</strong></li>
+                  <li class="mc-label mc-label--2"><strong>서로 다른 기준이 혼재된 카테고리</strong></li>
+                  <li class="mc-label mc-label--3"><strong>콘텐츠보다 과도하게 강조된 필터 영역</strong></li>
                 </ul>
               </div>
             </div>

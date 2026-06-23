@@ -1086,13 +1086,13 @@ em {
   flex-shrink: 0;
   margin-bottom: 45px; /* 카드 최하단보다 45px 위 */
 }
-/* 'Project' 글씨 아래 45px — 너비 886px, #3a7ffe 직선 */
+/* 'Project' 글씨 아래 45px — 글씨 너비에 맞춘 #3a7ffe 직선 */
 .project-title::after {
   content: "";
   position: absolute;
   left: 0;
   top: calc(100% + 45px);
-  width: min(886px, 90vw);
+  width: 100%;
   height: 1px;
   background: #3a7ffe;
 }

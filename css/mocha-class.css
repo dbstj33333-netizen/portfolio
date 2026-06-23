@@ -388,6 +388,104 @@
   gap: clamp(1.6rem, 3.5vw, 3.5rem);
   align-items: center;
 }
+
+/* =========================================================
+   콜아웃 스테이지 — 스크린샷 대각선 스택 + 우측 라벨 + ㄱ자 점선
+   (좌표는 % 기반, 모든 요소가 스테이지 비율에 맞춰 함께 스케일)
+========================================================= */
+.mocha-class-page .mc-callout {
+  display: block;            /* grid 해제 */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1060 / 720;  /* 시안 비율 — 내부 요소 % 기준 */
+}
+/* 스크린샷 공통 — 그림자/모서리 */
+.mocha-class-page .mc-shot {
+  position: absolute;
+  z-index: 1;
+}
+.mocha-class-page .mc-shot .mocha-figure,
+.mocha-class-page .mc-shot .mocha-figure img {
+  border-radius: 10px;
+}
+.mocha-class-page .mc-shot .mocha-figure {
+  box-shadow: 0 14px 38px rgba(34, 34, 34, 0.14);
+  overflow: hidden;
+}
+/* 메인 화면 — 상단·좌측 */
+.mocha-class-page .mc-shot--main {
+  left: 1%;
+  top: 0;
+  width: 37%;
+}
+/* 필터 화면 — 하단·우측(더 넓게) */
+.mocha-class-page .mc-shot--filter {
+  left: 9%;
+  top: 60%;
+  width: 62%;
+}
+
+/* 연결 점선 SVG — 스테이지 전체를 덮음 */
+.mocha-class-page .mc-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  overflow: visible;
+}
+.mocha-class-page .mc-line {
+  fill: none;
+  stroke: var(--sd-primary);
+  stroke-width: 1.6;
+  stroke-dasharray: 4 4;
+  vector-effect: non-scaling-stroke;  /* 비율 왜곡에도 선 두께/점선 일정 */
+}
+
+/* 우측 라벨 — 절대배치 + 끝점 원형 포인트 */
+.mocha-class-page .mc-labels {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 4;
+  pointer-events: none;
+}
+.mocha-class-page .mc-labels .mc-label {
+  position: absolute;
+  padding-left: 1.4rem;
+  width: 26%;
+  margin: 0;
+}
+/* 끝점 원(라벨 좌측) */
+.mocha-class-page .mc-labels .mc-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--sd-primary);
+  box-shadow: 0 0 0 4px rgba(243, 143, 57, 0.18);
+}
+/* 라벨 점선 연결 모티프(li::after)는 SVG로 대체 → 숨김 */
+.mocha-class-page .mc-labels .mc-label::after { display: none; }
+.mocha-class-page .mc-labels .mc-label strong {
+  display: block;
+  font-family: var(--sd-font-ko);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--sd-text);
+  white-space: nowrap;
+}
+/* 각 라벨 세로 위치 — SVG 점선 끝점과 정렬 */
+.mocha-class-page .mc-label--1 { left: 73%; top: 3%; }
+.mocha-class-page .mc-label--2 { left: 73%; top: 31%; }
+.mocha-class-page .mc-label--3 { left: 75%; top: 85%; }
 .mocha-class-page .mocha-annot-list {
   list-style: none;
   margin: 0;
