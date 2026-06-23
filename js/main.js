@@ -763,27 +763,38 @@
     /* 개선 결과 — 최종 화면 3종이 같은 자리에서 한 장씩 순차적으로 떠오름(스티키 스택).
        데스크탑 + 모션 허용 시에만 스택 모드(.is-seq); 그 외엔 세로 나열 폴백. */
     var seqMotionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.querySelectorAll(".mc-seq").forEach(function (seq) {
+    document.querySelectorAll(".mc-result-pin").forEach(function (pin) {
       if (!seqMotionOk || window.innerWidth <= 900) return;
-      var seqImgs = gsap.utils.toArray(seq.querySelectorAll(".mc-seq-img"));
-      if (!seqImgs.length) return;
-      seq.classList.add("is-seq");
-      gsap.set(seqImgs, { opacity: 0, y: 64 });
-      var seqTL = gsap.timeline({
+      var monitor = pin.querySelector(".mc-monitor");
+      var shots = gsap.utils.toArray(pin.querySelectorAll(".mc-shot"));
+      if (!monitor || shots.length < 2) return;
+      monitor.classList.add("is-monitor");       // 폴백 스크롤 해제 → JS가 제어
+      // 헤더+좌측 문구는 pin으로 고정. 모니터 안에서 한 장씩 위로 스크롤되고,
+      // 한 장이 끝까지 올라가면 다음 장으로 전환. 4장 끝나면 pin 해제 → 다음 섹션.
+      gsap.set(shots, { autoAlpha: 0, y: 0 });
+      gsap.set(shots[0], { autoAlpha: 1 });
+      var mTL = gsap.timeline({
         scrollTrigger: {
-          trigger: seq,
+          trigger: pin,
           start: "top top",
-          end: "bottom bottom",
-          scrub: 0.6,
+          end: "+=" + (shots.length * 70) + "%", // 장당 약 70vh — 더 빠르게
+          pin: true,
+          scrub: 0.5,
           invalidateOnRefresh: true,
         },
       });
-      seqImgs.forEach(function (img) {
-        seqTL
-          .fromTo(img,
-            { opacity: 0, y: 64 },
-            { opacity: 1, y: 0, ease: "power2.out", duration: 1 })
-          .to({}, { duration: 0.55 }); // 다음 장 등장 전 잠시 유지
+      shots.forEach(function (shot, i) {
+        if (i > 0) {
+          mTL.set(shots[i - 1], { autoAlpha: 0 });
+          mTL.set(shot, { autoAlpha: 1, y: 0 });
+        }
+        // 이미지가 모니터보다 길면 그만큼 위로 스크롤(짧으면 그대로 표시)
+        mTL.to(shot, {
+          y: function () { return Math.min(0, monitor.clientHeight - shot.offsetHeight); },
+          ease: "none",
+          duration: 1,
+        });
+        mTL.to({}, { duration: 0.12 }); // 바닥에서 잠깐 멈춤
       });
     });
 
@@ -794,26 +805,30 @@
       var arts = gsap.utils.toArray(water.querySelectorAll(".gd-art"));
       if (!arts.length) return;
       water.classList.add("is-water");
-      gsap.set(arts, { opacity: 0, scale: 0.55, y: 170, xPercent: 0, filter: "blur(16px)" });
+      var stage = water.querySelector(".gd-water-stage");
+      // 상단 제목과 겹치지 않도록 작품을 중앙보다 아래로 내림
+      var dropY = Math.round(window.innerHeight * 0.1);
+      gsap.set(arts, { opacity: 0, scale: 0.55, y: dropY + 170, xPercent: 0, filter: "blur(16px)" });
       var wTL = gsap.timeline({
         scrollTrigger: {
-          trigger: water,
+          trigger: stage,
           start: "top top",
-          end: "bottom bottom",
-          scrub: 0.7,
+          end: "+=" + (arts.length * 150) + "%", // 장당 약 150vh — 더 천천히 떠오름
+          pin: true,
+          scrub: 0.8,
           invalidateOnRefresh: true,
         },
       });
       arts.forEach(function (art, i) {
-        // 물속에서 떠오르며 확대(상한 scale:1 = CSS 최대 크기)
+        // 물속에서 떠오르며 확대(상한 scale:1 = CSS 최대 크기), 중앙보다 아래(dropY)에 안착
         wTL.fromTo(art,
-          { opacity: 0, scale: 0.55, y: 170, xPercent: 0, filter: "blur(16px)" },
-          { opacity: 1, scale: 1, y: 0, xPercent: 0, filter: "blur(0px)", ease: "power2.out", duration: 1.1 },
-          i === 0 ? 0 : "-=0.45" // 이전 장이 좌측으로 빠지는 동안 다음 장이 떠오름
+          { opacity: 0, scale: 0.55, y: dropY + 170, xPercent: 0, filter: "blur(16px)" },
+          { opacity: 1, scale: 1, y: dropY, xPercent: 0, filter: "blur(0px)", ease: "power2.out", duration: 1.3 },
+          i === 0 ? 0 : "-=0.5" // 이전 장이 좌측으로 빠지는 동안 다음 장이 떠오름
         );
-        wTL.to(art, { duration: 0.5 }); // 잠시 머무름
+        wTL.to(art, { duration: 0.7 }); // 잠시 머무름
         if (i < arts.length - 1) {
-          wTL.to(art, { xPercent: -155, opacity: 0, scale: 0.96, filter: "blur(8px)", ease: "power1.in", duration: 0.95 });
+          wTL.to(art, { xPercent: -155, y: dropY, opacity: 0, scale: 0.96, filter: "blur(8px)", ease: "power1.in", duration: 1.0 });
         }
       });
     });
@@ -831,6 +846,36 @@
     ScrollTrigger.refresh();
     measure();
   });
+  // 지연 로드(lazy) 이미지가 스크롤 중 로드되면 레이아웃이 바뀌어 핀 위치가 어긋남
+  //  → 각 이미지 로드 완료 시 ScrollTrigger 위치 재계산(핀이 엉뚱한 섹션에서 발동하는 문제 방지)
+  document.querySelectorAll("img").forEach(function (im) {
+    if (im.complete) return;
+    im.addEventListener("load", function () { ScrollTrigger.refresh(); }, { once: true });
+  });
   // 핀 등 레이아웃 변경 후에도 섹션 좌표 동기화
   ScrollTrigger.addEventListener("refresh", measure);
+})();
+
+/* =========================================================
+   윤슬 — 인트로 수면 위 햇빛 반짝임 글린트 동적 생성
+   (작은 가로 글린트들이 무작위 위치·시차로 깜빡임)
+========================================================= */
+(function () {
+  "use strict";
+  var layer = document.querySelector(".intro-yunseul");
+  if (!layer) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var N = 30;
+  var frag = document.createDocumentFragment();
+  for (var i = 0; i < N; i++) {
+    var s = document.createElement("span");
+    s.style.left = (Math.random() * 100).toFixed(2) + "%";
+    s.style.top = (Math.random() * 100).toFixed(2) + "%";
+    s.style.setProperty("--w", (10 + Math.random() * 22).toFixed(0) + "px");
+    s.style.setProperty("--d", (2.6 + Math.random() * 2.8).toFixed(2) + "s");
+    s.style.setProperty("--delay", (Math.random() * 5).toFixed(2) + "s");
+    s.style.setProperty("--o", (0.5 + Math.random() * 0.45).toFixed(2));
+    frag.appendChild(s);
+  }
+  layer.appendChild(frag);
 })();

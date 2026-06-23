@@ -108,16 +108,19 @@
         <div class="intro-text intro-text--blur">
           <p class="intro-name">LEE YUN SEO</p>
           <p class="intro-sub">UIUX DESIGNER PORTFOLIO</p>
-          <h1 class="intro-title">Make it Clear.</h1>
+          <h1 class="intro-title">Make It Clear</h1>
         </div>
 
         <!-- (2) 렌즈 안에서만 보이는 선명한 텍스트 레이어 (clip-path 마스킹) -->
         <div class="intro-text intro-text--clear">
           <p class="intro-name">LEE YUN SEO</p>
           <p class="intro-sub">UIUX DESIGNER PORTFOLIO</p>
-          <h1 class="intro-title">Make it Clear.</h1>
+          <h1 class="intro-title">Make It Clear</h1>
         </div>
       </div>
+
+      <!-- 윤슬 — 물빛이 반짝이는 잔물결 글린트(JS가 동적 생성) -->
+      <div class="intro-yunseul" aria-hidden="true"></div>
 
       <!-- 유리 렌즈: 커서를 따라다니며 원 안의 글자를 굴절·색수차·블러로 비춤 -->
       <div class="intro-lens" aria-hidden="true">
@@ -127,7 +130,7 @@
             <div class="intro-text">
               <p class="intro-name">LEE YUN SEO</p>
               <p class="intro-sub">UIUX DESIGNER PORTFOLIO</p>
-              <h1 class="intro-title">Make it Clear.</h1>
+              <h1 class="intro-title">Make It Clear</h1>
             </div>
           </div>
         </div>
@@ -382,17 +385,6 @@
             </span>
           </a>
 
-          <a class="project-card" href="#proj-app">
-            <span class="project-card-thumb project-card-thumb--apps">
-              <img src="assets/images/pro3_1.png" alt="러닝 기록 앱 Tracksy 아이콘" loading="lazy" />
-              <img src="assets/images/pro3_2.png" alt="디지털 디톡스 앱 끄숑 아이콘" loading="lazy" />
-            </span>
-            <span class="project-card-body">
-              <span class="project-card-name">앱 UX/UI 기획 및 제작 프로젝트</span>
-              <span class="project-card-sub">러닝 기록 앱 ‘Tracksy’<br />디지털 디톡스 앱 ‘끄숑’ · 출시예정</span>
-            </span>
-          </a>
-
           <a class="project-card" href="#proj-graphic">
             <span class="project-card-thumb">
               <img src="assets/images/pro_4.png" alt="그래픽 디자인 작업 썸네일" loading="lazy" />
@@ -632,72 +624,39 @@
             </div>
           </section>
 
-          <!-- 6) 개선 결과 -->
-          <section class="system-dental-section" aria-labelledby="mc2-result-title">
-            <div class="system-dental-wrap">
-              <div class="system-dental-sectionhead system-dental-reveal">
-                <span class="system-dental-eyebrow">개선 결과</span>
+          <!-- 6) 개선 결과 및 배운 점 — 좌측 문구 고정 / 우측 모니터 안에서 이미지 스크롤 -->
+          <section class="system-dental-section mc-result-sec" aria-labelledby="mc2-result-title">
+            <div class="system-dental-wrap mc-result-pin">
+              <div class="system-dental-sectionhead">
+                <span class="system-dental-eyebrow">개선 결과 및 배운 점</span>
                 <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
               </div>
-              <div class="system-dental-reveal">
-                <h2 id="mc2-result-title" class="system-dental-h2" style="margin-bottom:1.4rem;">
-                  정돈된 클래스 탐색 경험
-                </h2>
-                <p class="system-dental-body mocha-result-lead" style="margin-bottom:0.5rem;">
-                  탐색 기준과 콘텐츠 우선순위를 정리해 사용자가 원하는 클래스와 주요 신청 경로를
-                  쉽게 확인할 수 있도록 개선했습니다.
-                </p>
-              </div>
-              <!-- 최종 화면 3종 — 같은 자리에서 한 장씩 순차적으로 떠오름(스티키 스택) -->
-              <div class="mc-seq">
-                <div class="mc-seq-frame">
-                  <figure class="mc-seq-img">
-                    <img src="assets/images/sub1_img5.png" alt="개선된 모카클래스 메인 페이지 — 모이는 시간이 특별한 경험이 되도록" loading="lazy" />
-                  </figure>
-                  <figure class="mc-seq-img">
-                    <img src="assets/images/sub1_img6.png" alt="개선된 모카클래스 오프라인 클래스 탐색 페이지 — 지도 기반 클래스 찾기" loading="lazy" />
-                  </figure>
-                  <figure class="mc-seq-img">
-                    <img src="assets/images/sub1_img7.png" alt="개선된 모카클래스 소개 페이지 — 일상의 따뜻한 휴식과 새로운 경험" loading="lazy" />
-                  </figure>
+              <div class="mc-result2">
+                <div class="mc-result2-text">
+                  <h2 id="mc2-result-title" class="system-dental-h2" style="margin-bottom:1.4rem;">
+                    정돈된 클래스 탐색 경험
+                  </h2>
+                  <p class="system-dental-body mocha-result-lead">
+                    탐색 기준과 콘텐츠 우선순위를 정리해 사용자가 원하는 클래스와 주요 신청 경로를
+                    쉽게 확인할 수 있도록 개선했습니다.
+                  </p>
+                  <p class="system-dental-body mocha-result-lead" style="margin-top:1.4rem;">
+                    기능을 많이 제공하는 것보다 사용자가 어떤 기준부터 선택해야 하는지 명확하게 안내하는 것이
+                    중요했습니다. 또한 반복되는 요소를 단순히 제거하기보다 서비스 목적과 사용자 흐름을 함께
+                    고려해야 한다는 점을 배웠습니다.
+                  </p>
                 </div>
-              </div>
-              <div class="mocha-effects">
-                <div class="mocha-card mocha-card--peach system-dental-reveal-img">
-                  <p class="mocha-card-num">01</p>
-                  <h3 class="mocha-card-title">명확한 탐색 기준</h3>
-                  <p class="mocha-card-desc">목적에 맞는 탐색 경로 제공</p>
+                <div class="mc-result2-stage">
+                  <!-- 모니터 영역 — 4장을 세로 스트립으로 이어 스크롤로 위로 올림 -->
+                  <div class="mc-monitor">
+                    <div class="mc-monitor-screen">
+                      <img class="mc-shot" src="assets/images/sub1_img5.png" alt="개선된 모카클래스 메인 페이지" />
+                      <img class="mc-shot" src="assets/images/sub1_img6.png" alt="개선된 모카클래스 오프라인 클래스 탐색 페이지" />
+                      <img class="mc-shot" src="assets/images/sub1_img7.png" alt="개선된 모카클래스 소개 페이지" />
+                      <img class="mc-shot" src="assets/images/sub1_img8.png" alt="개선된 모카클래스 추가 화면" />
+                    </div>
+                  </div>
                 </div>
-                <div class="mocha-card mocha-card--peach system-dental-reveal-img" data-sd-delay="0.1">
-                  <p class="mocha-card-num">02</p>
-                  <h3 class="mocha-card-title">정돈된 콘텐츠 위계</h3>
-                  <p class="mocha-card-desc">핵심 클래스 중심으로 정보 구성</p>
-                </div>
-                <div class="mocha-card mocha-card--peach system-dental-reveal-img" data-sd-delay="0.2">
-                  <p class="mocha-card-num">03</p>
-                  <h3 class="mocha-card-title">자연스러운 신청 흐름</h3>
-                  <p class="mocha-card-desc">탐색에서 주요 CTA까지 연결</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- 7) 회고 및 배운 점 -->
-          <section class="system-dental-section" aria-labelledby="mc2-retro-title">
-            <div class="system-dental-wrap">
-              <div class="mocha-retro system-dental-reveal">
-                <div class="system-dental-sectionhead" style="margin-bottom:1.4rem;">
-                  <span class="system-dental-eyebrow">회고 및 배운 점</span>
-                  <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
-                </div>
-                <h2 id="mc2-retro-title" class="system-dental-h2">
-                  기능의 수보다 중요한 것은 명확한 선택 기준
-                </h2>
-                <p class="system-dental-body mocha-retro-lead" style="margin-top:1.6rem;">
-                  다양한 기능을 제공하는 것보다 사용자가 어떤 기준부터 선택해야 하는지 명확하게 안내하는 것이
-                  중요했습니다. 또한 반복되는 요소를 단순히 제거하기보다 서비스 목적과 사용자 흐름을 고려해
-                  역할과 우선순위를 정리해야 한다는 점을 배웠습니다.
-                </p>
               </div>
             </div>
           </section>
@@ -918,117 +877,18 @@
         </div>
       </section>
 
-      <!-- 03 · 앱 UX/UI 기획 및 제작 프로젝트 (러닝 + 디톡스) -->
-      <section class="proj-embed" id="proj-app">
-        <div class="cs">
-          <header class="cs-hero">
-            <span class="cs-category">Mobile App · UX/UI 기획·제작</span>
-            <h1 class="cs-title">앱 UX/UI 기획 및 제작 프로젝트</h1>
-            <p class="cs-summary">
-              사용자 니즈에서 출발해 기획 · 정보구조 · UX/UI · 프로토타입까지 진행한
-              앱 프로젝트 모음입니다.
-            </p>
-          </header>
-
-          <!-- 앱 01 · 러닝 기록 앱 -->
-          <article class="cs-app">
-            <h2 class="cs-app-title">
-              <span class="cs-app-num">App 01</span>러닝 기록 앱 기획 및 제작
-              <span class="cs-app-tag">개인 프로젝트 · Figma</span>
-            </h2>
-            <figure class="cs-figure"><div class="cs-img-placeholder">COVER IMAGE</div></figure>
-            <section class="cs-section">
-              <p class="cs-section-num">01</p>
-              <h3 class="cs-section-title">Overview <span class="ko">프로젝트 개요</span></h3>
-              <p class="cs-text">어떤 앱인지, 왜 이 앱을 기획하게 되었는지 설명합니다.</p>
-            </section>
-            <section class="cs-section">
-              <p class="cs-section-num">02</p>
-              <h3 class="cs-section-title">Problem <span class="ko">문제 정의</span></h3>
-              <p class="cs-text">타깃 사용자의 니즈와 기존 서비스에서 느낀 불편을 정리합니다.</p>
-              <ul class="cs-list">
-                <li>문제점 1 — 무엇이 어떻게 불편했는지</li>
-                <li>문제점 2 — 데이터/관찰 근거가 있다면 함께</li>
-              </ul>
-            </section>
-            <section class="cs-section">
-              <p class="cs-section-num">03</p>
-              <h3 class="cs-section-title">Design <span class="ko">주요 화면</span></h3>
-              <p class="cs-text">앱의 주요 화면을 소개합니다.</p>
-              <div class="cs-gallery">
-                <div class="cs-img-placeholder">SCREEN 1</div>
-                <div class="cs-img-placeholder">SCREEN 2</div>
-                <div class="cs-img-placeholder">SCREEN 3</div>
-              </div>
-            </section>
-            <section class="cs-section">
-              <p class="cs-section-num">04</p>
-              <h3 class="cs-section-title">Result &amp; Reflection <span class="ko">결과와 회고</span></h3>
-              <p class="cs-text">완성한 결과물과 프로젝트를 통해 배운 점을 정리합니다.</p>
-            </section>
-          </article>
-
-          <!-- 앱 02 · 디지털 디톡스 앱 -->
-          <article class="cs-app">
-            <h2 class="cs-app-title">
-              <span class="cs-app-num">App 02</span>디지털 디톡스 앱 기획 및 제작
-              <span class="cs-app-tag">개인 프로젝트 · Figma</span>
-            </h2>
-            <figure class="cs-figure"><div class="cs-img-placeholder">COVER IMAGE</div></figure>
-            <section class="cs-section">
-              <p class="cs-section-num">01</p>
-              <h3 class="cs-section-title">Overview <span class="ko">프로젝트 개요</span></h3>
-              <p class="cs-text">어떤 앱인지, 왜 이 앱을 기획하게 되었는지 설명합니다.</p>
-            </section>
-            <section class="cs-section">
-              <p class="cs-section-num">02</p>
-              <h3 class="cs-section-title">Problem <span class="ko">문제 정의</span></h3>
-              <p class="cs-text">타깃 사용자의 니즈와 기존 서비스에서 느낀 불편을 정리합니다.</p>
-              <ul class="cs-list">
-                <li>문제점 1 — 무엇이 어떻게 불편했는지</li>
-                <li>문제점 2 — 데이터/관찰 근거가 있다면 함께</li>
-              </ul>
-            </section>
-            <section class="cs-section">
-              <p class="cs-section-num">03</p>
-              <h3 class="cs-section-title">Design <span class="ko">주요 화면</span></h3>
-              <p class="cs-text">앱의 주요 화면을 소개합니다.</p>
-              <div class="cs-gallery">
-                <div class="cs-img-placeholder">SCREEN 1</div>
-                <div class="cs-img-placeholder">SCREEN 2</div>
-                <div class="cs-img-placeholder">SCREEN 3</div>
-              </div>
-            </section>
-            <section class="cs-section">
-              <p class="cs-section-num">04</p>
-              <h3 class="cs-section-title">Result &amp; Reflection <span class="ko">결과와 회고</span></h3>
-              <p class="cs-text">완성한 결과물과 프로젝트를 통해 배운 점을 정리합니다.</p>
-            </section>
-          </article>
-        </div>
-      </section>
-
       <!-- 04 · 그래픽 디자인 작업 -->
       <section class="proj-embed" id="proj-graphic">
         <div class="cs">
-          <header class="cs-hero">
-            <span class="cs-category">Graphic Design</span>
-            <h1 class="cs-title">그래픽 디자인 작업</h1>
-            <p class="cs-summary">
-              <em>한 줄 소개를 적어주세요.</em> 배너, 상세페이지, 포스터 등
-              그래픽 디자인 작업물을 모았습니다.
-            </p>
-            <dl class="cs-meta">
-              <div><dt>Role</dt><dd>그래픽 디자인</dd></div>
-              <div><dt>Tools</dt><dd>Photoshop · Illustrator</dd></div>
-              <div><dt>Type</dt><dd>개인 / 외주 작업</dd></div>
-              <div><dt>Output</dt><dd>배너 · 상세페이지 · 포스터</dd></div>
-            </dl>
-          </header>
           <!-- 배너 작업물 — 물속에서 한 장씩 떠오르는 쇼케이스(스크롤 구동).
-               JS 활성 시 .is-water 스택, 그 외엔 세로 나열 폴백. 클릭 시 라이트박스 -->
+               제목은 stage 상단에 두어 pin 시 상단 고정, 작품은 중앙 등장. -->
           <div class="gd-water" aria-label="배너 디자인 작업물">
             <div class="gd-water-stage">
+              <header class="gd-water-head">
+                <span class="cs-category">Graphic Design</span>
+                <h2 class="cs-title">그래픽 디자인 작업</h2>
+              </header>
+              <span class="gd-ripple" aria-hidden="true"></span>
               <button type="button" class="gd-art" data-full="assets/images/b_img1.png" aria-label="배너 디자인 1 크게 보기">
                 <img src="assets/images/b_img1.png" alt="배너 디자인 작업물 1" loading="lazy" />
               </button>
@@ -1076,8 +936,7 @@
       <li><a href="#why" data-target="why"><span class="proj-float-name">Why UI/UX</span><span class="proj-float-num">03</span></a></li>
       <li><a href="#proj-mocha" data-target="proj-mocha"><span class="proj-float-name">모카클래스 반응형 웹</span><span class="proj-float-num">04</span></a></li>
       <li><a href="#proj-system" data-target="proj-system"><span class="proj-float-name">시스템치과 웹 UI/UX</span><span class="proj-float-num">05</span></a></li>
-      <li><a href="#proj-app" data-target="proj-app"><span class="proj-float-name">앱 UX/UI 기획·제작</span><span class="proj-float-num">06</span></a></li>
-      <li><a href="#proj-graphic" data-target="proj-graphic"><span class="proj-float-name">그래픽 디자인 작업</span><span class="proj-float-num">07</span></a></li>
+      <li><a href="#proj-graphic" data-target="proj-graphic"><span class="proj-float-name">그래픽 디자인 작업</span><span class="proj-float-num">06</span></a></li>
     </ul>
   </nav>
 

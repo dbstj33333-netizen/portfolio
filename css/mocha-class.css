@@ -15,6 +15,14 @@
   --sd-white: #ffffff;
 }
 
+/* 프로젝트(페이지 블루) → 모카 제작과정(크림) 경계 자연스럽게 잇기.
+   상단 280px를 #e7f0ff에서 크림(--sd-bg)으로 그라데이션(배경 레이어라 콘텐츠 뒤). */
+.mocha-class-page.proj-embed--mocha {
+  background:
+    linear-gradient(to bottom, #e7f0ff 0%, var(--sd-bg) 100%) top center / 100% 280px no-repeat,
+    var(--sd-bg);
+}
+
 /* Go to Website : 시스템치과와 동일하게 밑줄 링크 사용(별도 박스 테두리 없음)
    개선 100% : 시스템치과 태그(.system-dental-tags li)와 동일한 아웃라인 pill 사용
    → 두 요소 모두 system-dental 기본 스타일을 그대로 따르므로 별도 override 없음 */
@@ -264,44 +272,74 @@
 }
 
 /* =========================================================
-   개선 결과 — 최종 화면 3종이 같은 자리에서 순차적으로 떠오름
-   · 기본(폴백): 세로 나열(JS 없거나 모션축소 시에도 모두 보임)
-   · .is-seq(JS 활성): 스티키 스택 — 스크롤에 따라 한 장씩 떠오름
+   개선 결과 — 좌측 문구 고정(헤더 포함) / 우측 이미지만 스크롤 교체
+   · 폴백(JS 없음/모바일): 2단 해제, 이미지 세로 나열
+   · JS 활성: .mc-result-pin 전체를 pin → 좌측·헤더 고정, 우측 이미지 크로스페이드
 ========================================================= */
-.mocha-class-page .mc-seq {
-  margin-top: clamp(1.5rem, 4vh, 3rem);
+.mocha-class-page .mc-result2 {
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: center;
+  margin-top: clamp(1.6rem, 3.5vh, 2.8rem);
 }
-.mocha-class-page .mc-seq-img {
-  margin: 0 auto clamp(1.2rem, 3vh, 2rem);
-  width: min(560px, 100%);
+.mocha-class-page .mc-result2-stage {
+  position: relative;
+  height: min(68vh, 600px);
 }
-.mocha-class-page .mc-seq-img img {
+/* 모니터 영역 — 사각형 프레임, 안에서 이미지 스트립이 스크롤 */
+.mocha-class-page .mc-monitor {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--sd-line);
+  box-shadow: 0 24px 60px rgba(34, 34, 34, 0.14);
+}
+/* 폴백(JS 비활성/모바일): 모니터 안에서 사용자가 직접 스크롤 */
+.mocha-class-page .mc-monitor:not(.is-monitor) { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.mocha-class-page .mc-monitor-screen { width: 100%; }
+.mocha-class-page .mc-shot { display: block; width: 100%; height: auto; }
+/* JS 활성 — 각 이미지를 모니터 안에 절대배치로 쌓고 한 장씩 스크롤/전환 */
+.mocha-class-page .mc-monitor.is-monitor .mc-monitor-screen { position: absolute; inset: 0; }
+.mocha-class-page .mc-monitor.is-monitor .mc-shot {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: auto;
-  display: block;
+  will-change: transform, opacity;
+}
+@media (max-width: 900px) {
+  /* 모바일 — 모니터 높이 고정 후 내부 스크롤 */
+  .mocha-class-page .mc-result2-stage { height: clamp(320px, 60vh, 460px); }
+}
+.mocha-class-page .mc-result2-img {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mocha-class-page .mc-result2-img img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   border-radius: 14px;
   box-shadow: 0 24px 60px rgba(34, 34, 34, 0.16);
 }
-/* JS 활성 — 스티키 스택 오버랩 */
-.mocha-class-page .mc-seq.is-seq {
-  position: relative;
-  height: 260vh;                 /* 스크롤 길이 — 3장 순차 등장 */
+@media (max-width: 900px) {
+  .mocha-class-page .mc-result2 { grid-template-columns: 1fr; }
+  .mocha-class-page .mc-result2-stage { height: auto; }
+  .mocha-class-page .mc-result2-img {
+    position: relative;
+    inset: auto;
+    margin-bottom: 1.2rem;
+  }
 }
-.mocha-class-page .mc-seq.is-seq .mc-seq-frame {
-  position: sticky;
-  top: 8vh;
-  height: 84vh;
-  display: grid;
-  place-items: center;
-}
-.mocha-class-page .mc-seq.is-seq .mc-seq-img {
-  position: absolute;
-  margin: 0;
-  width: min(560px, 86%);
-  max-height: 84vh;
-  will-change: opacity, transform;
-}
-.mocha-class-page .mc-seq.is-seq .mc-seq-img img { max-height: 84vh; object-fit: contain; }
 
 /* Visual & Responsive — 디자인 시스템 + 디바이스 3종 */
 .mocha-class-page .mocha-ds {

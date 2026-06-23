@@ -1,8 +1,16 @@
 /* =========================================================
-   UIUX DESIGNER PORTFOLIO — Make it Clear.
+   UIUX DESIGNER PORTFOLIO — Make It Clear
    style.css
    기준 해상도: 데스크톱 1920px / 이후 태블릿·모바일 대응
 ========================================================= */
+
+/* 인트로 메인 카피 'Make It Clear' 전용 폰트 */
+@font-face {
+  font-family: 'HsSummerWaterLight20';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405@1.0/HSYeoleum20-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
 
 /* ---------------------------------------------------------
    0. 디자인 토큰 (컬러 · 폰트 변수)
@@ -404,16 +412,44 @@ em {
 }
 
 .intro-title {
-  font-family: 'Cormorant Garamond', 'Apple SD Gothic Neo', serif;
-  font-style: italic;
-  font-weight: 600;
+  font-family: 'HsSummerWaterLight20', 'Apple SD Gothic Neo', serif;
+  font-style: normal;
+  font-weight: normal;
   text-transform: none;
   letter-spacing: 0.01em;
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: calc(clamp(3rem, 8vw, 7rem) + 5px);  /* 기존보다 5px 크게 */
   line-height: 1.12;
   /* 위치는 고정, 마우스가 지나갈 때만 표면이 물결침 (JS가 scale 제어) */
   filter: url(#waterRipple);
   will-change: filter;
+}
+
+/* 윤슬 — 물빛이 반짝이는 잔물결 글린트(수면 위 햇빛) */
+.intro-yunseul {
+  position: absolute;
+  inset: 0;
+  z-index: 1;            /* 배경 위, 텍스트 아래 */
+  pointer-events: none;
+  overflow: hidden;
+}
+.intro-yunseul span {
+  position: absolute;
+  width: var(--w, 16px);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  box-shadow: 0 0 6px 1px rgba(150, 205, 255, 0.85);
+  opacity: 0;
+  transform: scaleX(0.5);
+  animation: yunseulTwinkle var(--d, 3.2s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes yunseulTwinkle {
+  0%, 100% { opacity: 0; transform: scaleX(0.45); }
+  50%      { opacity: var(--o, 0.85); transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-yunseul { display: none; }
 }
 
 /* 마우스 움직임에 파동치는 낱글자 (JS가 분리·제어) */
@@ -1086,17 +1122,6 @@ em {
   flex-shrink: 0;
   margin-bottom: 45px; /* 카드 최하단보다 45px 위 */
 }
-/* 'Project' 글씨 아래 45px — 글씨 너비에 맞춘 #3a7ffe 직선 */
-.project-title::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: calc(100% + 45px);
-  width: 100%;
-  height: 1px;
-  background: #3a7ffe;
-}
-
 /* 이후 프로젝트 카드/리스트 자리 */
 .project-list {
   margin-top: 4vh;
@@ -1237,7 +1262,6 @@ em {
   flex-shrink: 0;
   width: clamp(120px, 12vw, 168px);
   aspect-ratio: 16 / 10;
-  border-radius: 10px;
   overflow: hidden;
   background: #eef5ff;
 }
@@ -1308,50 +1332,90 @@ em {
   max-height: 78vh;
   width: auto; height: auto;
   margin: 0 auto;
-  border-radius: 14px;
   box-shadow: 0 22px 56px rgba(12, 30, 40, 0.28);
 }
 .gd-art:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
-/* JS 활성 — 풀블리드 물빛 무대 */
+/* 제목 헤더 — 폴백은 상단 흐름, pin 시 무대 상단 고정 */
+.gd-water-head { text-align: center; margin-bottom: clamp(1.5rem, 4vh, 3rem); }
+.gd-water.is-water .gd-water-head {
+  position: absolute;
+  top: clamp(3.5vh, 6vh, 8vh);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  margin: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* JS 활성 — 첫 화면 분위기의 밝은 물빛 무대 (스크롤 고정은 GSAP pin) */
 .gd-water.is-water {
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);     /* 풀블리드 */
-  height: 500vh;                     /* 스크롤 길이(8장 순차) */
-  background: radial-gradient(130% 95% at 50% -8%, #1d4d5d 0%, #143742 40%, #0d2530 72%, #081a23 100%);
 }
 .gd-water.is-water .gd-water-stage {
-  position: sticky;
-  top: 0;
+  position: relative;                /* GSAP pin이 고정 */
+  width: 100%;
   height: 100vh;
   overflow: hidden;                  /* 좌측으로 빠지는 작품 클리핑 */
   display: grid;
   place-items: center;
+  background: linear-gradient(165deg, #ffffff 0%, #eef5ff 52%, #dfeaff 100%);
 }
-/* 몽환적인 물빛 글로우 — 천천히 떠다님 */
+/* 파스텔 글로우 — 첫 화면과 동일 톤, 천천히 부유 */
 .gd-water.is-water .gd-water-stage::before,
 .gd-water.is-water .gd-water-stage::after {
   content: "";
   position: absolute;
   border-radius: 50%;
-  filter: blur(72px);
-  opacity: 0.5;
+  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
 }
 .gd-water.is-water .gd-water-stage::before {
-  width: 48vw; height: 48vw; left: 6%; top: 10%;
-  background: radial-gradient(circle, rgba(94, 200, 214, 0.55), transparent 70%);
+  width: 46vw; height: 46vw; left: 5%; top: 8%;
+  background: radial-gradient(circle, rgba(150, 235, 245, 0.40), transparent 70%);
   animation: gdDrift1 17s ease-in-out infinite alternate;
 }
 .gd-water.is-water .gd-water-stage::after {
   width: 42vw; height: 42vw; right: 4%; bottom: 6%;
-  background: radial-gradient(circle, rgba(126, 124, 224, 0.45), transparent 70%);
+  background: radial-gradient(circle, rgba(190, 175, 255, 0.38), transparent 70%);
   animation: gdDrift2 21s ease-in-out infinite alternate;
 }
 @keyframes gdDrift1 { from { transform: translate(0, 0); } to { transform: translate(6%, 8%); } }
 @keyframes gdDrift2 { from { transform: translate(0, 0); } to { transform: translate(-7%, -6%); } }
+
+/* 물 파동 — 작품 뒤에서 동심원이 퍼져 '떠오르는' 느낌(강하게) */
+.gd-water.is-water .gd-ripple {
+  position: absolute;
+  left: 50%; top: 52%;
+  width: min(960px, 98vw);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  z-index: 1;                        /* 글로우 위, 작품 아래 */
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(150, 200, 255, 0.20), transparent 62%);
+  animation: gdBloom 4s ease-in-out infinite;   /* 은은한 물빛 펄스 */
+}
+.gd-water.is-water .gd-ripple::before,
+.gd-water.is-water .gd-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(108, 168, 255, 0.5);
+  animation: gdRipple 4s ease-out infinite;
+}
+.gd-water.is-water .gd-ripple::after { animation-delay: 2s; }
+@keyframes gdRipple {
+  0%   { transform: scale(0.25); opacity: 0.78; }
+  70%  { opacity: 0.24; }
+  100% { transform: scale(1); opacity: 0; }
+}
+@keyframes gdBloom { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.95; } }
 
 .gd-water.is-water .gd-art {
   position: absolute;
@@ -1362,10 +1426,11 @@ em {
 .gd-water.is-water .gd-art img {
   max-width: min(640px, 84vw);
   max-height: 72vh;
-  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 30px 70px rgba(70, 110, 190, 0.22);
 }
 @media (prefers-reduced-motion: reduce) {
-  .gd-water.is-water { width: auto; margin-left: 0; height: auto; background: none; }
+  .gd-water.is-water { width: auto; margin-left: 0; }
+  .gd-water.is-water .gd-ripple { display: none; }
 }
 
 /* 라이트박스 — 클릭 시 전체 배너 보기(자르지 않음) */
@@ -1463,7 +1528,7 @@ em {
   /* 인트로 — 자간 줄여 가로 넘침 방지 */
   .intro-name { letter-spacing: 0.3em; font-size: 0.7rem; }
   .intro-sub  { font-size: 1rem; letter-spacing: 0.18em; }
-  .intro-title { font-size: clamp(2.4rem, 13vw, 3.4rem); }
+  .intro-title { font-size: calc(clamp(2.4rem, 13vw, 3.4rem) + 5px); }
 
   /* INDEX */
   .index-title { font-size: 2rem; margin-bottom: 3vh; }
