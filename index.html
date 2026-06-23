@@ -510,6 +510,69 @@
             </div>
           </section>
 
+          <!-- 2-1) 디자인 시스템 — 시스템치과와 동일한 간결 구성(컬러+타이포) -->
+          <section class="system-dental-section" aria-labelledby="mc-ds-title">
+            <div class="system-dental-wrap">
+              <div class="system-dental-sectionhead system-dental-reveal">
+                <span class="system-dental-eyebrow">디자인 시스템</span>
+                <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
+              </div>
+              <h2 id="mc-ds-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.2rem;">
+                일관된 화면을 위한 디자인 기준
+              </h2>
+              <p class="system-dental-body system-dental-reveal" data-sd-delay="0.05" style="margin-bottom:2.6rem;">
+                반복되는 화면을 일관되게 만들기 위해 컬러와 타이포그래피 기준을 정리했습니다.
+              </p>
+              <div class="system-dental-ai">
+                <!-- COLOR SYSTEM -->
+                <div class="system-dental-reveal" data-sd-delay="0.1">
+                  <p class="system-dental-ai-blocktitle">Color System</p>
+                  <div class="system-dental-colors">
+                    <div class="system-dental-color">
+                      <div class="system-dental-color-swatch" style="background:#FF8A2B;"></div>
+                      <div class="system-dental-color-info">
+                        <p class="system-dental-color-name">Primary</p>
+                        <p class="system-dental-color-hex">#FF8A2B</p>
+                      </div>
+                    </div>
+                    <div class="system-dental-color">
+                      <div class="system-dental-color-swatch" style="background:#F5821E;"></div>
+                      <div class="system-dental-color-info">
+                        <p class="system-dental-color-name">Primary Dark</p>
+                        <p class="system-dental-color-hex">#F5821E</p>
+                      </div>
+                    </div>
+                    <div class="system-dental-color">
+                      <div class="system-dental-color-swatch" style="background:#FFFAF3;"></div>
+                      <div class="system-dental-color-info">
+                        <p class="system-dental-color-name">Cream</p>
+                        <p class="system-dental-color-hex">#FFFAF3</p>
+                      </div>
+                    </div>
+                    <div class="system-dental-color">
+                      <div class="system-dental-color-swatch" style="background:#222222;"></div>
+                      <div class="system-dental-color-info">
+                        <p class="system-dental-color-name">Text</p>
+                        <p class="system-dental-color-hex">#222222</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- TYPOGRAPHY -->
+                <div class="system-dental-reveal" data-sd-delay="0.18">
+                  <p class="system-dental-ai-blocktitle">Typography</p>
+                  <p class="system-dental-type-note">A2z(에이투지체) 기반 · 본문 400 / 제목 600 · word-break: keep-all</p>
+                  <div class="system-dental-type-samples">
+                    <span class="w2">모카클래스</span>
+                    <span class="w4">모카클래스</span>
+                    <span class="w6">모카클래스</span>
+                    <span class="w8">모카클래스</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <!-- 3) 정보 구조 개선 -->
           <section class="system-dental-section" aria-labelledby="mc-s3-title">
             <div class="system-dental-wrap">
@@ -576,22 +639,26 @@
                 <span class="system-dental-eyebrow">개선 결과</span>
                 <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
               </div>
-              <div class="mocha-result">
-                <div class="system-dental-reveal">
-                  <h2 id="mc2-result-title" class="system-dental-h2" style="margin-bottom:1.4rem;">
-                    정돈된 클래스 탐색 경험
-                  </h2>
-                  <p class="system-dental-body mocha-result-lead">
-                    탐색 기준과 콘텐츠 우선순위를 정리해 사용자가 원하는 클래스와 주요 신청 경로를
-                    쉽게 확인할 수 있도록 개선했습니다.
-                  </p>
-                </div>
-                <div class="mocha-result-visual system-dental-reveal-img" data-sd-delay="0.1">
-                  <figure class="mocha-figure result-desktop">
-                    <img src="assets/images/p1_1.png" alt="개선된 모카클래스 최종 PC 화면 목업" loading="lazy" />
+              <div class="system-dental-reveal">
+                <h2 id="mc2-result-title" class="system-dental-h2" style="margin-bottom:1.4rem;">
+                  정돈된 클래스 탐색 경험
+                </h2>
+                <p class="system-dental-body mocha-result-lead" style="margin-bottom:0.5rem;">
+                  탐색 기준과 콘텐츠 우선순위를 정리해 사용자가 원하는 클래스와 주요 신청 경로를
+                  쉽게 확인할 수 있도록 개선했습니다.
+                </p>
+              </div>
+              <!-- 최종 화면 3종 — 같은 자리에서 한 장씩 순차적으로 떠오름(스티키 스택) -->
+              <div class="mc-seq">
+                <div class="mc-seq-frame">
+                  <figure class="mc-seq-img">
+                    <img src="assets/images/sub1_img5.png" alt="개선된 모카클래스 메인 페이지 — 모이는 시간이 특별한 경험이 되도록" loading="lazy" />
                   </figure>
-                  <figure class="mocha-figure result-mobile">
-                    <img src="assets/images/p1_2.png" alt="개선된 모카클래스 최종 모바일 화면 목업" loading="lazy" />
+                  <figure class="mc-seq-img">
+                    <img src="assets/images/sub1_img6.png" alt="개선된 모카클래스 오프라인 클래스 탐색 페이지 — 지도 기반 클래스 찾기" loading="lazy" />
+                  </figure>
+                  <figure class="mc-seq-img">
+                    <img src="assets/images/sub1_img7.png" alt="개선된 모카클래스 소개 페이지 — 일상의 따뜻한 휴식과 새로운 경험" loading="lazy" />
                   </figure>
                 </div>
               </div>
@@ -958,33 +1025,35 @@
               <div><dt>Output</dt><dd>배너 · 상세페이지 · 포스터</dd></div>
             </dl>
           </header>
-          <!-- 배너 작업물 — 비율 유지 메이슨리. 세로물은 컬럼 메이슨리, 가로 배너는 풀폭.
-               클릭 시 라이트박스로 원본 전체 보기(자르지 않음) -->
-          <div class="gd-grid" aria-label="배너 디자인 작업물">
-            <button type="button" class="gd-tile" data-full="assets/images/b_img1.png" aria-label="배너 디자인 1 크게 보기">
-              <img src="assets/images/b_img1.png" alt="배너 디자인 작업물 1 (세로형 상세페이지)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile" data-full="assets/images/b_img2.png" aria-label="배너 디자인 2 크게 보기">
-              <img src="assets/images/b_img2.png" alt="배너 디자인 작업물 2 (세로형 상세페이지)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile" data-full="assets/images/b_img3.png" aria-label="배너 디자인 3 크게 보기">
-              <img src="assets/images/b_img3.png" alt="배너 디자인 작업물 3 (세로형 상세페이지)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile" data-full="assets/images/b_img4.png" aria-label="배너 디자인 4 크게 보기">
-              <img src="assets/images/b_img4.png" alt="배너 디자인 작업물 4 (세로형 상세페이지)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile" data-full="assets/images/b_img5.png" aria-label="배너 디자인 5 크게 보기">
-              <img src="assets/images/b_img5.png" alt="배너 디자인 작업물 5 (세로형 상세페이지)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile gd-tile--full" data-full="assets/images/b_img8.png" aria-label="배너 디자인 6 크게 보기">
-              <img src="assets/images/b_img8.png" alt="배너 디자인 작업물 6 (가로형 배너)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile gd-tile--full" data-full="assets/images/b_img6.png" aria-label="배너 디자인 7 크게 보기">
-              <img src="assets/images/b_img6.png" alt="배너 디자인 작업물 7 (가로형 배너)" loading="lazy" />
-            </button>
-            <button type="button" class="gd-tile gd-tile--full" data-full="assets/images/b_img7.png" aria-label="배너 디자인 8 크게 보기">
-              <img src="assets/images/b_img7.png" alt="배너 디자인 작업물 8 (가로형 와이드 배너)" loading="lazy" />
-            </button>
+          <!-- 배너 작업물 — 물속에서 한 장씩 떠오르는 쇼케이스(스크롤 구동).
+               JS 활성 시 .is-water 스택, 그 외엔 세로 나열 폴백. 클릭 시 라이트박스 -->
+          <div class="gd-water" aria-label="배너 디자인 작업물">
+            <div class="gd-water-stage">
+              <button type="button" class="gd-art" data-full="assets/images/b_img1.png" aria-label="배너 디자인 1 크게 보기">
+                <img src="assets/images/b_img1.png" alt="배너 디자인 작업물 1" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img2.png" aria-label="배너 디자인 2 크게 보기">
+                <img src="assets/images/b_img2.png" alt="배너 디자인 작업물 2" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img3.png" aria-label="배너 디자인 3 크게 보기">
+                <img src="assets/images/b_img3.png" alt="배너 디자인 작업물 3" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img4.png" aria-label="배너 디자인 4 크게 보기">
+                <img src="assets/images/b_img4.png" alt="배너 디자인 작업물 4" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img5.png" aria-label="배너 디자인 5 크게 보기">
+                <img src="assets/images/b_img5.png" alt="배너 디자인 작업물 5" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img8.png" aria-label="배너 디자인 6 크게 보기">
+                <img src="assets/images/b_img8.png" alt="배너 디자인 작업물 6" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img6.png" aria-label="배너 디자인 7 크게 보기">
+                <img src="assets/images/b_img6.png" alt="배너 디자인 작업물 7" loading="lazy" />
+              </button>
+              <button type="button" class="gd-art" data-full="assets/images/b_img7.png" aria-label="배너 디자인 8 크게 보기">
+                <img src="assets/images/b_img7.png" alt="배너 디자인 작업물 8" loading="lazy" />
+              </button>
+            </div>
           </div>
         </div>
       </section>

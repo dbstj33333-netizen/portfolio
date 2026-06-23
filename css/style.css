@@ -1222,10 +1222,10 @@ em {
   display: flex;
   align-items: center;
   gap: clamp(1rem, 1.6vw, 1.6rem);
-  padding: clamp(0.8rem, 1.1vw, 1.1rem) clamp(1rem, 1.4vw, 1.4rem);
+  padding: clamp(0.9rem, 1.2vw, 1.2rem) clamp(1.6rem, 2.4vw, 2.4rem);
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid var(--blue-faint);
-  border-radius: 16px;
+  border-radius: 999px;   /* 알약(스타디움) 형태 — 끝이 반원으로 둥근 박스 */
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 .project-card:hover {
@@ -1291,51 +1291,81 @@ em {
 }
 
 /* =========================================================
-   그래픽 디자인 — 비율 유지 메이슨리 갤러리
-   · 세로물(상세페이지형)은 멀티컬럼 메이슨리, 가로 배너는 풀폭
-   · 자르지 않고 원본 비율 유지, 클릭 시 라이트박스 전체 보기
+   그래픽 디자인 — 물속에서 한 장씩 떠오르는 쇼케이스
+   · 폴백(JS 없음/모바일/모션축소): 세로 나열, 모두 보임
+   · .is-water(JS 활성): 풀블리드 물 무대 + 스티키 스택, 스크롤 구동
 ========================================================= */
-.gd-grid {
-  margin-top: 5vh;
-  columns: 4;
-  column-gap: clamp(0.9rem, 1.6vw, 1.4rem);
-}
-@media (max-width: 1024px) { .gd-grid { columns: 3; } }
-@media (max-width: 720px)  { .gd-grid { columns: 2; } }
-
-.gd-tile {
+.gd-water { margin-top: 6vh; }
+/* 폴백 — 세로 나열 */
+.gd-art {
   display: block;
-  width: 100%;
-  margin: 0 0 clamp(0.9rem, 1.6vw, 1.4rem);
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 22px rgba(22, 30, 50, 0.10);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  break-inside: avoid;             /* 컬럼 사이에서 잘리지 않게 */
-  -webkit-column-break-inside: avoid;
+  margin: 0 auto clamp(1.2rem, 3vh, 2rem);
+  padding: 0; border: 0; background: none; cursor: pointer;
 }
-.gd-tile img {
-  width: 100%;
-  height: auto;                    /* 원본 비율 유지(무크롭) */
+.gd-art img {
   display: block;
+  max-width: min(680px, 86vw);
+  max-height: 78vh;
+  width: auto; height: auto;
+  margin: 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 22px 56px rgba(12, 30, 40, 0.28);
 }
-.gd-tile:hover,
-.gd-tile:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 32px rgba(22, 30, 50, 0.18);
-}
-.gd-tile:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.gd-art:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
-/* 가로 배너 — 컬럼 흐름을 깨고 전체 폭으로(너무 넓지 않게 최대폭 제한 + 가운데) */
-.gd-tile--full {
-  column-span: all;
-  -webkit-column-span: all;
-  max-width: 920px;
-  margin-inline: auto;
+/* JS 활성 — 풀블리드 물빛 무대 */
+.gd-water.is-water {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);     /* 풀블리드 */
+  height: 500vh;                     /* 스크롤 길이(8장 순차) */
+  background: radial-gradient(130% 95% at 50% -8%, #1d4d5d 0%, #143742 40%, #0d2530 72%, #081a23 100%);
+}
+.gd-water.is-water .gd-water-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;                  /* 좌측으로 빠지는 작품 클리핑 */
+  display: grid;
+  place-items: center;
+}
+/* 몽환적인 물빛 글로우 — 천천히 떠다님 */
+.gd-water.is-water .gd-water-stage::before,
+.gd-water.is-water .gd-water-stage::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+.gd-water.is-water .gd-water-stage::before {
+  width: 48vw; height: 48vw; left: 6%; top: 10%;
+  background: radial-gradient(circle, rgba(94, 200, 214, 0.55), transparent 70%);
+  animation: gdDrift1 17s ease-in-out infinite alternate;
+}
+.gd-water.is-water .gd-water-stage::after {
+  width: 42vw; height: 42vw; right: 4%; bottom: 6%;
+  background: radial-gradient(circle, rgba(126, 124, 224, 0.45), transparent 70%);
+  animation: gdDrift2 21s ease-in-out infinite alternate;
+}
+@keyframes gdDrift1 { from { transform: translate(0, 0); } to { transform: translate(6%, 8%); } }
+@keyframes gdDrift2 { from { transform: translate(0, 0); } to { transform: translate(-7%, -6%); } }
+
+.gd-water.is-water .gd-art {
+  position: absolute;
+  margin: 0;
+  z-index: 2;
+  will-change: transform, opacity, filter;
+}
+.gd-water.is-water .gd-art img {
+  max-width: min(640px, 84vw);
+  max-height: 72vh;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-water.is-water { width: auto; margin-left: 0; height: auto; background: none; }
 }
 
 /* 라이트박스 — 클릭 시 전체 배너 보기(자르지 않음) */

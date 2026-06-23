@@ -30,7 +30,7 @@
     if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
   }
 
-  var banners = document.querySelectorAll(".gd-tile[data-full], .gd-card[data-full], .gd-banner[data-full]");
+  var banners = document.querySelectorAll(".gd-art[data-full], .gd-tile[data-full], .gd-card[data-full], .gd-banner[data-full]");
   banners.forEach(function (btn) {
     btn.addEventListener("click", function () {
       var full = btn.getAttribute("data-full");

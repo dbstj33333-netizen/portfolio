@@ -759,6 +759,64 @@
         duration: 0.8,
         ease: "power2.out",
       }, "-=0.6");
+
+    /* 개선 결과 — 최종 화면 3종이 같은 자리에서 한 장씩 순차적으로 떠오름(스티키 스택).
+       데스크탑 + 모션 허용 시에만 스택 모드(.is-seq); 그 외엔 세로 나열 폴백. */
+    var seqMotionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll(".mc-seq").forEach(function (seq) {
+      if (!seqMotionOk || window.innerWidth <= 900) return;
+      var seqImgs = gsap.utils.toArray(seq.querySelectorAll(".mc-seq-img"));
+      if (!seqImgs.length) return;
+      seq.classList.add("is-seq");
+      gsap.set(seqImgs, { opacity: 0, y: 64 });
+      var seqTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: seq,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        },
+      });
+      seqImgs.forEach(function (img) {
+        seqTL
+          .fromTo(img,
+            { opacity: 0, y: 64 },
+            { opacity: 1, y: 0, ease: "power2.out", duration: 1 })
+          .to({}, { duration: 0.55 }); // 다음 장 등장 전 잠시 유지
+      });
+    });
+
+    /* 그래픽 디자인 — 물속에서 작품이 한 장씩 떠오르며 확대(상한), 다음 장 떠오를 때
+       이전 장은 좌측으로 흘러나감. 데스크탑 + 모션 허용 시에만 동작. */
+    document.querySelectorAll(".gd-water").forEach(function (water) {
+      if (!seqMotionOk || window.innerWidth <= 900) return;
+      var arts = gsap.utils.toArray(water.querySelectorAll(".gd-art"));
+      if (!arts.length) return;
+      water.classList.add("is-water");
+      gsap.set(arts, { opacity: 0, scale: 0.55, y: 170, xPercent: 0, filter: "blur(16px)" });
+      var wTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: water,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.7,
+          invalidateOnRefresh: true,
+        },
+      });
+      arts.forEach(function (art, i) {
+        // 물속에서 떠오르며 확대(상한 scale:1 = CSS 최대 크기)
+        wTL.fromTo(art,
+          { opacity: 0, scale: 0.55, y: 170, xPercent: 0, filter: "blur(16px)" },
+          { opacity: 1, scale: 1, y: 0, xPercent: 0, filter: "blur(0px)", ease: "power2.out", duration: 1.1 },
+          i === 0 ? 0 : "-=0.45" // 이전 장이 좌측으로 빠지는 동안 다음 장이 떠오름
+        );
+        wTL.to(art, { duration: 0.5 }); // 잠시 머무름
+        if (i < arts.length - 1) {
+          wTL.to(art, { xPercent: -155, opacity: 0, scale: 0.96, filter: "blur(8px)", ease: "power1.in", duration: 0.95 });
+        }
+      });
+    });
   }
 
   /* ===== 폰트 로딩/로드 후 위치 재계산 =====

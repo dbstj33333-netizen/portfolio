@@ -263,6 +263,46 @@
   .mocha-class-page .mocha-tobe-section::before { display: none; }  /* 모바일 단순화 */
 }
 
+/* =========================================================
+   개선 결과 — 최종 화면 3종이 같은 자리에서 순차적으로 떠오름
+   · 기본(폴백): 세로 나열(JS 없거나 모션축소 시에도 모두 보임)
+   · .is-seq(JS 활성): 스티키 스택 — 스크롤에 따라 한 장씩 떠오름
+========================================================= */
+.mocha-class-page .mc-seq {
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+}
+.mocha-class-page .mc-seq-img {
+  margin: 0 auto clamp(1.2rem, 3vh, 2rem);
+  width: min(560px, 100%);
+}
+.mocha-class-page .mc-seq-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(34, 34, 34, 0.16);
+}
+/* JS 활성 — 스티키 스택 오버랩 */
+.mocha-class-page .mc-seq.is-seq {
+  position: relative;
+  height: 260vh;                 /* 스크롤 길이 — 3장 순차 등장 */
+}
+.mocha-class-page .mc-seq.is-seq .mc-seq-frame {
+  position: sticky;
+  top: 8vh;
+  height: 84vh;
+  display: grid;
+  place-items: center;
+}
+.mocha-class-page .mc-seq.is-seq .mc-seq-img {
+  position: absolute;
+  margin: 0;
+  width: min(560px, 86%);
+  max-height: 84vh;
+  will-change: opacity, transform;
+}
+.mocha-class-page .mc-seq.is-seq .mc-seq-img img { max-height: 84vh; object-fit: contain; }
+
 /* Visual & Responsive — 디자인 시스템 + 디바이스 3종 */
 .mocha-class-page .mocha-ds {
   display: grid;
