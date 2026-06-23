@@ -40,7 +40,8 @@
 
 /* 섹션 — 공통 세로 간격 토큰(데스크톱 120 / 태블릿 96 / 모바일 64) */
 .system-dental-section {
-  padding-block: var(--sec-pad);
+  /* 제작과정 케이스 스터디 — 섹션 간 간격을 전역 토큰보다 넓게(1.5배) */
+  padding-block: calc(var(--sec-pad) * 1.5);
 }
 
 /* 섹션 헤더 (좌측 소제목 + 우측 프로젝트명) */
@@ -83,11 +84,20 @@
   color: var(--sd-primary);
   letter-spacing: 0.02em;
 }
+
+/* 메인카피 색상 통일 — 강조색(--sd-primary)
+   · 히어로 + 회고/결과 포함 모든 섹션 헤드라인에 적용
+   · 치과(#A52A2C)·모카(#F38F39) 각자 팔레트의 강조색을 사용 */
+.system-dental-page .system-dental-overview-title,
+.system-dental-page .system-dental-h2,
+.system-dental-page .system-dental-points-title {
+  color: var(--sd-primary);
+}
 .system-dental-body {
   font-size: clamp(0.98rem, 1.15vw, 1.12rem);
   font-weight: 300;
   line-height: var(--lh-body);      /* 본문 ≤20px → 140% */
-  color: var(--sd-subtext);
+  color: var(--sd-text);            /* 서브카피 본문 #222222 */
   max-width: 60ch;
 }
 .system-dental-body strong { font-weight: 500; color: var(--sd-text); }
@@ -223,7 +233,7 @@
   font-size: clamp(0.98rem, 1.2vw, 1.12rem);
   font-weight: 300;
   line-height: var(--lh-body);      /* 본문 140% */
-  color: var(--sd-subtext);
+  color: var(--sd-text);            /* 서브카피 본문 #222222 */
   margin-bottom: 2.4rem;
 }
 

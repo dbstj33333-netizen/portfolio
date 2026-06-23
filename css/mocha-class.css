@@ -229,10 +229,39 @@
 .mocha-class-page .mocha-note {
   margin-top: 1.4rem;
   line-height: 1.7;
-  color: var(--sd-subtext);
+  color: var(--sd-text);            /* 서브카피 #222222 통일 */
   font-weight: 300;
 }
 .mocha-class-page .mocha-note strong { color: var(--sd-primary); font-weight: 600; }
+
+/* 해결과정-필터개선 — TO-BE 뒤 큰 원형 피치 배경(참고 시안)
+   · 우측에 큰 원 배치, 좌측 호가 TO-BE를 감쌈. 섹션 밖 넘침은 overflow로 잘라냄
+   · 이미지가 투명(RGBA)이라 원형 배경이 자연스럽게 비침 */
+.mocha-class-page .mocha-tobe-section { position: relative; overflow: hidden; }
+.mocha-class-page .mocha-tobe-section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  top: 50%;
+  left: 41.25%;           /* 792 / 1920 (762 + 30px, 디자인 캔버스 기준) */
+  transform: translateY(-50%);
+  width: 93.75%;          /* 1800 / 1920 → 지름, 뷰포트에 비례 스케일 */
+  aspect-ratio: 1 / 1;    /* 정원(1800×1800) */
+  border-radius: 50%;
+  background: rgba(243, 143, 57, 0.13);   /* 연한 피치 */
+}
+/* 콘텐츠는 배경 위로 */
+.mocha-class-page .mocha-tobe-section > .system-dental-wrap { position: relative; z-index: 1; }
+/* 마무리 문구 — TO-BE(우측) 아래 중앙에 배치 */
+.mocha-class-page .mocha-tobe-section .mocha-note {
+  margin-left: 33%;          /* TO-BE 영역(우측) 아래로 이동 */
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .mocha-class-page .mocha-tobe-section .mocha-note { margin-left: 0; }
+  .mocha-class-page .mocha-tobe-section::before { display: none; }  /* 모바일 단순화 */
+}
 
 /* Visual & Responsive — 디자인 시스템 + 디바이스 3종 */
 .mocha-class-page .mocha-ds {
@@ -568,6 +597,45 @@
   margin: 0;
 }
 .mocha-class-page .mocha-card--peach .mocha-card-title { margin-bottom: 0.25rem; }
+
+/* 리스트형 카드 — 번호 없이 중앙 제목 + 불릿 목록(개선 전략 시안) */
+.mocha-class-page .mocha-card--list {
+  display: block;            /* 번호 그리드 해제 */
+  background: var(--sd-bg-light);
+  border: 1px solid var(--sd-line);                 /* 박스 경계 또렷하게 */
+  box-shadow: 0 3px 10px rgba(214, 118, 31, 0.06);  /* 아주 약한 그림자로 박스 구분 */
+  padding-block: clamp(1.8rem, 3vw, 2.6rem);
+}
+.mocha-class-page .mocha-card--list .mocha-card-title {
+  text-align: center;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);  /* 키워드 강조 — 크게 */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--sd-text);                  /* 가독성 — 다크(#222222) */
+  padding-bottom: clamp(1rem, 1.8vw, 1.4rem);
+  margin-bottom: clamp(1.3rem, 2.2vw, 1.8rem);
+  position: relative;
+}
+/* 키워드와 디테일 구분 — 짧은 중앙 구분선 */
+.mocha-class-page .mocha-card--list .mocha-card-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 2px;
+  background: var(--sd-primary);
+  opacity: 0.55;
+}
+.mocha-class-page .mocha-card--list .mocha-bullets {
+  width: fit-content;
+  margin-inline: auto;       /* 불릿 블록을 카드 중앙에 배치(텍스트는 좌측 정렬) */
+}
+/* 디테일도 가독성 위해 다크(#222222) */
+.mocha-class-page .mocha-card--list .mocha-bullets li {
+  color: var(--sd-text);
+}
 
 /* TO-BE 밝은 강조 박스 */
 .mocha-class-page .mocha-tobe-box {

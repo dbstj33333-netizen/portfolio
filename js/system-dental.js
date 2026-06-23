@@ -20,17 +20,20 @@
   var io = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
         var el = entry.target;
-        if (entry.isIntersecting) {
-          // 같은 그룹 안에서 0.1초 간격 스태거 (data-sd-delay)
-          var delay = parseFloat(el.getAttribute("data-sd-delay")) || 0;
-          el.style.transitionDelay = delay + "s";
-          el.classList.add("is-in");
-        } else {
-          // 화면을 벗어나면 다시 숨김 → 위로 올리면 역재생
-          el.style.transitionDelay = "0s";
-          el.classList.remove("is-in");
-        }
+        // 같은 그룹 안에서 0.1초 간격 스태거 (data-sd-delay)
+        var delay = parseFloat(el.getAttribute("data-sd-delay")) || 0;
+        el.style.transitionDelay = delay + "s";
+        el.classList.add("is-in");
+        // 단방향 등장 — 한 번 나타나면 더는 토글하지 않음(경계 떨림 방지)
+        io.unobserve(el);
+        // 트랜지션 종료 후 will-change 해제(합성 레이어 잔류 제거)
+        el.addEventListener(
+          "transitionend",
+          function () { el.style.willChange = "auto"; },
+          { once: true }
+        );
       });
     },
     { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }

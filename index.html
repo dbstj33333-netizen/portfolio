@@ -454,48 +454,16 @@
                 <span class="system-dental-eyebrow">프로젝트 배경 및 문제정의</span>
                 <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
               </div>
-              <h2 id="mc-s1-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.2rem;">
+              <h2 id="mc-s1-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.2rem;color:var(--sd-primary);">
                 복잡하게 나열된 탐색 구조
               </h2>
               <p class="system-dental-body system-dental-reveal" data-sd-delay="0.05" style="margin-bottom:2.6rem;">
                 수업 형태, 지역, 카테고리, 이용 목적 등 서로 다른 탐색 기준이 한 화면에 혼재되어
                 원하는 클래스를 찾는 경로가 명확하지 않았습니다.
               </p>
-              <div class="mocha-annot mc-callout system-dental-reveal-img">
-                <!-- 메인 화면(상단·좌측) — 네비/카테고리 영역 강조 -->
-                <div class="mc-shot mc-shot--main">
-                  <div class="mocha-shotwrap">
-                    <figure class="mocha-figure">
-                      <img src="assets/images/sub1_1.png" alt="기존 모카클래스 메인 화면 — 단체 클래스 배너와 카테고리, 클래스 목록이 한 화면에 나열" loading="lazy" />
-                    </figure>
-                    <span class="mocha-region" style="left:1.5%;top:1.5%;width:97%;height:9%;"></span>
-                    <span class="mocha-region" style="left:1.5%;top:25%;width:97%;height:14%;"></span>
-                  </div>
-                </div>
-                <!-- 필터 화면(하단·우측, 더 넓게) -->
-                <div class="mc-shot mc-shot--filter">
-                  <div class="mocha-shotwrap">
-                    <figure class="mocha-figure">
-                      <img src="assets/images/sub1_2.png" alt="기존 모카클래스 필터 화면 — 지역·카테고리·요일·난이도 등 여러 조건이 동시에 노출" loading="lazy" />
-                    </figure>
-                    <span class="mocha-region" style="left:1%;top:2%;width:98%;height:94%;"></span>
-                  </div>
-                </div>
-
-                <!-- 연결 점선(ㄱ자) — viewBox 0~100, 비율 왜곡 무시 + 선 두께 고정 -->
-                <svg class="mc-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                  <polyline class="mc-line" points="37,5.5 73,5.5" />
-                  <polyline class="mc-line" points="37,27 60,27 60,34 73,34" />
-                  <polyline class="mc-line" points="70,80 72.5,80 72.5,88 75,88" />
-                </svg>
-
-                <!-- 우측 라벨(끝점 원형 포인트) -->
-                <ul class="mocha-flags mc-labels">
-                  <li class="mc-label mc-label--1"><strong>탐색 기준이 불분명한 네비게이션</strong></li>
-                  <li class="mc-label mc-label--2"><strong>서로 다른 기준이 혼재된 카테고리</strong></li>
-                  <li class="mc-label mc-label--3"><strong>콘텐츠보다 과도하게 강조된 필터 영역</strong></li>
-                </ul>
-              </div>
+              <figure class="mocha-board system-dental-reveal-img">
+                <img src="assets/images/sub1_img1.png" alt="기존 모카클래스 화면 — 탐색 기준이 불분명한 네비게이션, 서로 다른 기준이 혼재된 카테고리, 콘텐츠보다 과도하게 강조된 필터 영역" loading="lazy" />
+              </figure>
             </div>
           </section>
 
@@ -507,33 +475,36 @@
                 <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
               </div>
               <h2 id="mc-s2-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.2rem;color:var(--sd-primary);">
-                원하는 클래스를 더 쉽고 빠르게
+                원하는 클래스를 보다 찾기 쉬운 구조로
               </h2>
               <p class="system-dental-body system-dental-reveal" data-sd-delay="0.05">
-                복잡한 탐색 구조를 단순화해, 사용자가 자신의 목적에 맞는 클래스를 쉽고 빠르게 찾을 수 있는
-                탐색 경험을 목표로 했습니다.
+                기존 사이트는 지역, 수업 형태, 카테고리 등 여러 탐색 기준이 한 화면에 섞여 있었습니다.<br />
+                이를 사용 목적에 따라 나누고, 원하는 클래스를 찾는 과정이 짧아지도록 구조를&nbsp;정리했습니다.
               </p>
               <div class="mocha-cards" style="margin-top:2.8rem;">
-                <div class="mocha-card mocha-card--peach system-dental-reveal-img">
-                  <p class="mocha-card-num">01</p>
-                  <div>
-                    <h3 class="mocha-card-title">탐색 구조 명확화</h3>
-                    <p class="mocha-card-desc">메뉴와 카테고리 관계 정리</p>
-                  </div>
+                <div class="mocha-card mocha-card--peach mocha-card--list system-dental-reveal-img">
+                  <h3 class="mocha-card-title">정보구조 정리</h3>
+                  <ul class="mocha-bullets">
+                    <li>상단 메뉴 재구성</li>
+                    <li>빠른 탐색 메뉴 분리</li>
+                    <li>서로 다른 기준의 메뉴 구분</li>
+                  </ul>
                 </div>
-                <div class="mocha-card mocha-card--peach system-dental-reveal-img" data-sd-delay="0.1">
-                  <p class="mocha-card-num">02</p>
-                  <div>
-                    <h3 class="mocha-card-title">콘텐츠 우선순위 정리</h3>
-                    <p class="mocha-card-desc">반복 콘텐츠와 역할 구분</p>
-                  </div>
+                <div class="mocha-card mocha-card--peach mocha-card--list system-dental-reveal-img" data-sd-delay="0.1">
+                  <h3 class="mocha-card-title">메인페이지 정리</h3>
+                  <ul class="mocha-bullets">
+                    <li>길게 나열된 클래스 목록 축소</li>
+                    <li>섹션의 목적 구분</li>
+                    <li>단체 클래스 CTA 위치 정리</li>
+                  </ul>
                 </div>
-                <div class="mocha-card mocha-card--peach system-dental-reveal-img" data-sd-delay="0.2">
-                  <p class="mocha-card-num">03</p>
-                  <div>
-                    <h3 class="mocha-card-title">탐색 부담 완화</h3>
-                    <p class="mocha-card-desc">필터 정보 위계 조정</p>
-                  </div>
+                <div class="mocha-card mocha-card--peach mocha-card--list system-dental-reveal-img" data-sd-delay="0.2">
+                  <h3 class="mocha-card-title">필터 정리</h3>
+                  <ul class="mocha-bullets">
+                    <li>큰 필터 영역 축소</li>
+                    <li>자주 쓰는 조건과 세부 조건 분리</li>
+                    <li>첫 화면에서 클래스가 보이도록 조정</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -553,31 +524,9 @@
                 사용 목적을 중심으로 메뉴를 재구성하고, 지역별·내 주변·카테고리별 탐색은
                 메인페이지의 빠른 탐색 영역으로 분리했습니다.
               </p>
-              <div class="mocha-compare">
-                <div class="mocha-col mocha-col--asis system-dental-reveal-img">
-                  <span class="mocha-compare-label">AS-IS</span>
-                  <figure class="mocha-figure">
-                    <img src="assets/images/sub1_3.png" alt="기존 모카클래스 상단 메뉴 — 서로 다른 기준의 항목이 한 줄에 혼재" loading="lazy" />
-                  </figure>
-                  <p class="mocha-compare-desc">서로 다른 기준이 혼재된 메뉴 구조</p>
-                </div>
-                <div class="mocha-col mocha-col--tobe system-dental-reveal-img" data-sd-delay="0.1">
-                  <span class="mocha-compare-label">TO-BE</span>
-                  <div class="mocha-tobe-box">
-                    <div class="mocha-shotwrap">
-                      <figure class="mocha-figure">
-                        <img src="assets/images/sub1_4.png" alt="개선된 모카클래스 화면 — 사용 목적 기준으로 재구성한 상단 메뉴와 빠른 탐색 영역" loading="lazy" />
-                      </figure>
-                      <span class="mocha-region" style="left:3%;top:3%;width:94%;height:16%;"></span>
-                      <span class="mocha-region" style="left:3%;top:62%;width:94%;height:22%;"></span>
-                    </div>
-                    <ul class="mocha-flags" style="margin-top:1.3rem;">
-                      <li><strong>사용 목적을 기준으로 재구성한 상단 메뉴</strong></li>
-                      <li><strong>빠른 탐색 기능을 별도 영역으로 분리</strong></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <figure class="mocha-board system-dental-reveal-img">
+                <img src="assets/images/sub1_img2.png" alt="정보구조 개선 AS-IS/TO-BE — 서로 다른 기준이 혼재된 기존 메뉴 구조 대비, 사용 목적 기준으로 재구성한 상단 메뉴와 별도로 분리한 빠른 탐색 영역" loading="lazy" />
+              </figure>
             </div>
           </section>
 
@@ -588,62 +537,35 @@
                 <span class="system-dental-eyebrow">해결과정 - 메인페이지 개선</span>
                 <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
               </div>
-              <h2 id="mc-s4-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:2.4rem;color:var(--sd-primary);">
+              <h2 id="mc-s4-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.2rem;color:var(--sd-primary);">
                 나열 중심에서 목적이 보이는 흐름으로
               </h2>
-              <div class="mocha-split">
-                <figure class="mocha-figure system-dental-reveal-img">
-                  <img src="assets/images/sub1_5.png" alt="개선된 모카클래스 메인페이지 — 카테고리 탭, 통합된 클래스 영역, 클래스 모두 보기 버튼, 단체 클래스 CTA 배너" loading="lazy" />
-                </figure>
-                <ul class="mocha-flags system-dental-reveal" data-sd-delay="0.1">
-                  <li><strong>카테고리별 클래스 구조화</strong><span>길게 나열되던 클래스 목록을 카테고리별로 정리</span></li>
-                  <li><strong>클래스 콘텐츠 영역 통합</strong><span>여러 목록을 한 영역으로 통합해 메인페이지의 스크롤 길이를 줄임</span></li>
-                  <li><strong>단체 클래스 CTA 재배치</strong><span>사용자 흐름에 맞는 주요 전환 구간에 배치</span></li>
-                </ul>
-              </div>
+              <p class="system-dental-body system-dental-reveal" data-sd-delay="0.05" style="margin-bottom:2.6rem;">
+                길게 나열되던 클래스 목록을 카테고리별로 구조화하고, 단체 클래스 CTA는
+                사용자 흐름에 맞는 전환 구간으로 재배치해 메인페이지의 흐름을 정리했습니다.
+              </p>
+              <figure class="mocha-board system-dental-reveal-img">
+                <img src="assets/images/sub1_img3.png" alt="메인페이지 개선 — 카테고리별 클래스 구조화, 클래스 콘텐츠 노출 축소, 사용자 흐름에 맞춘 단체 클래스 CTA 재배치" loading="lazy" />
+              </figure>
             </div>
           </section>
 
           <!-- 5) 필터 개선 -->
-          <section class="system-dental-section" aria-labelledby="mc-s5-title">
+          <section class="system-dental-section mocha-tobe-section" aria-labelledby="mc-s5-title">
             <div class="system-dental-wrap">
               <div class="system-dental-sectionhead system-dental-reveal">
                 <span class="system-dental-eyebrow">해결과정 - 필터 개선</span>
                 <span class="system-dental-projecttag">모카클래스 반응형 웹 UI/UX 개선</span>
               </div>
-              <h2 id="mc-s5-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:2.4rem;color:var(--sd-primary);">
+              <h2 id="mc-s5-title" class="system-dental-h2 system-dental-reveal" style="margin-bottom:1.2rem;color:var(--sd-primary);">
                 조건은 충분하게, 첫 화면은 가볍게
               </h2>
-              <div class="mocha-diagonal">
-                <div class="mocha-col mocha-col--asis system-dental-reveal-img">
-                  <span class="mocha-compare-label">AS-IS</span>
-                  <ul class="mocha-bullets" style="margin:0 0 1.1rem;">
-                    <li>넓은 필터 영역</li>
-                    <li>여러 조건 동시 노출</li>
-                    <li>클래스 콘텐츠 노출 지연</li>
-                  </ul>
-                  <figure class="mocha-figure">
-                    <img src="assets/images/sub1_6.png" alt="기존 모카클래스 필터 — 넓은 필터 영역이 첫 화면을 차지해 클래스 콘텐츠 노출이 지연" loading="lazy" />
-                  </figure>
-                </div>
-                <div class="mocha-col mocha-col--tobe system-dental-reveal-img" data-sd-delay="0.1">
-                  <span class="mocha-compare-label">TO-BE</span>
-                  <div class="mocha-shotwrap">
-                    <figure class="mocha-figure">
-                      <img src="assets/images/sub1_7.png" alt="개선된 모카클래스 필터 — 주요 조건은 우선 노출하고 세부 조건은 별도 패널로 분리" loading="lazy" />
-                    </figure>
-                    <span class="mocha-region" style="left:2%;top:16%;width:96%;height:18%;"></span>
-                    <span class="mocha-region" style="left:54%;top:46%;width:44%;height:46%;"></span>
-                  </div>
-                  <ul class="mocha-flags" style="margin-top:1.1rem;">
-                    <li><strong>주요 조건 우선 노출</strong></li>
-                    <li><strong>세부 조건 별도 분리</strong></li>
-                  </ul>
-                </div>
-              </div>
-              <p class="mocha-note system-dental-reveal" data-sd-delay="0.05">
-                주요 조건은 먼저 보여주고, 세부 조건은 별도 영역으로 분리했습니다.
+              <p class="system-dental-body system-dental-reveal" data-sd-delay="0.05" style="margin-bottom:2.6rem;">
+                주요 조건은 먼저 보여주고 세부 조건은 별도 영역으로 분리했습니다.
               </p>
+              <figure class="mocha-board system-dental-reveal-img">
+                <img src="assets/images/sub1_img4.png" alt="필터 개선 AS-IS/TO-BE — 넓은 필터 영역에 여러 조건이 동시 노출되던 기존 화면 대비, 주요 조건을 우선 노출하고 세부 조건은 별도 영역으로 분리한 개선 화면" loading="lazy" />
+              </figure>
             </div>
           </section>
 
@@ -1036,31 +958,32 @@
               <div><dt>Output</dt><dd>배너 · 상세페이지 · 포스터</dd></div>
             </dl>
           </header>
-          <!-- 배너 작업물 — 대각선으로 쌓인 카드. hover/포커스 시 앞으로 뽑히고, 클릭 시 전체 보기 -->
-          <div class="gd-stack" aria-label="배너 디자인 작업물">
-            <button type="button" class="gd-card" style="--i:0" data-full="assets/images/b_img1.png" aria-label="배너 1 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img1.png" alt="배너 디자인 작업물 1" loading="lazy" /></span>
+          <!-- 배너 작업물 — 비율 유지 메이슨리. 세로물은 컬럼 메이슨리, 가로 배너는 풀폭.
+               클릭 시 라이트박스로 원본 전체 보기(자르지 않음) -->
+          <div class="gd-grid" aria-label="배너 디자인 작업물">
+            <button type="button" class="gd-tile" data-full="assets/images/b_img1.png" aria-label="배너 디자인 1 크게 보기">
+              <img src="assets/images/b_img1.png" alt="배너 디자인 작업물 1 (세로형 상세페이지)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:1" data-full="assets/images/b_img2.png" aria-label="배너 2 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img2.png" alt="배너 디자인 작업물 2" loading="lazy" /></span>
+            <button type="button" class="gd-tile" data-full="assets/images/b_img2.png" aria-label="배너 디자인 2 크게 보기">
+              <img src="assets/images/b_img2.png" alt="배너 디자인 작업물 2 (세로형 상세페이지)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:2" data-full="assets/images/b_img3.png" aria-label="배너 3 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img3.png" alt="배너 디자인 작업물 3" loading="lazy" /></span>
+            <button type="button" class="gd-tile" data-full="assets/images/b_img3.png" aria-label="배너 디자인 3 크게 보기">
+              <img src="assets/images/b_img3.png" alt="배너 디자인 작업물 3 (세로형 상세페이지)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:3" data-full="assets/images/b_img4.png" aria-label="배너 4 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img4.png" alt="배너 디자인 작업물 4" loading="lazy" /></span>
+            <button type="button" class="gd-tile" data-full="assets/images/b_img4.png" aria-label="배너 디자인 4 크게 보기">
+              <img src="assets/images/b_img4.png" alt="배너 디자인 작업물 4 (세로형 상세페이지)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:4" data-full="assets/images/b_img5.png" aria-label="배너 5 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img5.png" alt="배너 디자인 작업물 5" loading="lazy" /></span>
+            <button type="button" class="gd-tile" data-full="assets/images/b_img5.png" aria-label="배너 디자인 5 크게 보기">
+              <img src="assets/images/b_img5.png" alt="배너 디자인 작업물 5 (세로형 상세페이지)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:5" data-full="assets/images/b_img6.png" aria-label="배너 6 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img6.png" alt="배너 디자인 작업물 6" loading="lazy" /></span>
+            <button type="button" class="gd-tile gd-tile--full" data-full="assets/images/b_img8.png" aria-label="배너 디자인 6 크게 보기">
+              <img src="assets/images/b_img8.png" alt="배너 디자인 작업물 6 (가로형 배너)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:6" data-full="assets/images/b_img7.png" aria-label="배너 7 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img7.png" alt="배너 디자인 작업물 7" loading="lazy" /></span>
+            <button type="button" class="gd-tile gd-tile--full" data-full="assets/images/b_img6.png" aria-label="배너 디자인 7 크게 보기">
+              <img src="assets/images/b_img6.png" alt="배너 디자인 작업물 7 (가로형 배너)" loading="lazy" />
             </button>
-            <button type="button" class="gd-card" style="--i:7" data-full="assets/images/b_img8.png" aria-label="배너 8 크게 보기">
-              <span class="gd-card-img"><img src="assets/images/b_img8.png" alt="배너 디자인 작업물 8" loading="lazy" /></span>
+            <button type="button" class="gd-tile gd-tile--full" data-full="assets/images/b_img7.png" aria-label="배너 디자인 8 크게 보기">
+              <img src="assets/images/b_img7.png" alt="배너 디자인 작업물 8 (가로형 와이드 배너)" loading="lazy" />
             </button>
           </div>
         </div>

@@ -658,7 +658,7 @@
       scrollTrigger: {
         trigger: ".section--why",
         start: "top top", // About 이 완전히 사라지는 지점
-        end: "+=130%",
+        end: "+=180%",    // 키워드 낙하 구간을 늘린 만큼 핀 길이도 확장(변형 연출 속도 유지)
         pin: true,
         scrub: 1,
         invalidateOnRefresh: true,
@@ -696,7 +696,7 @@
       .addLabel("funnelShown")
       // (3) 제목
       .to(".why-title", { opacity: 1, y: 0, ease: "power2.out", duration: 0.45 }, ">-0.1")
-      // (4) 키워드 — 짧은 구간에 거의 한꺼번에 낙하(한 번 스크롤로도 모두 떨어짐).
+      // (4) 키워드 — 더 긴 구간에 걸쳐 하나씩 천천히 낙하.
       //     스크럽이라 위로 올리면 그대로 역재생되어 다시 올라감.
       .to(
         ".why-cap",
@@ -704,8 +704,8 @@
           y: (i, el) => parseFloat(el.dataset.y),
           opacity: 1,
           ease: "back.out(1.4)",
-          stagger: { each: 0.03, from: "start" },
-          duration: 0.4,
+          stagger: { each: 0.12, from: "start" },
+          duration: 1.2,
         },
         ">+0.05"
       )
