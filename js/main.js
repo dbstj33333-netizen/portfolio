@@ -785,8 +785,13 @@
       });
       shots.forEach(function (shot, i) {
         if (i > 0) {
-          mTL.set(shots[i - 1], { autoAlpha: 0 });
-          mTL.set(shot, { autoAlpha: 1, y: 0 });
+          // 화면 전환을 또렷하게 — 이전 장은 페이드아웃, 다음 장은 아래에서 살짝 확대되며 들어옴
+          mTL.to(shots[i - 1], { autoAlpha: 0, duration: 0.2, ease: "power1.in" });
+          mTL.fromTo(
+            shot,
+            { autoAlpha: 0, y: 64, scale: 1.05 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.32, ease: "power2.out" }
+          );
         }
         // 이미지가 모니터보다 길면 그만큼 위로 스크롤(짧으면 그대로 표시)
         mTL.to(shot, {
@@ -857,25 +862,47 @@
 })();
 
 /* =========================================================
-   윤슬 — 인트로 수면 위 햇빛 반짝임 글린트 동적 생성
-   (작은 가로 글린트들이 무작위 위치·시차로 깜빡임)
+   모카 개선결과 목업 — mockup 프레임 뒤 페이지 시퀀스(자동 루프)
+   각 페이지(이미지)를 세로로 스크롤 → 끝나면 옆으로 슬라이드 → 다음 페이지
 ========================================================= */
 (function () {
   "use strict";
-  var layer = document.querySelector(".intro-yunseul");
-  if (!layer) return;
+  if (typeof gsap === "undefined") return;
+  var mockup = document.querySelector(".mc-result-mockup");
+  if (!mockup) return;
+  var track = mockup.querySelector(".mc-pages");
+  var pages = Array.prototype.slice.call(mockup.querySelectorAll(".mc-page"));
+  if (!track || pages.length < 2) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var N = 30;
-  var frag = document.createDocumentFragment();
-  for (var i = 0; i < N; i++) {
-    var s = document.createElement("span");
-    s.style.left = (Math.random() * 100).toFixed(2) + "%";
-    s.style.top = (Math.random() * 100).toFixed(2) + "%";
-    s.style.setProperty("--w", (10 + Math.random() * 22).toFixed(0) + "px");
-    s.style.setProperty("--d", (2.6 + Math.random() * 2.8).toFixed(2) + "s");
-    s.style.setProperty("--delay", (Math.random() * 5).toFixed(2) + "s");
-    s.style.setProperty("--o", (0.5 + Math.random() * 0.45).toFixed(2));
-    frag.appendChild(s);
+
+  var tl = null;
+  function build() {
+    if (tl) { tl.kill(); tl = null; }
+    var imgs = pages.map(function (p) { return p.querySelector("img"); });
+    tl = gsap.timeline({ repeat: -1, repeatDelay: 0.4 });
+    tl.set(track, { xPercent: 0 });          // 루프마다 처음 페이지로 리셋
+    tl.set(imgs, { y: 0 });
+    pages.forEach(function (page, i) {
+      var img = imgs[i];
+      // 이미지가 화면(페이지)보다 길면 그만큼 위로 스크롤
+      var dist = Math.min(0, page.clientHeight - img.offsetHeight);
+      var dur = Math.max(2.2, Math.abs(dist) / 170);   // 길수록 더 오래 스크롤
+      tl.to(img, { y: dist, duration: dur, ease: "none" });
+      tl.to({}, { duration: 0.7 });                    // 바닥에서 잠깐 멈춤
+      if (i < pages.length - 1) {
+        // 다음 페이지로 옆으로 슬라이드
+        tl.to(track, { xPercent: -100 * (i + 1), duration: 0.7, ease: "power2.inOut" });
+        tl.to({}, { duration: 0.25 });
+      }
+    });
+    // 마지막 페이지 → 처음으로 되돌아가며 한 바퀴
+    tl.to(track, { xPercent: 0, duration: 0.9, ease: "power2.inOut" });
   }
-  layer.appendChild(frag);
+
+  build();
+  window.addEventListener("load", build);   // 이미지 높이 확정 후 재계산
+  pages.forEach(function (p) {
+    var im = p.querySelector("img");
+    if (im && !im.complete) im.addEventListener("load", build, { once: true });
+  });
 })();

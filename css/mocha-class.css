@@ -15,12 +15,10 @@
   --sd-white: #ffffff;
 }
 
-/* 프로젝트(페이지 블루) → 모카 제작과정(크림) 경계 자연스럽게 잇기.
-   상단 280px를 #e7f0ff에서 크림(--sd-bg)으로 그라데이션(배경 레이어라 콘텐츠 뒤). */
+/* 위쪽 프로젝트 화면(흰 배경)과 자연스럽게 이어지도록 모카 섹션도 흰 배경.
+   기존 파란 그라데이션 띠를 제거해 경계선(seam) 없이 연결. */
 .mocha-class-page.proj-embed--mocha {
-  background:
-    linear-gradient(to bottom, #e7f0ff 0%, var(--sd-bg) 100%) top center / 100% 280px no-repeat,
-    var(--sd-bg);
+  background: var(--sd-bg);   /* #ffffff */
 }
 
 /* Go to Website : 시스템치과와 동일하게 밑줄 링크 사용(별도 박스 테두리 없음)
@@ -294,8 +292,9 @@
   border-radius: 14px;
   overflow: hidden;
   background: #ffffff;
-  border: 1px solid var(--sd-line);
-  box-shadow: 0 24px 60px rgba(34, 34, 34, 0.14);
+  border: 0;                                  /* 테두리 제거 */
+  box-shadow: none;                           /* 그림자 제거 */
+  transform: translateX(-20px) scale(1.05);   /* 20px 좌측 이동 + 5% 확대 */
 }
 /* 폴백(JS 비활성/모바일): 모니터 안에서 사용자가 직접 스크롤 */
 .mocha-class-page .mc-monitor:not(.is-monitor) { overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -314,6 +313,8 @@
 @media (max-width: 900px) {
   /* 모바일 — 모니터 높이 고정 후 내부 스크롤 */
   .mocha-class-page .mc-result2-stage { height: clamp(320px, 60vh, 460px); }
+  /* 모바일에선 이동/확대 해제(가로 넘침 방지) */
+  .mocha-class-page .mc-monitor { transform: none; }
 }
 .mocha-class-page .mc-result2-img {
   position: absolute;
@@ -905,4 +906,134 @@
   .mocha-class-page .mocha-compare-desc,
   .mocha-class-page .mocha-note,
   .mocha-class-page .mocha-callout { font-size: 16px; }
+}
+
+/* =========================================================
+   톤 균일화 — 제작과정(모카) 섹션 화이트/차콜 통일
+   · 배경 모두 #ffffff · 글씨 모두 #222222 (.mocha-class-page 한정)
+   · 메인카피(헤드라인)·서브카피(본문) 크기·굵기 한 단계 상향
+   · Project 02(시스템치과)에는 영향 없음
+========================================================= */
+.mocha-class-page {
+  --sd-bg: #ffffff;        /* 섹션 배경 */
+  --sd-bg-light: #ffffff;  /* 카드·칩 등 보조 면 */
+  --sd-white: #ffffff;
+  --sd-subtext: #222222;   /* 보조 텍스트도 차콜로 통일 */
+}
+
+/* 배경 — 장식용 피치 톤 원 제거(흰 배경 노출) */
+.mocha-class-page .mocha-tobe-section::before { background: transparent; }
+
+/* 글씨 — 강조(오렌지) 텍스트를 모두 차콜(#222222)로 통일 */
+.mocha-class-page .system-dental-overview-num,
+.mocha-class-page .system-dental-overview-title,
+.mocha-class-page .system-dental-h2,
+.mocha-class-page .system-dental-points-title,
+.mocha-class-page .system-dental-eyebrow,
+.mocha-class-page .system-dental-info dt,
+.mocha-class-page .system-dental-ai-blocktitle,
+.mocha-class-page .mocha-note strong,
+.mocha-class-page .mocha-card-title,
+.mocha-class-page .mocha-bullets li {
+  color: #222222;
+}
+
+/* 메인카피 — 섹션 헤드라인/히어로: 굵기 +1단계, 크기 한 단계 상향 */
+.mocha-class-page .system-dental-h2 {
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 46px);    /* 기존 28~40 → 한 단계 위 */
+}
+.mocha-class-page .system-dental-overview-title {
+  font-weight: 700;
+  font-size: clamp(34px, 5.6vw, 56px);  /* 기존 30~50 → 한 단계 위 */
+}
+
+/* 서브카피 — 본문/개요 설명: 굵기 300→400, 크기 한 단계 상향 */
+.mocha-class-page .system-dental-body,
+.mocha-class-page .system-dental-overview-desc {
+  font-weight: 400;
+  font-size: clamp(1.08rem, 1.35vw, 1.25rem);  /* 기존 0.98~1.12 → 한 단계 위 */
+}
+
+/* 개요 헤드라인 — 한 줄 유지(좁은 화면에서만 줄바꿈 허용) */
+.mocha-class-page .system-dental-overview-title { white-space: nowrap; }
+@media (max-width: 720px) {
+  .mocha-class-page .system-dental-overview-title { white-space: normal; }
+}
+
+/* 본문 한 줄 — 60ch 폭 제한 해제(넓은 화면은 한 줄, 좁아지면 자연 줄바꿈) */
+.mocha-class-page .mc-oneline { max-width: none; }
+
+/* 개선 결과 — 시스템치과 문제정의(52fr 48fr)와 동일 비율 → 목업 크기 동일 */
+.mocha-class-page .mc-result2 {
+  grid-template-columns: 52fr 48fr;
+  gap: clamp(2rem, 3.6vw, 4rem);
+}
+/* 리드 문장 — <br> 위치 유지, 칼럼이 좁아지면 자연 줄바꿈(넘침 방지) */
+.mocha-class-page .mocha-result-lead { max-width: none; }
+@media (max-width: 1280px) {
+  /* 좁은 화면 — 강제 한 줄 해제(가로 넘침 방지) */
+  .mocha-class-page .mocha-result-lead { white-space: normal; }
+}
+@media (max-width: 900px) {
+  .mocha-class-page .mc-result2 { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   개선 결과 — mockup.png 프레임 뒤로 결과 화면(sub1_img5~8 스트립)이 스크롤
+   · 시스템치과 문제정의 목업과 동일 구조(키프레임 sdMockupScroll 재사용)
+   · 화면 영역은 프레임 내부(테두리 ~10px), 4장 세로 스트립 기준 스크롤 거리
+========================================================= */
+.mocha-class-page .mc-result2-stage { height: auto; }   /* 고정 높이 해제 — 목업 비율에 맞춤 */
+.mocha-class-page .sd-mockup { display: block; margin: 0; }
+.mocha-class-page .sd-mockup-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-inline: auto;
+  /* mockup.png(812×465) 프레임 내부 화면 영역 */
+  --scr-left: 1.0%;
+  --scr-top: 1.8%;
+  --scr-width: 98.0%;
+  --scr-height: 96.4%;
+  --shot-end: -91.9%;        /* 4장 스트립(높이합 h/w=6.978) 기준 */
+}
+.mocha-class-page .sd-mockup .sd-mockup-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  position: relative;
+  z-index: 2;                /* 프레임이 위 */
+  pointer-events: none;
+}
+.mocha-class-page .sd-mockup-screen {
+  position: absolute;
+  left: var(--scr-left);
+  top: var(--scr-top);
+  width: var(--scr-width);
+  height: var(--scr-height);
+  overflow: hidden;          /* 화면 영역 밖으로는 안 보이게 */
+  z-index: 1;                /* 프레임 뒤 */
+  background: #ffffff;
+}
+/* 가로 페이지 트랙 — 각 페이지(이미지)는 세로 스크롤, 끝나면 옆으로 슬라이드(JS 제어) */
+.mocha-class-page .sd-mockup .mc-pages {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+.mocha-class-page .sd-mockup .mc-page {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.mocha-class-page .sd-mockup .mc-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform;
 }

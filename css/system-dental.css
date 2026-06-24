@@ -893,3 +893,178 @@
   }
   .sd-sol-sticky { position: static; }
 }
+
+/* =========================================================
+   톤 균일화 — 시스템치과(index 임베드) 화이트/차콜 통일
+   · 배경 모두 #ffffff · 글씨 모두 #222222 (.proj-embed--system 한정)
+   · 강조색(버건디)은 포인트·배지·테두리 등 장식 요소에만 유지
+   · 표준 상세 페이지(project-system 등)에는 영향 없음
+========================================================= */
+.proj-embed--system {
+  --sd-bg: #ffffff;        /* 섹션 배경 */
+  --sd-bg-light: #ffffff;  /* 카드·이미지 면 */
+  --sd-white: #ffffff;
+  --sd-subtext: #222222;   /* 보조 텍스트도 차콜로 통일 */
+}
+
+/* 글씨 — 강조(버건디) 텍스트를 모두 차콜(#222222)로 */
+.proj-embed--system .system-dental-overview-num,
+.proj-embed--system .system-dental-overview-title,
+.proj-embed--system .system-dental-h2,
+.proj-embed--system .system-dental-h3,
+.proj-embed--system .system-dental-points-title,
+.proj-embed--system .system-dental-problem-title,
+.proj-embed--system .system-dental-col-label,
+.proj-embed--system .system-dental-eyebrow,
+.proj-embed--system .system-dental-info dt,
+.proj-embed--system .system-dental-ai-blocktitle {
+  color: #222222;
+}
+
+/* 배경 — 베이지/핑크/다크 박스를 모두 흰색으로 */
+.proj-embed--system .system-dental-point { background: #ffffff; }
+.proj-embed--system .system-dental-problem-bullets {
+  background: #ffffff;
+  border: 1px solid var(--sd-line);
+}
+.proj-embed--system .system-dental-problem-conclusion {
+  background: #ffffff;
+  color: #222222;
+  border: 1px solid var(--sd-line);
+}
+.proj-embed--system .sd-sol-sticky { background: #ffffff; }
+/* AS-IS/TO-BE 이미지 하단 페이드도 흰색으로(베이지 잔상 제거) */
+.proj-embed--system .sd-sol-imgs::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 32%,
+    rgba(255, 255, 255, 0.92) 58%,
+    #ffffff 80%
+  );
+}
+
+/* =========================================================
+   케이스 스터디 공통 — Go to Website 버튼화 + 태그를 #키워드로
+   · .proj-embed 한정(모카·시스템 임베드) · 강조색은 각 팔레트(var(--sd-primary))
+========================================================= */
+/* Go to Website — 밑줄 링크 → 외곽선 버튼(필 형태) */
+.proj-embed .system-dental-link {
+  border: 1.5px solid var(--sd-primary);
+  border-radius: 999px;
+  padding: 0.62rem 1.5rem;
+  color: var(--sd-primary);
+}
+.proj-embed .system-dental-link:hover,
+.proj-embed .system-dental-link:focus-visible {
+  background: var(--sd-primary);
+  color: #ffffff;
+  gap: 0.5rem;
+}
+
+/* 태그 — 외곽선 pill 제거 + 앞에 # 붙여 키워드 느낌(강조색 #) */
+.proj-embed .system-dental-tags li {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  font-weight: 500;
+  color: #222222;
+  line-height: 1.3;
+}
+.proj-embed .system-dental-tags li::before {
+  content: "#";
+  margin-right: 0.12em;
+  color: var(--sd-primary);
+  font-weight: 700;
+}
+
+/* =========================================================
+   타이포 위계 — 시스템치과(index 임베드)를 모카클래스와 동일하게
+   · 메인카피(히어로/섹션 헤드라인) 굵기 +1단계, 크기 한 단계 상향
+   · 서브카피(본문/개요 설명) 굵기 300→400, 크기 한 단계 상향
+========================================================= */
+.proj-embed--system .system-dental-overview-title {
+  font-weight: 700;
+  font-size: clamp(34px, 5.6vw, 56px);
+  white-space: nowrap;                 /* 히어로 타이틀 한 줄 유지 */
+}
+.proj-embed--system .system-dental-h2,
+.proj-embed--system .system-dental-points-title {
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 46px);
+}
+/* 문제정의 제목 — 한 줄 유지(칼럼 폭에 맞춰 크기 조정) */
+.proj-embed--system .system-dental-problem-title {
+  font-weight: 700;
+  font-size: clamp(28px, 4.5vw, 40px);
+  white-space: nowrap;
+}
+.proj-embed--system .system-dental-body,
+.proj-embed--system .system-dental-overview-desc {
+  font-weight: 400;
+  font-size: clamp(1.08rem, 1.35vw, 1.25rem);
+}
+@media (max-width: 820px) {
+  /* 좁은 화면 — 한 줄 강제 해제(가로 넘침 방지) */
+  .proj-embed--system .system-dental-overview-title,
+  .proj-embed--system .system-dental-problem-title { white-space: normal; }
+}
+
+/* =========================================================
+   문제정의 — 모니터 목업(p2_3.png) 안에서 화면(p2_3_screen.png)이 자동으로 흘러내림
+   · 프레임 화면 영역에 긴 스크린샷을 겹쳐 overflow:hidden + translateY 루프
+   · 화면 좌표는 % 변수(--scr-*)로 미세조정 가능
+   · 스크롤 거리(--shot-end)는 (화면높이/이미지높이)로 산출한 값
+========================================================= */
+.proj-embed--system .system-dental-problem-figure.sd-mockup {
+  display: block;
+  margin: 0;
+}
+.proj-embed--system .sd-mockup-inner {
+  position: relative;
+  display: block;
+  width: 100%;                       /* 모니터 프레임은 칼럼 폭에 맞춤(반응형) */
+  max-width: 100%;
+  margin-inline: auto;
+  /* mockup.png(812×465) 프레임 내부 화면 영역(테두리 ~10px, 측정값 + 살짝 덮음) */
+  --scr-left: 1.0%;
+  --scr-top: 1.8%;
+  --scr-width: 98.0%;
+  --scr-height: 96.4%;
+  --shot-end: -86.4%;                /* p2_screen이 끝까지 올라가는 지점 */
+}
+.proj-embed--system .sd-mockup .sd-mockup-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  position: relative;
+  z-index: 2;                        /* 프레임이 위 — 화면은 이 뒤에서 보임 */
+  pointer-events: none;
+}
+.proj-embed--system .sd-mockup-screen {
+  position: absolute;
+  left: var(--scr-left);
+  top: var(--scr-top);
+  width: var(--scr-width);
+  height: var(--scr-height);
+  overflow: hidden;                  /* 화면 영역 밖으로는 안 보이게 */
+  z-index: 1;                        /* 프레임 뒤 */
+  background: #ffffff;               /* 스크롤 끝 빈틈은 흰 배경 */
+}
+.proj-embed--system .sd-mockup .sd-mockup-shot {
+  display: block;
+  width: 100%;                                   /* 화면 영역 가득 채움 */
+  height: auto;
+  max-width: none;
+  will-change: transform;
+  animation: sdMockupScroll 24s ease-in-out infinite alternate;
+}
+@keyframes sdMockupScroll {
+  0%, 6%    { transform: translateY(0); }
+  94%, 100% { transform: translateY(var(--shot-end, -90%)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj-embed--system .sd-mockup .sd-mockup-shot { animation: none; }
+}

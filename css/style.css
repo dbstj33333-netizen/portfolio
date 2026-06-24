@@ -424,34 +424,6 @@ em {
   will-change: filter;
 }
 
-/* 윤슬 — 물빛이 반짝이는 잔물결 글린트(수면 위 햇빛) */
-.intro-yunseul {
-  position: absolute;
-  inset: 0;
-  z-index: 1;            /* 배경 위, 텍스트 아래 */
-  pointer-events: none;
-  overflow: hidden;
-}
-.intro-yunseul span {
-  position: absolute;
-  width: var(--w, 16px);
-  height: 2px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
-  box-shadow: 0 0 6px 1px rgba(150, 205, 255, 0.85);
-  opacity: 0;
-  transform: scaleX(0.5);
-  animation: yunseulTwinkle var(--d, 3.2s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-@keyframes yunseulTwinkle {
-  0%, 100% { opacity: 0; transform: scaleX(0.45); }
-  50%      { opacity: var(--o, 0.85); transform: scaleX(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .intro-yunseul { display: none; }
-}
-
 /* 마우스 움직임에 파동치는 낱글자 (JS가 분리·제어) */
 .wave-ch {
   display: inline-block;
@@ -1142,12 +1114,8 @@ em {
   /* 고정 헤더가 없으므로 0, 앵커 점프 시 살짝 여유 */
   scroll-margin-top: 12px;
 }
+/* 케이스 스터디 임베드는 모두 흰 배경으로 통일 → 사이 경계선(seam) 제거 */
 .proj-embed + .proj-embed {
-  border-top: 1px solid var(--blue-faint);
-}
-/* 시스템치과 임베드는 자체 베이지 배경으로 구분 → 경계선 불필요 */
-.proj-embed--system + .proj-embed,
-.proj-embed--system {
   border-top: 0;
 }
 
@@ -1222,6 +1190,23 @@ em {
   transform: scale(1.2);
 }
 
+/* 플로팅 메뉴 — 모카/시스템치과 항목은 각 프로젝트 강조색으로 표시
+   (활성/호버 시 글자·번호·끝점 원을 해당 팔레트 색으로) */
+.proj-float a[data-target="proj-mocha"]:hover,
+.proj-float a[data-target="proj-mocha"].is-active,
+.proj-float a[data-target="proj-mocha"].is-active .proj-float-num { color: #f38f39; }
+.proj-float a[data-target="proj-mocha"].is-active::after {
+  background: #f38f39;
+  border-color: #f38f39;
+}
+.proj-float a[data-target="proj-system"]:hover,
+.proj-float a[data-target="proj-system"].is-active,
+.proj-float a[data-target="proj-system"].is-active .proj-float-num { color: #a52a2c; }
+.proj-float a[data-target="proj-system"].is-active::after {
+  background: #a52a2c;
+  border-color: #a52a2c;
+}
+
 /* =========================================================
    프로젝트 화면 — 썸네일 카드 (참고: 프로젝트.png)
 ========================================================= */
@@ -1263,6 +1248,7 @@ em {
   width: clamp(120px, 12vw, 168px);
   aspect-ratio: 16 / 10;
   overflow: hidden;
+  border-radius: 12px;   /* 알약형 카드 안 썸네일도 모서리 둥글게 */
   background: #eef5ff;
 }
 .project-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
