@@ -21,7 +21,7 @@
   --sd-pad: clamp(20px, 4vw, 84px);
 
   /* 폰트 — 기존 포트폴리오 폰트 재사용 */
-  --sd-font-en: 'Space Grotesk', var(--font-en);
+  --sd-font-en: 'Pretendard', var(--font-ko);
   --sd-font-ko: 'Pretendard', var(--font-ko);
 
   background: var(--sd-bg);

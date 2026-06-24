@@ -27,9 +27,9 @@
   --bg-top: #ffffff;
   --bg-bottom: #e7f0ff;
 
-  /* 타이포 — 페이퍼로지(Paperlogy)를 메인으로, 미설치 시 폴백 */
-  --font-en: 'Paperlogy', 'Poppins', sans-serif;
-  --font-ko: 'Paperlogy', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  /* 타이포 — 전체 Pretendard 통일(인트로 헤드라인/라벨만 별도 폰트 유지) */
+  --font-en: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  --font-ko: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
   /* 레이아웃 */
   --pad-x: 5.2vw;           /* 좌우 공통 여백 (1920px 기준 ≈ 100px) — 콘텐츠 폭 넓힘 */
