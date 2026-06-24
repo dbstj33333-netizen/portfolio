@@ -1348,7 +1348,8 @@ em {
   overflow: hidden;                  /* 좌측으로 빠지는 작품 클리핑 */
   display: grid;
   place-items: center;
-  background: linear-gradient(165deg, #ffffff 0%, #eef5ff 52%, #dfeaff 100%);
+  /* 상단 12%는 흰색으로 고정 → 위쪽 흰 시스템치과 섹션과 경계 없이 연결, 이후 물빛으로 */
+  background: linear-gradient(165deg, #ffffff 0%, #ffffff 12%, #eef5ff 56%, #dfeaff 100%);
 }
 /* 파스텔 글로우 — 첫 화면과 동일 톤, 천천히 부유 */
 .gd-water.is-water .gd-water-stage::before,
